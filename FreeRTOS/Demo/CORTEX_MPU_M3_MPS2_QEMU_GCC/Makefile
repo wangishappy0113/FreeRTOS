@@ -29,6 +29,7 @@ SOURCE_FILES          +=    $(KERNEL_DIR)/stream_buffer.c
 # application source files
 SOURCE_FILES          +=    app_main.c
 SOURCE_FILES          +=    mpu_demo.c
+SOURCE_FILES          +=    fuzz_harness.c
 
 INCLUDE_DIRS          +=    -I$(FREERTOS_DIR)/Demo/CORTEX_MPU_M3_MPS2_QEMU_GCC
 INCLUDE_DIRS          +=    -I$(FREERTOS_DIR)/Demo/CORTEX_MPU_M3_MPS2_QEMU_GCC/CMSIS
@@ -47,6 +48,12 @@ LDFLAGS                =    -T ./scripts/mps2_m3.ld
 LDFLAGS               +=    -Xlinker -Map=${BUILD_DIR}/output.map
 LDFLAGS               +=    -Xlinker --gc-sections
 LDFLAGS               +=    -nostartfiles -nostdlib -nolibc -nodefaultlibs
+
+# --- BEGIN: Add --undefined for critical fuzzing symbols ---
+LDFLAGS               +=    -Xlinker --undefined=FUZZ_INPUT
+LDFLAGS               +=    -Xlinker --undefined=fuzz_task
+LDFLAGS               +=    -Xlinker --undefined=BREAKPOINT
+# --- END: Add --undefined ---
 
 ifeq ($(DEBUG), 1)
     CFLAGS                +=     -g3 -Og -ffunction-sections -fdata-sections -save-temps=obj

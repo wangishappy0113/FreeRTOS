@@ -35,16 +35,22 @@
 
 #include <stdio.h>
 
+
+extern void fuzz_task(void);
+
 void app_main( void )
 {
     /* Start the MPU demo. */
-    vStartMPUDemo();
+    //  printf("Hello from FreeRTOS Demo!\n");
+    // vStartMPUDemo();
+    
+    fuzz_task(); // Call the function from fuzz_harness.c
 
     /* Start the scheduler. */
     vTaskStartScheduler();
-
-    printf( "Returned from vTaskStartScheduler something bad had happened\n" );
-
+    
+    // printf( "Returned from vTaskStartScheduler something bad had happened\n" );
+   
     /* Should not get here. */
     for( ; ; )
     {
