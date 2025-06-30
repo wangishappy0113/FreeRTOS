@@ -308,10 +308,12 @@ portDONT_DISCARD void vHandleMemoryFault( uint32_t * pulFaultStackAddress )
     }
     else
     {
+         /* This is an unexpected fault - signal crash to fuzzer. */
+        __asm volatile ( "bkpt #0xE6" ); // 用 bkpt 指令替换无限循环
         /* This is an unexpected fault - loop forever. */
-        for( ; ; )
-        {
-        }
+        // for( ; ; )
+        // {
+        // }
     }
 }
 /*-----------------------------------------------------------*/

@@ -38,18 +38,19 @@
 
 extern void fuzz_task(void);
 
+volatile int g_app_main_counter0 = 0;
+volatile int g_app_main_counter1 = 0;
 void app_main( void )
 {
     /* Start the MPU demo. */
     //  printf("Hello from FreeRTOS Demo!\n");
     // vStartMPUDemo();
-    
+  
     fuzz_task(); // Call the function from fuzz_harness.c
 
     /* Start the scheduler. */
-    vTaskStartScheduler();
-    
-    // printf( "Returned from vTaskStartScheduler something bad had happened\n" );
+    // vTaskStartScheduler();
+
    
     /* Should not get here. */
     for( ; ; )

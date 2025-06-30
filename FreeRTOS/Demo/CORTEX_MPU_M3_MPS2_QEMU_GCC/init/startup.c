@@ -110,35 +110,40 @@ void prvGetRegistersFromStack( uint32_t * pulFaultStackAddress )
 static void Default_Handler( void ) __attribute__( ( naked ) );
 void Default_Handler( void )
 {
-    __asm volatile
-    (
-        "Default_Handler:\n"
-        "    ldr r3, =0xe000ed04\n"
-        "    ldr r2, [r3, #0]\n"
-        "    uxtb r2, r2\n"
-        "Infinite_Loop:\n"
-        "    b  Infinite_Loop\n"
-        ".size  Default_Handler, .-Default_Handler\n"
-        ".ltorg\n"
-    );
+    // __asm volatile
+    // (
+    //     "Default_Handler:\n"
+    //     "    ldr r3, =0xe000ed04\n"
+    //     "    ldr r2, [r3, #0]\n"
+    //     "    uxtb r2, r2\n"
+    //     "Infinite_Loop:\n"
+    //     "    b  Infinite_Loop\n"
+    //     ".size  Default_Handler, .-Default_Handler\n"
+    //     ".ltorg\n"
+    // );
+     __asm volatile ( "bkpt #0xE6" );
 }
 
 static void HardFault_Handler( void ) __attribute__( ( naked ) );
 void HardFault_Handler( void )
 {
-    __asm volatile
-    (
-        " tst lr, #4                                                \n"
-        " ite eq                                                    \n"
-        " mrseq r0, msp                                             \n"
-        " mrsne r0, psp                                             \n"
-        " ldr r1, [r0, #24]                                         \n"
-        " ldr r2, =prvGetRegistersFromStack                         \n"
-        " bx r2                                                     \n"
-        " .ltorg                                                    \n"
-    );
+    // __asm volatile
+    // (
+    //     " tst lr, #4                                                \n"
+    //     " ite eq                                                    \n"
+    //     " mrseq r0, msp                                             \n"
+    //     " mrsne r0, psp                                             \n"
+    //     " ldr r1, [r0, #24]                                         \n"
+    //     " ldr r2, =prvGetRegistersFromStack                         \n"
+    //     " bx r2                                                     \n"
+    //     " .ltorg                                                    \n"
+    // );
+    __asm volatile ( "bkpt #0xE6" );
 }
 
+/* 保持 MemMang_Handler, BusFault_Handler, UsageFault_Handler 的原始跳转逻辑不变，
+   因为我们将修改它们的目标函数 vHandleMemoryFault。
+   例如 MemMang_Handler 应该保持如下：*/
 static void MemMang_Handler( void ) __attribute__( ( naked ) );
 void MemMang_Handler( void )
 {

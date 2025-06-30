@@ -34,6 +34,7 @@ void __attribute__((used, visibility("default"))) test_task(void)
     // fflush(stdout);
 
     // ====================================================================
+    
     int a = 0;
     int b = 0;
     if (FUZZ_INPUT[0] == 100)
@@ -51,7 +52,16 @@ void __attribute__((used, visibility("default"))) test_task(void)
             a += i;
             b += i;
         }
+
+        volatile int *code_addr = (int *)FUZZ_INPUT[0]; // 获取函数地址（代码段）
+        *code_addr = 1; // 修改函数代码（非法访问）
     }
+
+
+
+    // --- 后续代码不应被执行到 ---
+    // 如果你看到了这条打印，说明错误没有被触发
+    printf("FuzzTask: ERROR - The fault was not triggered. Reached BREAKPOINT.\n");
     // 在这里实现你的模糊测试逻辑:
     // 使用 FUZZ_INPUT 中的数据来调用 FreeRTOS API 或其他目标函数
     //
@@ -79,6 +89,7 @@ void __attribute__((used, visibility("default"))) test_task(void)
     // fflush(stdout);
     // printf("Harness: BREAKPOINT() called. LibAFL will reset and re-enter fuzz_task().\n");
     // fflush(stdout);
+    printf("into BREAKPOINT\n");
     BREAKPOINT();
 }
 
@@ -136,7 +147,7 @@ void fuzz_task(void) {
                                 xFuzzHostTaskStack,         // Pointer to stack array
                                 &xFuzzHostTaskTCB);         // Pointer to TCB buffer
    
-    vTaskStartScheduler();
+
     if (xHandle == NULL) { // xTaskCreateStatic returns NULL on failure
         printf("Harness: FATAL - Failed to create FuzzHostTask STATICALLY!\n");
         fflush(stdout);
@@ -145,5 +156,5 @@ void fuzz_task(void) {
         printf("Harness: FuzzHostTask created successfully STATICALLY (Handle: %p).\n", (void*)xHandle);
         fflush(stdout);
     }
-    BREAKPOINT();
+    vTaskStartScheduler();
 }
