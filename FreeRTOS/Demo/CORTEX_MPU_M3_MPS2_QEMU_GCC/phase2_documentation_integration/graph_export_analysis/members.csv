@@ -1,0 +1,77 @@
+name,typeFullName,decl_in,filename,line
+uxEventBits,EventBits_t,,,56
+xTasksWaitingForBits,List_t,,,57
+uxEventGroupNumber,UBaseType_t,,,60
+ucStaticallyAllocated,uint8_t,,,64
+xInternalObjectHandle,OpaqueObjectHandle_t,,,77
+ulKernelObjectType,uint32_t,,,78
+pvKernelObjectData,void*,,,79
+pcTimerName,char*,,,85
+xTimerListItem,ListItem_t,,,86
+xTimerPeriodInTicks,TickType_t,,,87
+pvTimerID,void*,,,88
+pxCallbackFunction,TimerCallbackFunction_t,,,89
+uxTimerNumber,UBaseType_t,,,91
+ucStatus,uint8_t,,,93
+xMessageValue,TickType_t,,,107
+pxTimer,Timer_t*,,,108
+pxCallbackFunction,PendedFunction_t,,,115
+pvParameter1,void*,,,116
+ulParameter2,uint32_t,,,117
+xTimerParameters,TimerParameter_t,,,127
+xCallbackParameters,CallbackParameters_t,,,132
+u,union,,,134
+xMessageID,BaseType_t,,,124
+pxNextFreeBlock,A_BLOCK_LINK*,,,102
+xBlockSize,size_t,,,103
+xTail,volatile size_t,,,234
+xHead,volatile size_t,,,235
+xLength,size_t,,,236
+xTriggerLevelBytes,size_t,,,237
+xTaskWaitingToReceive,volatile TaskHandle_t,,,238
+xTaskWaitingToSend,volatile TaskHandle_t,,,239
+pucBuffer,uint8_t*,,,240
+ucFlags,uint8_t,,,241
+uxStreamBufferNumber,UBaseType_t,,,244
+uxNotificationIndex,UBaseType_t,,,251
+pcTail,int8_t*,,,70
+pcReadFrom,int8_t*,,,71
+xMutexHolder,TaskHandle_t,,,76
+uxRecursiveCallCount,UBaseType_t,,,77
+xQueue,QueuePointers_t,,,110
+xSemaphore,SemaphoreData_t,,,111
+u,union,,,112
+pcHead,int8_t*,,,105
+pcWriteTo,int8_t*,,,106
+xTasksWaitingToSend,List_t,,,114
+xTasksWaitingToReceive,List_t,,,115
+uxMessagesWaiting,volatile UBaseType_t,,,117
+uxLength,UBaseType_t,,,118
+uxItemSize,UBaseType_t,,,119
+cRxLock,volatile int8_t,,,121
+cTxLock,volatile int8_t,,,122
+ucStaticallyAllocated,uint8_t,,,125
+uxQueueNumber,UBaseType_t,,,133
+ucQueueType,uint8_t,,,134
+pcQueueName,char*,,,155
+xHandle,QueueHandle_t,,,156
+pxTopOfStack,volatile StackType_t*,,,376
+xMPUSettings,xMPU_SETTINGS,,,379
+xStateListItem,ListItem_t,,,386
+xEventListItem,ListItem_t,,,387
+uxPriority,UBaseType_t,,,388
+pxStack,StackType_t*,,,389
+pcTaskName,char[(10)],,,394
+uxTCBNumber,UBaseType_t,,,409
+uxTaskNumber,UBaseType_t,,,410
+uxBasePriority,UBaseType_t,,,414
+uxMutexesHeld,UBaseType_t,,,415
+ulNotifiedValue,volatile uint32_t[1],,,435
+ucNotifyState,volatile uint8_t[1],,,436
+ucStaticallyAllocated,uint8_t,,,442
+ucDelayAborted,uint8_t,,,446
+DATA,volatile uint32_t,,,34
+STATE,volatile uint32_t,,,35
+CTRL,volatile uint32_t,,,36
+INTSTATUS,volatile uint32_t,,,37
+BAUDDIV,volatile uint32_t,,,38

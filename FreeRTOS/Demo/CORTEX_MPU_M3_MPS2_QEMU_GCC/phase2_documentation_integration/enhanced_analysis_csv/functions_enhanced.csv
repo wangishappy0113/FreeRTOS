@@ -1,0 +1,2 @@
+function_name,signature,source_file,start_line,end_line,full_name,cyclomatic_complexity,number_of_lines,parameters,local_variables
+[0m${method.name}[31m,[0m${method.signature}[31m,[0m${method.filename}[31m,-1,-1,[0m${method.fullName}[31m,0,0,[0m${params}[31m,[0m${locals}[31m

@@ -1,0 +1,12 @@
+function_name,signature,source_file,full_name,index
+prvSetupMPU,void(void),/home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/port.c,vPortEnterCritical,106
+prvGetMPURegionSizeSetting,uint32_t(uint32_t),/home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/port.c,vPortExitCritical,107
+MPU_GetFreeIndexInKernelObjectPool,int32_t(void),/home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/port.c,xPortIsAuthorizedToAccessBuffer,117
+MPU_SetIndexFreeInKernelObjectPool,void(int32_t),/home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/port.c,vPortValidateInterruptPriority,118
+MPU_GetIndexForHandle,"int32_t(OpaqueObjectHandle_t,uint32_t)",/home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/port.c,vPortGrantAccessToKernelObject,119
+MPU_StoreHandleAndDataAtIndex,"void(int32_t,OpaqueObjectHandle_t,void*,uint32_t)",/home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/port.c,vPortRevokeAccessToKernelObject,120
+MPU_GetHandleAtIndex,"OpaqueObjectHandle_t(int32_t,uint32_t)",/home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/port.c,xPortIsAuthorizedToAccessKernelObject,121
+vStartMPUDemo,void(void),/home/zwz/FreeRTOS/FreeRTOS/Source/queue.c,prvCopyDataFromQueue,365
+tskMPU_WRITE_PERMISSION,ANY(2),app_main.c,vApplicationMallocFailedHook,473
+mpuMULTIPLY_UINT32_WILL_OVERFLOW,ANY(0),app_main.c,vApplicationGetIdleTaskMemory,474
+tskMPU_READ_PERMISSION,ANY(1),/home/zwz/FreeRTOS/FreeRTOS/Source/queue.c,/home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:errQUEUE_EMPTY:ANY(0),564

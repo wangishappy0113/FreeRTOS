@@ -1,0 +1,2 @@
+variable_name,function_name,source_file,line_number
+[0m${id.name}[31m,[0m${id.method.name}[31m,[0m${id.filename}[31m,-1

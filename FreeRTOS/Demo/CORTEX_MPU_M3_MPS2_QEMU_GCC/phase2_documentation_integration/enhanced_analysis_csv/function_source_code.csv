@@ -1,0 +1,137 @@
+function_name,source_file,line_number,source_code_snippet
+<global>,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,1,<empty>
+xEventGroupCreateStatic,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,86,"{
+            EventGroup_t * pxEventBits;
+
+            traceENTER_xEventGroupCreateStatic( pxEventGroupBuffer );
+
+            /* A StaticEventGroup_t object must be provided. */
+            configASSE"
+xEventGroupCreate,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,145,"{
+            EventGroup_t * pxEventBits;
+
+            traceENTER_xEventGroupCreate();
+
+            /* MISRA Ref 11.5.1 [Malloc memory assignment] */
+            /* More details at: https://github.com"
+xEventGroupSync,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,185,"{
+        EventBits_t uxOriginalBitValue, uxReturn;
+        EventGroup_t * pxEventBits = xEventGroup;
+        BaseType_t xAlreadyYielded;
+        BaseType_t xTimeoutOccurred = pdFALSE;
+
+        traceE"
+xEventGroupWaitBits,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,312,"{
+        EventGroup_t * pxEventBits = xEventGroup;
+        EventBits_t uxReturn, uxControlBits = 0;
+        BaseType_t xWaitConditionMet, xAlreadyYielded;
+        BaseType_t xTimeoutOccurred = pdFALS"
+xEventGroupClearBits,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,472,"{
+        EventGroup_t * pxEventBits = xEventGroup;
+        EventBits_t uxReturn;
+
+        traceENTER_xEventGroupClearBits( xEventGroup, uxBitsToClear );
+
+        /* Check the user is not attempting t"
+xEventGroupClearBitsFromISR,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,506,"{
+            BaseType_t xReturn;
+
+            traceENTER_xEventGroupClearBitsFromISR( xEventGroup, uxBitsToClear );
+
+            traceEVENT_GROUP_CLEAR_BITS_FROM_ISR( xEventGroup, uxBitsToClear );
+  "
+xEventGroupGetBitsFromISR,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,524,"{
+        UBaseType_t uxSavedInterruptStatus;
+        EventGroup_t const * const pxEventBits = xEventGroup;
+        EventBits_t uxReturn;
+
+        traceENTER_xEventGroupGetBitsFromISR( xEventGroup );
+"
+xEventGroupSetBits,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,547,"{
+        ListItem_t * pxListItem;
+        ListItem_t * pxNext;
+        ListItem_t const * pxListEnd;
+        List_t const * pxList;
+        EventBits_t uxBitsToClear = 0, uxBitsWaitedFor, uxControlBi"
+vEventGroupDelete,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,650,"{
+        EventGroup_t * pxEventBits = xEventGroup;
+        const List_t * pxTasksWaitingForBits;
+
+        traceENTER_vEventGroupDelete( xEventGroup );
+
+        configASSERT( pxEventBits );
+
+        p"
+xEventGroupGetStaticBuffer,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,701,"{
+            BaseType_t xReturn;
+            EventGroup_t * pxEventBits = xEventGroup;
+
+            traceENTER_xEventGroupGetStaticBuffer( xEventGroup, ppxEventGroupBuffer );
+
+            configASSER"
+vEventGroupSetBitsCallback,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,748,"{
+        traceENTER_vEventGroupSetBitsCallback( pvEventGroup, ulBitsToSet );
+
+        /* MISRA Ref 11.5.4 [Callback function parameter] */
+        /* More details at: https://github.com/FreeRTOS/Free"
+vEventGroupClearBitsCallback,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,764,"{
+        traceENTER_vEventGroupClearBitsCallback( pvEventGroup, ulBitsToClear );
+
+        /* MISRA Ref 11.5.4 [Callback function parameter] */
+        /* More details at: https://github.com/FreeRTOS/"
+prvTestWaitCondition,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,778,"{
+        BaseType_t xWaitConditionMet = pdFALSE;
+
+        if( xWaitForAllBits == pdFALSE )
+        {
+            /* Task only has to wait for one bit within uxBitsToWaitFor to be
+             * set. "
+xEventGroupSetBitsFromISR,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,817,"{
+            BaseType_t xReturn;
+
+            traceENTER_xEventGroupSetBitsFromISR( xEventGroup, uxBitsToSet, pxHigherPriorityTaskWoken );
+
+            traceEVENT_GROUP_SET_BITS_FROM_ISR( xEventGroup"
+uxEventGroupGetNumber,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,838,"{
+            UBaseType_t xReturn;
+
+            /* MISRA Ref 11.5.2 [Opaque pointer] */
+            /* More details at: https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/main/MISRA.md#rule-115 */
+     "
+vEventGroupSetNumber,/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c,868,"{
+            traceENTER_vEventGroupSetNumber( xEventGroup, uxEventGroupNumber );
+
+            /* MISRA Ref 11.5.2 [Opaque pointer] */
+            /* More details at: https://github.com/FreeRTOS/FreeR"
+Reset_Handler,init/startup.c,45,"{
+    /* set stack pointer */
+    __asm volatile ( "
+<global>,init/startup.c,1,<empty>
+prvGetRegistersFromStack,init/startup.c,69,"{
+/* These are volatile to try and prevent the compiler/linker optimizing them
+ * away as the variables never actually get used.  If the debugger won't show the
+ * values of the variables, make them g"
+Default_Handler,init/startup.c,111,"{
+    // __asm volatile
+    // (
+    //     "
+HardFault_Handler,init/startup.c,128,"{
+    // __asm volatile
+    // (
+    //     "
+BusFault_Handler,init/startup.c,162,"{
+    __asm volatile
+    (
+        "
+Debug_Handler,init/startup.c,190,"{
+    __asm volatile
+    (
+        "
+MPU_uxTaskGetNumberOfTasks,/home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/mpu_wrappers_v2_asm.c,335,"{
+        __asm volatile
+        (
+            "
+MPU_xTaskCheckForTimeOut,/home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/mpu_wrappers_v2_asm.c,760,"{
+        __asm volatile
+        (
+            "

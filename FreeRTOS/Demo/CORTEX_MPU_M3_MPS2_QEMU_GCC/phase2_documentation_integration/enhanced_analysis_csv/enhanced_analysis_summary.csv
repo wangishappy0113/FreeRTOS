@@ -1,0 +1,11 @@
+metric,value
+analysis_timestamp,2025-09-10 09:38:09
+total_functions,1
+total_function_calls,1
+total_files,18
+header_files,0
+source_files,18
+functions_with_source_code,26
+include_relationships,1
+data_flow_records,1
+cpg_source,/home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPU_M3_MPS2_QEMU_GCC/with_compdb_cpg.bin

@@ -1,0 +1,2 @@
+caller_function,callee_function,call_location_file,call_line_number,caller_source_file,callee_full_name
+[0m${call.method.name}[31m,[0m${call.name}[31m,[0m${call.filename}[31m,-1,[0m${call.method.filename}[31m,[0m${call.methodFullName}[31m
