@@ -43,7 +43,7 @@ volatile int g_app_main_counter1 = 0;
 void app_main( void )
 {
     /* Start the MPU demo. */
-    //  printf("Hello from FreeRTOS Demo!\n");
+    printf("Hello from FreeRTOS Demo!\n");
     // vStartMPUDemo();
   
     fuzz_task(); // Call the function from fuzz_harness.c

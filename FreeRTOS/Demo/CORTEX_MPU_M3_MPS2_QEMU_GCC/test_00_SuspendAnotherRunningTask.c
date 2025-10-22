@@ -43,7 +43,6 @@
 
 #include "timers.h"
 
-#include <stdio.h>   
 
 // LibAFL集成必需的全局变量和函数
 #define MAX_FUZZ_INPUT_SIZE 128
@@ -80,7 +79,7 @@ void __attribute__((used, visibility("default"))) test_task(void)
     // 测试用例: SuspendAnotherRunningTask
     // API类别: task_management
     // 描述: A lower-priority task suspends a higher-priority task. It verifies that the suspended task stops executing and correctly resumes later. This tests the basic functionality of suspending a task other than the caller.
-    printf("4444\n");
+    
     TaskHandle_t xCurrentTaskHandle = xTaskGetCurrentTaskHandle();
     UBaseType_t uxOriginalPriority = uxTaskPriorityGet(NULL);
 
@@ -109,7 +108,6 @@ void __attribute__((used, visibility("default"))) test_task(void)
     /* Store the counter value */
     uint32_t ulCounterWhenSuspended = ulWorkerTaskCounter;
 
-    printf("Hello from FreeRTOS Demo!\n");
     /* Delay for a while. The worker task should not run. */
     vTaskDelay(pdMS_TO_TICKS(100));
 
@@ -137,7 +135,6 @@ void __attribute__((used, visibility("default"))) test_task(void)
 // FreeRTOS任务包装器
 void fuzz_task(void)
 {
-    printf("11111\n");
     // 创建模糊测试任务
     xTaskCreate(
         (TaskFunction_t)test_task,
@@ -147,10 +144,10 @@ void fuzz_task(void)
         tskIDLE_PRIORITY + 1,
         NULL
     );
-    printf("2222\n");
+    
     // 启动调度器
     vTaskStartScheduler();
-    printf("333\n");
+    
     // 不应该到达这里
     for (;;) {
         // 空循环
