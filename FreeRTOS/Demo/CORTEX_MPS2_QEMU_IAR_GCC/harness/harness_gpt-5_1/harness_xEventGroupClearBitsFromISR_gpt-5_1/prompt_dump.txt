@@ -1,0 +1,227 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xEventGroupClearBitsFromISR, xTimerPendFunctionCallFromISR
+
+### Function xEventGroupClearBitsFromISR
+Signature: BaseType_t(EventGroupHandle_t,EventBits_t)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c:506-519
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, FreeRTOS.h, task.h, timers.h, event_groups.h
+Outgoing calls summary: <operator>.assignment(operator), xTimerPendFunctionCallFromISR(function), <operator>.cast(operator)
+Incoming callers count: 1
+Full source code:
+        BaseType_t xEventGroupClearBitsFromISR( EventGroupHandle_t xEventGroup,
+                                                const EventBits_t uxBitsToClear )
+        {
+            BaseType_t xReturn;
+
+            traceENTER_xEventGroupClearBitsFromISR( xEventGroup, uxBitsToClear );
+
+            traceEVENT_GROUP_CLEAR_BITS_FROM_ISR( xEventGroup, uxBitsToClear );
+            xReturn = xTimerPendFunctionCallFromISR( vEventGroupClearBitsCallback, ( void * ) xEventGroup, ( uint32_t ) uxBitsToClear, NULL );
+
+            traceRETURN_xEventGroupClearBitsFromISR( xReturn );
+
+            return xReturn;
+        }
+
+Official docs (summary):
+Parameters:
+- xEventGroup: EventGroupHandle_t — The event group in which the bits are to be cleared. The event group must  have previously been created using a call to xEventGroupCreate().
+- uxBitsToClear: const EventBits_t — A bitwise value that indicates the bit or bits to clear in the event group. For
+Return values:
+- BaseType_t: pdPASS The message was sent to the RTOS daemon task.
+pdFAIL  The message could not be sent to the RTOS daemon task (also known as
+the timer service task) because the timer command queue was full.  The
+length of the queue is set by the configTIMER_QUEUE_LENGTH setting in
+FreeRTOSConfig.h.
+Related configs: configTIMER_TASK_PRIORITY, xEventGroup
+Related APIs: xEventGroupClearBits
+Reference snippets:
+- API xEventGroupClearBitsFromISR Overview (api:xEventGroupClearBitsFromISR:overview#c0) :: API: xEventGroupClearBitsFromISR Signature: BaseType_t xEventGroupClearBitsFromISR(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear); Headers: event_groups.h, FreeRTOS.h Summary: A version of xEventGroupClearBits() that can be called from an interrupt. xEventGroupClearBitsFromISR() sends a message to the…
+- Function xEventGroupClearBitsFromISR (func:xEventGroupClearBitsFromISR:/home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c#c0) :: FUNC xEventGroupClearBitsFromISR BaseType_t(EventGroupHandle_t,EventBits_t) file /home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c:506-519         BaseType_t xEventGroupClearBitsFromISR( EventGroupHandle_t xEventGroup,                                                 const EventBits_t uxBitsToClear )         {          …
+- Incoming of xEventGroupClearBitsFromISR (rel:in:xEventGroupClearBitsFromISR#c0) :: incoming: MPU_xEventGroupClearBitsFromISR
+- Type xEventGroupClearBitsFromISR (type:xEventGroupClearBitsFromISR#c0) :: TYPE type xEventGroupClearBitsFromISR /home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c
+- Incoming of xTimerPendFunctionCallFromISR (rel:in:xTimerPendFunctionCallFromISR#c0) :: incoming: xEventGroupClearBitsFromISR, xEventGroupSetBitsFromISR
+- API xEventGroupClearBitsFromISR Parameters (api:xEventGroupClearBitsFromISR:parameters#c0) :: API: xEventGroupClearBitsFromISR Section: parameters param xEventGroup: EventGroupHandle_t The event group in which the bits are to be cleared. The event group must  have previously been created using a call to xEventGroupCreate(). param uxBitsToClear: const EventBits_t A bitwise value that indicates the bit or bits to…
+- xEventGroupClearBitsFromISR :: BaseType_t xEventGroupClearBitsFromISR(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear); A version of xEventGroupClearBits() that can be called from an interrupt. xEventGroupClearBitsFromISR() sends a message to the RTOS daemon task to have the
+
+Official documentation (full):
+Title: xEventGroupClearBitsFromISR
+Signature: BaseType_t xEventGroupClearBitsFromISR(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear);
+Summary:
+A version of xEventGroupClearBits() that can be called from an interrupt.
+xEventGroupClearBitsFromISR() sends a message to the RTOS daemon task to have the
+clear operation performed in the context of the daemon task.  The priority of the daemon task
+is set by configTIMER_TASK_PRIORITY in FreeRTOSConfig.h.
+Parameters:
+- xEventGroup: EventGroupHandle_t — The event group in which the bits are to be cleared. The event group must  have previously been created using a call to xEventGroupCreate().
+- uxBitsToClear: const EventBits_t — A bitwise value that indicates the bit or bits to clear in the event group. For
+Return values:
+- BaseType_t: pdPASS The message was sent to the RTOS daemon task.
+pdFAIL  The message could not be sent to the RTOS daemon task (also known as
+the timer service task) because the timer command queue was full.  The
+length of the queue is set by the configTIMER_QUEUE_LENGTH setting in
+FreeRTOSConfig.h.
+Notes:
+The RTOS source file FreeRTOS/source/event_groups.c must be included in the build for the
+xEventGroup ClearBitsFromISR() function to be available.
+Example:
+0x09 to clear bit 3 and bit 0.
+#define BIT_0  ( 1 << 0 )
+#define BIT_4  ( 1 << 4 )
+/* This code assumes the event group referenced by the xEventGroup variable has
+already been created using a call to xEventGroupCreate(). */
+void anInterruptHandler( void )
+{
+BaseType_t xSuccess;
+/* Clear bit 0 and bit 4 in xEventGroup. */
+xSuccess  = xEventGroupClearBitsFromISR(
+xEventGroup,    /* The event group being updated. */
+BIT_0 | BIT_4 ); /* The bits being cleared. */
+if( xSuccess == pdPASS )
+{
+/* The clear bits message was sent to the daemon task. */
+}
+else
+{
+/* The clear bits message was not sent to the daemon task. */
+}
+}
+
+### Function xTimerPendFunctionCallFromISR
+Signature: BaseType_t(PendedFunction_t,void*,uint32_t,BaseType_t*)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/timers.c:1236-1259
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, FreeRTOS.h, task.h, queue.h, timers.h
+Outgoing calls summary: <operator>.assignment(operator), <operator>.fieldAccess(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/timers.h:tmrCOMMAND_EXECUTE_CALLBACK_FROM_ISR:ANY(0)(macro), <operator>.cast(operator), <operator>.minus(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/queue.h:xQueueSendFromISR:ANY(3)(macro), <operator>.addressOf(operator), xQueueGenericSendFromISR(function)
+Incoming callers count: 2
+Full source code:
+        BaseType_t xTimerPendFunctionCallFromISR( PendedFunction_t xFunctionToPend,
+                                                  void * pvParameter1,
+                                                  uint32_t ulParameter2,
+                                                  BaseType_t * pxHigherPriorityTaskWoken )
+        {
+            DaemonTaskMessage_t xMessage;
+            BaseType_t xReturn;
+
+            traceENTER_xTimerPendFunctionCallFromISR( xFunctionToPend, pvParameter1, ulParameter2, pxHigherPriorityTaskWoken );
+
+            /* Complete the message with the function parameters and post it to the
+             * daemon task. */
+            xMessage.xMessageID = tmrCOMMAND_EXECUTE_CALLBACK_FROM_ISR;
+            xMessage.u.xCallbackParameters.pxCallbackFunction = xFunctionToPend;
+            xMessage.u.xCallbackParameters.pvParameter1 = pvParameter1;
+            xMessage.u.xCallbackParameters.ulParameter2 = ulParameter2;
+
+            xReturn = xQueueSendFromISR( xTimerQueue, &xMessage, pxHigherPriorityTaskWoken );
+
+            tracePEND_FUNC_CALL_FROM_ISR( xFunctionToPend, pvParameter1, ulParameter2, xReturn );
+            traceRETURN_xTimerPendFunctionCallFromISR( xReturn );
+
+            return xReturn;
+        }
+
+Official docs (summary):
+Parameters:
+- xFunctionToPend: PendedFunction_t — The function to execute from the timer s ervice/ daemon task.  The function must conform to the PendedFunction_t prototype  shown in Listing 209 .
+- pvParameter1: void — The value that will be passed into the callback function as the  function’s first parameter. The parameter has a void * type to  allow it to be used to pass any type. For example, integer types  can be cast to a void *, or the void * can be used to point to a  structure.
+- ulParameter2: uint32_t — The value that will be passed into the callback function as the  function’s second parameter.
+- pxHigherPriorityTaskWoken: BaseType_t — Calling xTimerPendFunctionCallFromISR() will result in a  message being sent on a queue to the RTOS timer daemon  task. If the priority of the daemon task (which is set by the value  of configTIMER_TASK_PRIORITY in FreeRTOSConfig.h) is  higher than the priority of the currently running task (the task the  interrupt interrupted) then *pxHigherPriorityTaskWoken will be  set to pdTRUE within xTimerPendFunctionCallFromISR(),  indicating that a context switch should be requested before the  interrupt exits. For that reason *pxHigherPriorityTaskWoken  must be initialized to pdFALSE.
+Return values:
+- BaseType_t: pdPASS The message was successfully sent to the RTOS daemon task.
+Any other
+value  The message was not sent to the RTOS daemon task because the message
+queue was already full.  The length of the queue is set by the value of
+configTIMER_QUEUE_LENGTH  in FreeRTOSConfig.h.
+Related configs: configUSE_TIMERS, pdFALSE, pdTRUE, pvParameter1, ulParameter2, vProcessInterface, xHigherPriorityTaskWoken, xInterfaceToService
+Related APIs: portEND_SWITCHING_ISR, portYIELD_FROM_ISR, prvCheckInterfaces, vAnISR, vPendableFunction, vProcessInterface
+
+Official documentation (full):
+Title: xTimerPendFunctionCallFromISR
+Signature: BaseType_t xTimerPendFunctionCallFromISR(PendedFunction_t xFunctionToPend, void *pvParameter1, uint32_t ulParameter2, BaseType_t *pxHigherPriorityTaskWoken);
+Summary:
+Used from application interrupt service routines to defer the execution of a function to the
+RTOS daemon task ( also known as the timer service task, hence this function is implemented
+in timers.c and is prefixed with 'Timer').
+Ideally an interrupt service routine (ISR) is kept as short as possible, but sometimes an ISR
+either has a lot of processing to do, or needs to perform processing that is not deterministic.  In
+these cases xTimerPendFunctionCallFromISR() can be used to defer processing of a function
+to the RTOS daemon task.
+A mechanism is provided that allows the interrupt to return directly to the task that will
+subsequently execute the pended function.  This allows the callback function to execute
+contiguously in time with the interrupt - just as if the callback had executed in the interrupt
+itself.
+Functions that can be deferred to the RTOS daemon task must have the prototype
+demonstrated by Listing 209.
+void vPendableFunction( void *pvParameter1, uint32_t ulParameter2 );
+xTimerPendFunctionCallFromISR()
+The pvParameter1 and ulParameter2 parameters are provided for use by the application code.
+Parameters:
+- xFunctionToPend: PendedFunction_t — The function to execute from the timer s ervice/ daemon task.  The function must conform to the PendedFunction_t prototype  shown in Listing 209 .
+- pvParameter1: void — The value that will be passed into the callback function as the  function’s first parameter. The parameter has a void * type to  allow it to be used to pass any type. For example, integer types  can be cast to a void *, or the void * can be used to point to a  structure.
+- ulParameter2: uint32_t — The value that will be passed into the callback function as the  function’s second parameter.
+- pxHigherPriorityTaskWoken: BaseType_t — Calling xTimerPendFunctionCallFromISR() will result in a  message being sent on a queue to the RTOS timer daemon  task. If the priority of the daemon task (which is set by the value  of configTIMER_TASK_PRIORITY in FreeRTOSConfig.h) is  higher than the priority of the currently running task (the task the  interrupt interrupted) then *pxHigherPriorityTaskWoken will be  set to pdTRUE within xTimerPendFunctionCallFromISR(),  indicating that a context switch should be requested before the  interrupt exits. For that reason *pxHigherPriorityTaskWoken  must be initialized to pdFALSE.
+Return values:
+- BaseType_t: pdPASS The message was successfully sent to the RTOS daemon task.
+Any other
+value  The message was not sent to the RTOS daemon task because the message
+queue was already full.  The length of the queue is set by the value of
+configTIMER_QUEUE_LENGTH  in FreeRTOSConfig.h.
+Notes:
+INCLUDE_xTimerPendFunctionCall() and configUSE_TIMERS must both be set to 1 in
+FreeRTOSConfig.h for xTimerPendFunctionCallFromISR() to be available.
+void vProcessInterface( void *pvParameter1, uint32_t ulParameter2 )
+{
+BaseType_t xInterfaceToService;
+/* The interface that requires servicing is passed in the second parameter.
+The first parameter is not used in this case. */
+xInterfaceToService = ( BaseType_t ) ulParameter2;
+/* ...Perform the processing here... */
+}
+/* An ISR that receives data packets from multiple interfaces */
+void vAnISR( void )
+{
+BaseType_t xInterfaceToService, xHigherPriorityTaskWoken;
+/* Query the hardware to determine which interface needs processing. */
+xInterfaceToService = prvCheckInterfaces();
+/* The actual processing is to be deferred to a task.  Request the
+vProcessInterface() callback function is executed, passing in the number of
+the interface that needs processing.  The interface to service is passed in
+the second parameter.  The first parameter is  not used in this case. */
+xHigherPriorityTaskWoken = pdFALSE;
+xTimerPendFunctionCallFromISR( vProcessInterface,
+NULL,
+( uint32_t ) xInterfaceToService,
+&xHigherPriorityTaskWoken );
+/* If xHigherPriorityTaskWoken is now set to pdTRUE  then a context switch
+should be requested.  The macro used is port specific and will be either
+portYIELD_FROM_ISR() or portEND_SWITCHING_ISR() - refer to the documentation
+page for the port being used. */
+portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
+}
+Example:
+/* The callback function that will execute in the context of the daemon task.
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

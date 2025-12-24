@@ -308,12 +308,17 @@ portDONT_DISCARD void vHandleMemoryFault( uint32_t * pulFaultStackAddress )
     }
     else
     {
-         /* This is an unexpected fault - signal crash to fuzzer. */
-        __asm volatile ( "bkpt #0xE6" ); // 用 bkpt 指令替换无限循环
-        /* This is an unexpected fault - loop forever. */
-        // for( ; ; )
-        // {
-        // }
+        /* This is an unexpected fault - signal crash to fuzzer.
+         * 注意：这里必须打印“堆栈中的 PC（stacked PC）”，而不是当前执行的
+         * bkpt 指令地址。pulFaultStackAddress[6] 保存的就是异常入栈时的 PC，
+         * 也就是真正发生 fault 的指令地址，后续 Python 侧会用它配合
+         * addr2line 做精确归因。 */
+
+        ulPC = pulFaultStackAddress[ 6 ];
+        /* 使用简单的 printf 输出 PC，格式固定，便于日志侧解析。 */
+        printf( "[MEMFAULT] stacked_pc=0x%08lx\r\n", ( unsigned long ) ulPC );
+
+        __asm volatile ( "bkpt #0xE6" );
     }
 }
 /*-----------------------------------------------------------*/

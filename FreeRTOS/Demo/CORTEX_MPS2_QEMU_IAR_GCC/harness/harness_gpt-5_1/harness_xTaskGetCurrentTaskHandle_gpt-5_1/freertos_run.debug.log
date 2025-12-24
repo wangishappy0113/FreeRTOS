@@ -1,0 +1,83 @@
+FUZZ_INPUT @ 0x20000064
+main address = 0x32c8
+Breakpoint address = 0x3408
+[2025-12-22T12:29:56Z INFO  libafl::events::launcher] spawning on cores: Cores { cmdline: "1", ids: [CoreId(1)] }
+[2025-12-22T12:29:56Z INFO  libafl::events::launcher] child spawned with id 1 and bound to core CoreId(1)
+[2025-12-22T12:29:56Z INFO  libafl::events::launcher] I am broker!!.
+[2025-12-22T12:29:56Z INFO  libafl_bolts::llmp] Successfully setup signal handlers
+[2025-12-22T12:29:56Z INFO  libafl::events::launcher] 1496082 PostFork
+[2025-12-22T12:29:56Z INFO  libafl_bolts::llmp] Connected to port 1337
+[2025-12-22T12:29:56Z INFO  libafl_bolts::llmp] New connection: 127.0.0.1:53224/127.0.0.1:53224
+[2025-12-22T12:29:56Z INFO  libafl::events::llmp::restarting] Setting core affinity to CoreId(1)
+[2025-12-22T12:29:56Z INFO  libafl::events::llmp::restarting] Spawning next client (id 0)
+[2025-12-22T12:29:56Z INFO  libafl::events::llmp::restarting] First run. Let's set it all up
+qemu_baremetal: warning: nic lan9118.0 has no peer
+Devices = ["timer", "cpu_common", "cpu", "armv7m_nvic", "armv7m_systick", "armv7m", "or-irq", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-timer", "cmsdk-apb-timer", "cmsdk-apb-dualtimer", "cmsdk-apb-watchdog", "led", "led", "led", "led", "led", "led", "led", "led", "mps2-scc", "led", "led", "mps2-fpgaio", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "i2c_bus", "i2c_bus", "i2c_bus", "i2c_bus", "lan9118-phy", "lan9118"]
+qemu_baremetal: warning: icount sleep disabled and no active timers
+[2025-12-22T12:29:56Z INFO  libafl_qemu::command::lqemu] Fuzzing starts @ PC 32c8
+[2025-12-22T12:29:56Z INFO  libafl::state] Loading file /home/zwz/Libafl/fuzzers/full_system/qemu_baremetal/corpus/golden_seed ...
+Hello from FreeRTOS fuzz demo!
+Calling prvGetRegistersFromStack() from fault handler[!] Magic MMIO Write Detected at 0x20000004! Triggering Crash...
+
+thread '<unnamed>' (1496087) panicked at src/fuzzer_breakpoint.rs:66:9:
+Magic Crash Triggered!
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[2025-12-22T12:29:56Z INFO  libafl::executors::inprocess] in crash handler!
+[2025-12-22T12:29:57Z INFO  libafl::events::llmp::restarting] Waiting for broker...
+[2025-12-22T12:29:57Z INFO  libafl::executors::inprocess] Bye!
+[Objective   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 0, objectives: 1, executions: 1, exec/sec: 0.000
+                  (CLIENT) corpus: 0, objectives: 1, executions: 1, exec/sec: 0.000
+[2025-12-22T12:29:57Z INFO  libafl::events::llmp::restarting] Spawning next client (id 1)
+qemu_baremetal: warning: nic lan9118.0 has no peer
+Devices = ["timer", "cpu_common", "cpu", "armv7m_nvic", "armv7m_systick", "armv7m", "or-irq", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-timer", "cmsdk-apb-timer", "cmsdk-apb-dualtimer", "cmsdk-apb-watchdog", "led", "led", "led", "led", "led", "led", "led", "led", "mps2-scc", "led", "led", "mps2-fpgaio", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "i2c_bus", "i2c_bus", "i2c_bus", "i2c_bus", "lan9118-phy", "lan9118"]
+qemu_baremetal: warning: icount sleep disabled and no active timers
+[2025-12-22T12:29:57Z INFO  libafl_qemu::command::lqemu] Fuzzing starts @ PC 32c8
+We imported 0 inputs from disk.
+
+thread 'main' (1496088) panicked at src/fuzzer_breakpoint.rs:264:14:
+called `Result::unwrap()` on an `Err` value: Empty("No entries in corpus. This often implies the target is not properly instrumented.",    0: libafl_bolts::Error::empty
+             at /home/zwz/Libafl/crates/libafl_bolts/src/lib.rs:403:34
+      <libafl::schedulers::queue::QueueScheduler as libafl::schedulers::Scheduler<I,S>>::next
+             at /home/zwz/Libafl/crates/libafl/src/schedulers/queue.rs:40:17
+   1: <libafl::schedulers::minimizer::MinimizerScheduler<CS,F,I,M,O> as libafl::schedulers::Scheduler<I,S>>::next
+             at /home/zwz/Libafl/crates/libafl/src/schedulers/minimizer.rs:214:32
+      <libafl::fuzzer::StdFuzzer<CS,F,IC,IF,OF> as libafl::fuzzer::Fuzzer<E,EM,I,S,ST>>::fuzz_one
+             at /home/zwz/Libafl/crates/libafl/src/fuzzer/mod.rs:922:37
+      <libafl::fuzzer::StdFuzzer<CS,F,IC,IF,OF> as libafl::fuzzer::Fuzzer<E,EM,I,S,ST>>::fuzz_loop
+             at /home/zwz/Libafl/crates/libafl/src/fuzzer/mod.rs:975:18
+      qemu_baremetal::fuzzer_breakpoint::fuzz::{{closure}}
+             at src/fuzzer_breakpoint.rs:263:14
+   2: core::ops::function::impls::<impl core::ops::function::FnOnce<A> for &mut F>::call_once
+             at /rustc/ded5c06cf21d2b93bffd5d884aa6e96934ee4234/library/core/src/ops/function.rs:310:21
+      libafl::events::launcher::Launcher<CF,MT,SP>::launch_with_hooks
+             at /home/zwz/Libafl/crates/libafl/src/events/launcher.rs:330:36
+      libafl::events::launcher::Launcher<CF,MT,SP>::launch
+             at /home/zwz/Libafl/crates/libafl/src/events/launcher.rs:222:9
+      qemu_baremetal::fuzzer_breakpoint::fuzz
+             at src/fuzzer_breakpoint.rs:288:10
+      qemu_baremetal::main
+             at src/main.rs:17:5
+   3: core::ops::function::FnOnce::call_once
+             at /rustc/ded5c06cf21d2b93bffd5d884aa6e96934ee4234/library/core/src/ops/function.rs:250:5
+      std::sys::backtrace::__rust_begin_short_backtrace
+             at /rustc/ded5c06cf21d2b93bffd5d884aa6e96934ee4234/library/std/src/sys/backtrace.rs:158:18
+   4: main
+   5: __libc_start_call_main
+             at ./csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+   6: __libc_start_main_impl
+             at ./csu/../csu/libc-start.c:360:3
+   7: _start
+)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[2025-12-22T12:29:57Z INFO  libafl_bolts::llmp] New connection: 127.0.0.1:53236/127.0.0.1:53236
+
+thread 'main' (1496082) panicked at /home/zwz/Libafl/crates/libafl/src/events/llmp/restarting.rs:897:21:
+Fuzzer-respawner: Storing state in crashed fuzzer instance did not work, no point to spawn the next client! This can happen if the child calls `exit()`, in that case make sure it uses `abort()`, if it got killed unrecoverable (OOM), or if there is a bug in the fuzzer itself. (Child exited with: 101)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[2025-12-22T12:29:57Z INFO  libafl_bolts::llmp] Client exit message received!, we are removing clients whose client_group_id is ClientId(
+        1,
+    )
+[2025-12-22T12:29:57Z INFO  libafl_bolts::llmp] Client ClientId(
+        1,
+    ) wants to exit. Removing.
+Fuzzing stopped by user. Good bye.

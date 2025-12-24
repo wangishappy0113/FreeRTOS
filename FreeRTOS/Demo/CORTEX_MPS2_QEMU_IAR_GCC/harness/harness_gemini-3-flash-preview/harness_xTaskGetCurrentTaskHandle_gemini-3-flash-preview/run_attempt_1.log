@@ -1,0 +1,23 @@
+[COMMAND]
+qemu-system-arm -machine mps2-an385 -monitor null -semihosting --semihosting-config enable=on,target=native -kernel /home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC/build/gcc/output/RTOSDemo.out -serial stdio -nographic
+[CWD]
+/home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC
+[TIMEOUT]
+False
+[RETURN_CODE]
+-6
+
+[STDOUT]
+Hello from FreeRTOS fuzz demo!
+Calling prvGetRegistersFromStack() from fault handler
+
+[STDERR]
+qemu: fatal: Lockup: can't escalate 3 to HardFault (current priority -1)
+
+R00=00000000 R01=00000072 R02=deadbeef R03=20000000
+R04=5a244237 R05=20000704 R06=5a24423b R07=200101a4
+R08=200101a4 R09=00000000 R10=00000007 R11=00000008
+R12=20011644 R13=203fffd8 R14=0000375f R15=00003766
+XPSR=61000003 -ZC- T handler
+FPSCR: 00000000
+

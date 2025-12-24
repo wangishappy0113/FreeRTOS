@@ -1,0 +1,20 @@
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=704 | finish_reason=completed
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=866 | finish_reason=completed
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=943 | finish_reason=completed
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=1060 | finish_reason=completed
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=4845 | finish_reason=completed
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=21012 | finish_reason=completed
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=9332 | finish_reason=completed
+
+🎉 函数级 Harness 已生成: /home/zwz/rtos_fuzz_agent/src/generated_tests/CORTEX_MPS2_QEMU_IAR_GCC/20251218_213403_xTaskGetHandle_gpt-5_1
+👉 提示已写入: prompt_dump.txt 便于审计与对比
+
+📜 多轮执行详情：
+  - round: compile=PASS(attempts=2), run=FAIL(TIMEOUT), repair=OK
+  - round: compile=PASS(attempts=1), run=FAIL(TIMEOUT)
+
+🔧 最终编译验证: PASS（尝试 1 次）。日志见 /home/zwz/rtos_fuzz_agent/src/generated_tests/CORTEX_MPS2_QEMU_IAR_GCC/20251218_213403_xTaskGetHandle_gpt-5_1/compile.log
+⚠️ 最终运行结果: PASS（逻辑已完成，检测到 [TEST_CASE_COMPLETED]，但进程因调试用 BREAKPOINT/自旋在 >0s 后被超时终止）。日志见 /home/zwz/rtos_fuzz_agent/src/generated_tests/CORTEX_MPS2_QEMU_IAR_GCC/20251218_213403_xTaskGetHandle_gpt-5_1/run.log
+📈 多轮执行摘要: stage=run, status=FAIL (共 2 轮)
+
+⏱ 本次 generate-func 总耗时: 183.63 秒

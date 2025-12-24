@@ -26,7 +26,8 @@
 
 #include <stdint.h>
 #include <stdio.h>
-
+#define MAGIC_CRASH_ADDR ((volatile unsigned int *)0x20000004)
+#define MAGIC_CRASH_VAL 0xDEADBEEF
 /* FreeRTOS interrupt handlers. */
 extern void vPortSVCHandler( void );
 extern void xPortPendSVHandler( void );
@@ -113,22 +114,36 @@ __attribute__( ( used ) ) void prvGetRegistersFromStack( uint32_t *pulFaultStack
     fflush( stdout );
 
     /* When the following line is hit, the variables contain the register values. */
-    for( ;; );
+    *MAGIC_CRASH_ADDR = MAGIC_CRASH_VAL;
+    // 立即触发断点，LibAFL会立即检测到
+    __asm__ volatile(
+        "bkpt #0xFF \n"  // 使用特定的立即数
+        : 
+        : 
+        : "memory"
+    );
+	
 }
 
 
 void Default_Handler( void )
 {
     __asm volatile
-    (
-        ".align 8                                \n"
-        " ldr r3, =0xe000ed04                    \n" /* Load the address of the interrupt control register into r3. */
-        " ldr r2, [r3, #0]                       \n" /* Load the value of the interrupt control register into r2. */
-        " uxtb r2, r2                            \n" /* The interrupt number is in the least significant byte - clear all other bits. */
-        "Infinite_Loop:                          \n" /* Sit in an infinite loop - the number of the executing interrupt is held in r2. */
-        " b  Infinite_Loop                       \n"
-        " .ltorg                                 \n"
-    );
+        (
+            ".align 8                        \n"
+            " ldr r3, =0xe000ed04            \n" /* 加载中断控制寄存器地址 */
+            " ldr r2, [r3, #0]               \n" /* 读取寄存器值 */
+            " uxtb r2, r2                    \n" /* 获得当前的中断号保存在 R2 中 */
+        );
+    *MAGIC_CRASH_ADDR = MAGIC_CRASH_VAL;
+    __asm volatile
+        (
+            " bkpt #0                        \n" /* <--- 在此处添加断点指令，程序运行到这里会自动暂停 */
+
+            "Infinite_Loop:                  \n" 
+            " b  Infinite_Loop               \n" /* 建议保留死循环，防止你在调试器点击“继续运行”后程序跑飞 */
+            " .ltorg                         \n"
+        );
 }
 
 void HardFault_Handler( void )

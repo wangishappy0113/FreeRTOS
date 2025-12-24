@@ -1,0 +1,228 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xTaskCreateStatic, prvCreateStaticTask
+
+### Function xTaskCreateStatic
+Signature: TaskHandle_t(TaskFunction_t,char*,StackType_t,void*,UBaseType_t,StackType_t*,StaticTask_t*)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1331-1365
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: <operator>.assignment(operator), prvCreateStaticTask(function), <operator>.addressOf(operator), <operator>.notEquals(operator), prvAddNewTaskToReadyList(function)
+Incoming callers count: 3
+Full source code:
+    TaskHandle_t xTaskCreateStatic( TaskFunction_t pxTaskCode,
+                                    const char * const pcName,
+                                    const configSTACK_DEPTH_TYPE uxStackDepth,
+                                    void * const pvParameters,
+                                    UBaseType_t uxPriority,
+                                    StackType_t * const puxStackBuffer,
+                                    StaticTask_t * const pxTaskBuffer )
+    {
+        TaskHandle_t xReturn = NULL;
+        TCB_t * pxNewTCB;
+
+        traceENTER_xTaskCreateStatic( pxTaskCode, pcName, uxStackDepth, pvParameters, uxPriority, puxStackBuffer, pxTaskBuffer );
+
+        pxNewTCB = prvCreateStaticTask( pxTaskCode, pcName, uxStackDepth, pvParameters, uxPriority, puxStackBuffer, pxTaskBuffer, &xReturn );
+
+        if( pxNewTCB != NULL )
+        {
+            #if ( ( configNUMBER_OF_CORES > 1 ) && ( configUSE_CORE_AFFINITY == 1 ) )
+            {
+                /* Set the task's affinity before scheduling it. */
+                pxNewTCB->uxCoreAffinityMask = configTASK_DEFAULT_CORE_AFFINITY;
+            }
+            #endif
+
+            prvAddNewTaskToReadyList( pxNewTCB );
+        }
+        else
+        {
+            mtCOVERAGE_TEST_MARKER();
+        }
+
+        traceRETURN_xTaskCreateStatic( xReturn );
+
+        return xReturn;
+    }
+
+Official docs (summary):
+Parameters:
+- pvTaskCode: TaskFunction_t — Tasks are simply C functions that never exit and , as such , are normally  implemented as an infinite loop. The pvTaskCode parameter is simply a  pointer to the function (in effect , just the function name) that implements the  task.
+- pcName: const char * const — A descriptive name for the task. This is mainly used to facilitate debugging,  but can also be used in a call to xTaskGetHandle() to obtain a task handle.  The application -defined constant configMAX_TASK_NAME_LEN defines the  maximum length of the name in characters – including the NULL terminator.  Supplying a string longer than this maximum will result in the string being  silently truncated.  ulStackDepth The puxStackBuffer parameter is used to pass an array of StackType_t  variables into xTaskCreateStatic(). ulStackDepth must be set to the number  of indexes in the array.
+- pvParameters: void — Task functions accept a parameter of type ‘pointer to void ’ ( void* ). The  value assigned to pvParameters will be the value passed into the task.  This parameter has the type ‘pointer to void’ to allow the task parameter to  effectively, and indirectly by means of casting, receive a parameter of any  type. For example, integer types can be passed into a task function by  casting the integer to a void pointer at the point the task is created, then by  casting the void pointer parameter back to an integer in the task function  definition itself.
+- uxPriority: UBaseType_t — Defines the priority at which the task will execute. Priorities can be assigned  from 0, which is the lowest priority , to (configMAX_PRIORITIES – 1), which  is the highest priority .  configMAX_PRIORITIES is a user defined constant. If  configUSE_PORT_OPTIMISED_TASK_SELECTION is set to 0 then t here is  no upper limit to the number of priorities that can be available (other than the  limit of the data types used and the RAM available in your microcontroller),  but it is advised to use the lowest number of priorities required , to avoid  wasting RAM.  Passing a uxPriority value above (configMAX_PRIORITIES – 1) will result in  the priority assigned to the task being capped silently to the maximum  legitimate value.
+- puxStackBuffer: StackType_t * const — Must point to a n array of StackType_t variables that has at least  ulStackDepth indexes (see the ulStackDepth parameter above) . The array  will be used as the created task’s stack, so must be persistent (not declared  within the stack frame created by a function , or in any other memory that can  legitimately be overwritten as the application executes ).
+- pxTaskBuffer: StaticTask_t * const — Must point to a variable of type StaticTask_t. The variable will be us ed to  hold the created task's data structures (TCB), so it must be persistent ( not  declared within the stack frame created by a function , or in any other  memory that can legitimately be overwritten as the application executes ).
+- StackDepth: uint32_t ul — No description available.
+Return values:
+- TaskHandle_t: The task could not be created because puxStackBuffer or pxTaskBuffer was
+NULL .
+Any other
+value  If a non -NULL value is returned then the task was created and the returned
+value is the handle of the created task.
+Related configs: configSUPPORT_STATIC_ALLOCATION
+Related APIs: xTaskCreate, xTaskCreateStatic
+Reference snippets:
+- Incoming of prvCreateRestrictedStaticTask (rel:in:prvCreateRestrictedStaticTask#c0) :: incoming: xTaskCreateRestrictedStatic
+- API xTaskCreateStatic Overview (api:xTaskCreateStatic:overview#c0) :: API: xTaskCreateStatic Signature: TaskHandle_t xTaskCreateStatic(TaskFunction_t pvTaskCode, const char * const pcName, uint32_t ul StackDepth, void *pvParameters, UBaseType_t uxPriority, StackType_t * const puxStackBuffer, StaticTask_t * const pxTaskBuffer); Headers: task.h, FreeRTOS.h Summary: Creates a new instance o…
+- Function xTaskCreateStatic (func:xTaskCreateStatic:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c0) :: FUNC xTaskCreateStatic TaskHandle_t(TaskFunction_t,char*,StackType_t,void*,UBaseType_t,StackType_t*,StaticTask_t*) file /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1331-1365     TaskHandle_t xTaskCreateStatic( TaskFunction_t pxTaskCode,                                     const char * const pcName,                      …
+- Function <global> (func:<global>:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c28) :: ;             pxNewTCB->pxStack = ( StackType_t * ) puxStackBuffer;              #if ( tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE != 0 )             {                 /* Tasks can be created statically or dynamically, so note this                  * task was created statically in case the task is later deleted. */      …
+- Incoming of prvAddNewTaskToReadyList (rel:in:prvAddNewTaskToReadyList#c0) :: incoming: xTaskCreate, xTaskCreateRestricted, xTaskCreateRestrictedStatic, xTaskCreateStatic
+- Function prvCreateStaticTask (func:prvCreateStaticTask:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c0) :: FUNC prvCreateStaticTask TCB_t(TaskFunction_t,char*,StackType_t,void*,UBaseType_t,StackType_t*,StaticTask_t*,TaskHandle_t*) file /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1276-1328     static TCB_t * prvCreateStaticTask( TaskFunction_t pxTaskCode,                                         const char * const pcName,     …
+- xTaskCreateStatic :: TaskHandle_t xTaskCreateStatic(TaskFunction_t pvTaskCode, const char * const pcName, uint32_t ul StackDepth, void *pvParameters, UBaseType_t uxPriority, StackType_t * const puxStackBuffer, StaticTask_t * const pxTaskBuffer); Creates a new instance of a task. Each task requires RAM that is used to hold the task state  (the task control block, or TCB) ,
+
+Official documentation (full):
+Title: xTaskCreateStatic
+Signature: TaskHandle_t xTaskCreateStatic(TaskFunction_t pvTaskCode, const char * const pcName, uint32_t ul StackDepth, void *pvParameters, UBaseType_t uxPriority, StackType_t * const puxStackBuffer, StaticTask_t * const pxTaskBuffer);
+Summary:
+Creates a new instance of a task.
+Each task requires RAM that is used to hold the task state  (the task control block, or TCB) ,
+and used by the task as its stack.  If a task is created using xTaskCreate() then the required
+RAM is automatically allocated from the FreeRTOS heap.  If a task is created using
+xTaskCreateStatic() then the RAM is provided by the application writer, which results in two
+additional function parameters, but allows the RAM to be static ally allocated at compile time.
+Newly created tasks are initially placed in the Ready state, but will immediately become the
+Running state task if there are no higher priority tasks that are able to run.
+Tasks can be created both before and after the scheduler has been started.
+Parameters:
+- pvTaskCode: TaskFunction_t — Tasks are simply C functions that never exit and , as such , are normally  implemented as an infinite loop. The pvTaskCode parameter is simply a  pointer to the function (in effect , just the function name) that implements the  task.
+- pcName: const char * const — A descriptive name for the task. This is mainly used to facilitate debugging,  but can also be used in a call to xTaskGetHandle() to obtain a task handle.  The application -defined constant configMAX_TASK_NAME_LEN defines the  maximum length of the name in characters – including the NULL terminator.  Supplying a string longer than this maximum will result in the string being  silently truncated.  ulStackDepth The puxStackBuffer parameter is used to pass an array of StackType_t  variables into xTaskCreateStatic(). ulStackDepth must be set to the number  of indexes in the array.
+- pvParameters: void — Task functions accept a parameter of type ‘pointer to void ’ ( void* ). The  value assigned to pvParameters will be the value passed into the task.  This parameter has the type ‘pointer to void’ to allow the task parameter to  effectively, and indirectly by means of casting, receive a parameter of any  type. For example, integer types can be passed into a task function by  casting the integer to a void pointer at the point the task is created, then by  casting the void pointer parameter back to an integer in the task function  definition itself.
+- uxPriority: UBaseType_t — Defines the priority at which the task will execute. Priorities can be assigned  from 0, which is the lowest priority , to (configMAX_PRIORITIES – 1), which  is the highest priority .  configMAX_PRIORITIES is a user defined constant. If  configUSE_PORT_OPTIMISED_TASK_SELECTION is set to 0 then t here is  no upper limit to the number of priorities that can be available (other than the  limit of the data types used and the RAM available in your microcontroller),  but it is advised to use the lowest number of priorities required , to avoid  wasting RAM.  Passing a uxPriority value above (configMAX_PRIORITIES – 1) will result in  the priority assigned to the task being capped silently to the maximum  legitimate value.
+- puxStackBuffer: StackType_t * const — Must point to a n array of StackType_t variables that has at least  ulStackDepth indexes (see the ulStackDepth parameter above) . The array  will be used as the created task’s stack, so must be persistent (not declared  within the stack frame created by a function , or in any other memory that can  legitimately be overwritten as the application executes ).
+- pxTaskBuffer: StaticTask_t * const — Must point to a variable of type StaticTask_t. The variable will be us ed to  hold the created task's data structures (TCB), so it must be persistent ( not  declared within the stack frame created by a function , or in any other  memory that can legitimately be overwritten as the application executes ).
+- StackDepth: uint32_t ul — No description available.
+Return values:
+- TaskHandle_t: The task could not be created because puxStackBuffer or pxTaskBuffer was
+NULL .
+Any other
+value  If a non -NULL value is returned then the task was created and the returned
+value is the handle of the created task.
+Notes:
+configSUPPORT_STATIC_ALLOCATION must be set to 1 in FreeRTOSConfig.h for this
+function to be available.
+Example:
+/* Dimensions the buffer that the task being created will use as its stack.  NOTE:  This is the
+number of words the stack will hold, not the number of  bytes.  For example, if each stack item
+is 32-bits, and this is set to 100,  then 400 bytes (100 * 32 -bits) will be allocated. */
+#define STACK_SIZE 200
+/* Structure that will hold the TCB of the task being created. */
+StaticTask_t xTaskBuffer;
+/* Buffer that the task being created will use as its stack.  Note this is  an array of
+StackType_t variables.  The size of StackType_t is dependent on  the RTOS port. */
+StackType_t xStack[ STACK_SIZE ];
+/* Function that implements the task being created. */
+void vTaskCode( void * pvParameters )
+{
+/* The parameter value is expected to be 1 as 1 is passed in the  pvParameters parameter
+in the call to xTaskCreateStatic(). */
+configASSERT( ( uint32_t ) pvParameters == 1UL );
+for( ;; )
+{
+/* Task code goes here. */
+}
+}
+/* Function that creates a task. */
+void vFunction( void )
+{
+TaskHandle_t xHandle = NULL;
+/* Create the task without using any dynamic memory allocation. */
+xHandle = xTaskCreateStatic(
+vTaskCode,        /* Function that implements the task. */
+"NAME",          /* Text name for the task. */
+STACK_SIZE,       /* The number of indexes in the xStack array . */
+( void * ) 1,     /* Parameter passed into the task. */
+tskIDLE_PRIORITY, /* Priority at which the task is created. */
+xStack,          /* Array to use as the task's stack. */
+&xTaskBuffer );   /* Variable to hold the task's data structure. */
+/* puxStackBuffer and pxTaskBuffer were not NULL, so the task will have been created, and
+xHandle will be the task's handle.  Use the handle to suspend the task. */
+vTaskSuspend( xHandle );
+}
+
+### Function prvCreateStaticTask
+Signature: TCB_t(TaskFunction_t,char*,StackType_t,void*,UBaseType_t,StackType_t*,StaticTask_t*,TaskHandle_t*)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1276-1328
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), <operator>.notEquals(operator), vAssertCalled(function), <operator>.assignment(operator), <operator>.sizeOf(operator), <operator>.cast(operator), <operator>.logicalAnd(operator)
+Incoming callers count: 1
+Full source code:
+    static TCB_t * prvCreateStaticTask( TaskFunction_t pxTaskCode,
+                                        const char * const pcName,
+                                        const configSTACK_DEPTH_TYPE uxStackDepth,
+                                        void * const pvParameters,
+                                        UBaseType_t uxPriority,
+                                        StackType_t * const puxStackBuffer,
+                                        StaticTask_t * const pxTaskBuffer,
+                                        TaskHandle_t * const pxCreatedTask )
+    {
+        TCB_t * pxNewTCB;
+
+        configASSERT( puxStackBuffer != NULL );
+        configASSERT( pxTaskBuffer != NULL );
+
+        #if ( configASSERT_DEFINED == 1 )
+        {
+            /* Sanity check that the size of the structure used to declare a
+             * variable of type StaticTask_t equals the size of the real task
+             * structure. */
+            volatile size_t xSize = sizeof( StaticTask_t );
+            configASSERT( xSize == sizeof( TCB_t ) );
+            ( void ) xSize; /* Prevent unused variable warning when configASSERT() is not used. */
+        }
+        #endif /* configASSERT_DEFINED */
+
+        if( ( pxTaskBuffer != NULL ) && ( puxStackBuffer != NULL ) )
+        {
+            /* The memory used for the task's TCB and stack are passed into this
+             * function - use them. */
+            /* MISRA Ref 11.3.1 [Misaligned access] */
+            /* More details at: https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/main/MISRA.md#rule-113 */
+            /* coverity[misra_c_2012_rule_11_3_violation] */
+            pxNewTCB = ( TCB_t * ) pxTaskBuffer;
+            ( void ) memset( ( void * ) pxNewTCB, 0x00, sizeof( TCB_t ) );
+            pxNewTCB->pxStack = ( StackType_t * ) puxStackBuffer;
+
+            #if ( tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE != 0 )
+            {
+                /* Tasks can be created statically or dynamically, so note this
+                 * task was created statically in case the task is later deleted. */
+                pxNewTCB->ucStaticallyAllocated = tskSTATICALLY_ALLOCATED_STACK_AND_TCB;
+            }
+            #endif /* tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE */
+
+            prvInitialiseNewTask( pxTaskCode, pcName, uxStackDepth, pvParameters, uxPriority, pxCreatedTask, pxNewTCB, NULL );
+        }
+        else
+        {
+            pxNewTCB = NULL;
+        }
+
+        return pxNewTCB;
+    }
+
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

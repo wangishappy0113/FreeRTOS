@@ -1,0 +1,19 @@
+{
+  "overall_status": "PASS",
+  "stage": "run",
+  "classification": "ok",
+  "subtype": null,
+  "details": {
+    "run": {
+      "status": "FAIL",
+      "stage": "run",
+      "command": "qemu-system-arm -machine mps2-an385 -monitor null -semihosting --semihosting-config enable=on,target=native -kernel /home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC/build/gcc/output/RTOSDemo.out -serial stdio -nographic",
+      "returncode": -6,
+      "timeout": false,
+      "stdout_tail": "Hello from FreeRTOS fuzz demo!\r\n[TEST_CASE_COMPLETED]\nCalling prvGetRegistersFromStack() from fault handler",
+      "stderr_tail": "qemu: fatal: Lockup: can't escalate 3 to HardFault (current priority -1)\n\nR00=00000000 R01=00000072 R02=deadbeef R03=20000000\nR04=20000004 R05=00000000 R06=20000468 R07=200004d0\nR08=20000538 R09=00000000 R10=00000000 R11=00000000\nR12=00000000 R13=203fffd8 R14=0000385f R15=00003866\nXPSR=61000003 -ZC- T handler\nFPSCR: 00000000\n",
+      "log_path": "/home/zwz/rtos_fuzz_agent/src/generated_tests/CORTEX_MPS2_QEMU_IAR_GCC/20251218_212606_xTaskGetCurrentTaskHandle_gpt-5_1/run.log",
+      "reason": "QEMU退出码 -6"
+    }
+  }
+}

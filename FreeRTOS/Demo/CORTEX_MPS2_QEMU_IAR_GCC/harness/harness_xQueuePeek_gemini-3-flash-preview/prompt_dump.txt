@@ -1,0 +1,301 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xQueuePeek
+
+### Function xQueuePeek
+Signature: BaseType_t(QueueHandle_t,void*,TickType_t)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:1887-2042
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, queue.h, croutine.h
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:pdFALSE:ANY(0)(macro), <operator>.cast(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), vAssertCalled(function), <operator>.logicalNot(operator), <operator>.logicalAnd(operator)
+Incoming callers count: 1
+Full source code:
+BaseType_t xQueuePeek( QueueHandle_t xQueue,
+                       void * const pvBuffer,
+                       TickType_t xTicksToWait )
+{
+    BaseType_t xEntryTimeSet = pdFALSE;
+    TimeOut_t xTimeOut;
+    int8_t * pcOriginalReadPosition;
+    Queue_t * const pxQueue = xQueue;
+
+    traceENTER_xQueuePeek( xQueue, pvBuffer, xTicksToWait );
+
+    /* Check the pointer is not NULL. */
+    configASSERT( ( pxQueue ) );
+
+    /* The buffer into which data is received can only be NULL if the data size
+     * is zero (so no data is copied into the buffer. */
+    configASSERT( !( ( ( pvBuffer ) == NULL ) && ( ( pxQueue )->uxItemSize != ( UBaseType_t ) 0U ) ) );
+
+    /* Cannot block if the scheduler is suspended. */
+    #if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
+    {
+        configASSERT( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait != 0 ) ) );
+    }
+    #endif
+
+    for( ; ; )
+    {
+        taskENTER_CRITICAL();
+        {
+            const UBaseType_t uxMessagesWaiting = pxQueue->uxMessagesWaiting;
+
+            /* Is there data in the queue now?  To be running the calling task
+             * must be the highest priority task wanting to access the queue. */
+            if( uxMessagesWaiting > ( UBaseType_t ) 0 )
+            {
+                /* Remember the read position so it can be reset after the data
+                 * is read from the queue as this function is only peeking the
+                 * data, not removing it. */
+                pcOriginalReadPosition = pxQueue->u.xQueue.pcReadFrom;
+
+                prvCopyDataFromQueue( pxQueue, pvBuffer );
+                traceQUEUE_PEEK( pxQueue );
+
+                /* The data is not being removed, so reset the read pointer. */
+                pxQueue->u.xQueue.pcReadFrom = pcOriginalReadPosition;
+
+                /* The data is being left in the queue, so see if there are
+                 * any other tasks waiting for the data. */
+                if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
+                {
+                    if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
+                    {
+                        /* The task waiting has a higher priority than this task. */
+                        queueYIELD_IF_USING_PREEMPTION();
+                    }
+                    else
+                    {
+                        mtCOVERAGE_TEST_MARKER();
+                    }
+                }
+                else
+                {
+                    mtCOVERAGE_TEST_MARKER();
+                }
+
+                taskEXIT_CRITICAL();
+
+                traceRETURN_xQueuePeek( pdPASS );
+
+                return pdPASS;
+            }
+            else
+            {
+                if( xTicksToWait == ( TickType_t ) 0 )
+                {
+                    /* The queue was empty and no block time is specified (or
+                     * the block time has expired) so leave now. */
+                    taskEXIT_CRITICAL();
+
+                    traceQUEUE_PEEK_FAILED( pxQueue );
+                    traceRETURN_xQueuePeek( errQUEUE_EMPTY );
+
+                    return errQUEUE_EMPTY;
+                }
+                else if( xEntryTimeSet == pdFALSE )
+                {
+                    /* The queue was empty and a block time was specified so
+                     * configure the timeout structure ready to enter the blocked
+                     * state. */
+                    vTaskInternalSetTimeOutState( &xTimeOut );
+                    xEntryTimeSet = pdTRUE;
+                }
+                else
+                {
+                    /* Entry time was already set. */
+                    mtCOVERAGE_TEST_MARKER();
+                }
+            }
+        }
+        taskEXIT_CRITICAL();
+
+        /* Interrupts and other tasks can send to and receive from the queue
+         * now that the critical section has been exited. */
+
+        vTaskSuspendAll();
+        prvLockQueue( pxQueue );
+
+        /* Update the timeout state to see if it has expired yet. */
+        if( xTaskCheckForTimeOut( &xTimeOut, &xTicksToWait ) == pdFALSE )
+        {
+            /* Timeout has not expired yet, check to see if there is data in the
+            * queue now, and if not enter the Blocked state to wait for data. */
+            if( prvIsQueueEmpty( pxQueue ) != pdFALSE )
+            {
+                traceBLOCKING_ON_QUEUE_PEEK( pxQueue );
+                vTaskPlaceOnEventList( &( pxQueue->xTasksWaitingToReceive ), xTicksToWait );
+                prvUnlockQueue( pxQueue );
+
+                if( xTaskResumeAll() == pdFALSE )
+                {
+                    taskYIELD_WITHIN_API();
+                }
+                else
+                {
+                    mtCOVERAGE_TEST_MARKER();
+                }
+            }
+            else
+            {
+                /* There is data in the queue now, so don't enter the blocked
+                 * state, instead return to try and obtain the data. */
+                prvUnlockQueue( pxQueue );
+                ( void ) xTaskResumeAll();
+            }
+        }
+        else
+        {
+            /* The timeout has expired.  If there is still no data in the queue
+             * exit, otherwise go back and try to read the data again. */
+            prvUnlockQueue( pxQueue );
+            ( void ) xTaskResumeAll();
+
+            if( prvIsQueueEmpty( pxQueue ) != pdFALSE )
+            {
+                traceQUEUE_PEEK_FAILED( pxQueue );
+                traceRETURN_xQueuePeek( errQUEUE_EMPTY );
+
+                return errQUEUE_EMPTY;
+            }
+            else
+            {
+                mtCOVERAGE_TEST_MARKER();
+            }
+        }
+    }
+}
+
+Official docs (summary):
+Parameters:
+- xQueue: QueueHandle_t — The handle of the queue from which data is to be read.
+- pvBuffer: void — A pointer to the memory into which the data read from the queue will be  copied.  The length of the buffer must be at least equal to the queue item size . The  item size will have been set by the uxItemSize parameter of the call to  xQueueCreate() or xQueueCreateStatic() used to create the queue .
+- xTicksToWait: TickType_t — The maximum amount of time the task should remain in the Blocked state to  wait for data to become available on the queue, should the queue already be  empty.  If xTicksToWait is zero , then xQueuePeek() will return immediately if the  queue is already empty.  The block time is specified in tick periods , so the absolute time it represents is  dependent on the tick frequency. The pdMS_TO_TICKS() macro can be used  to convert a time specified in milliseconds to a time specified in ticks.  Setting xTicksToWait to portMAX_DELAY will cause the task to wait  indefinitely (without timing out) provided INCLUDE_vTaskSuspend is set to 1  in FreeRTOSConfig.h.
+Return values:
+- BaseType_t: pdPASS Returned  if data was successfully read from the queue.
+If a block time was s pecified (xTicksToWait was not zero ), then it is
+possible that the calling task was placed in to the Blocked state , to wait
+for data to become available on the queue, but data was successfully
+read from the queue before the block time expired.
+errQUEUE_EMPTY  Returned if data cannot  be read from the queue because the queue is
+already empty.
+If a block time was specified (xTicksToWait was not zero) then the
+calling task will have been placed into the Blocked state to wait for
+another task or interrupt to send data to the queue, but the block time
+expired before this happened .
+Related configs: none
+Related APIs: xQueueReceive
+Reference snippets:
+- Incoming of xQueuePeek (rel:in:xQueuePeek#c0) :: incoming: MPU_xQueuePeekImpl
+- Incoming of xQueuePeekFromISR (rel:in:xQueuePeekFromISR#c0) :: incoming: MPU_xQueuePeekFromISR
+- Call xQueuePeek -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) (edge:xQueuePeek->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:1952#c0) :: Call: xQueuePeek -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:1952 callee_kind=macro
+- Call xQueuePeek -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listLIST_IS_EMPTY:ANY(1) (edge:xQueuePeek->/home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listLIST_IS_EMPTY:ANY(1):/home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:1935#c0) :: Call: xQueuePeek -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listLIST_IS_EMPTY:ANY(1) at /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:1935 callee_kind=macro
+- Call xQueuePeek -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) (edge:xQueuePeek->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:1964#c0) :: Call: xQueuePeek -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:1964 callee_kind=macro
+- Call xQueuePeek -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) (edge:xQueuePeek->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:1986#c0) :: Call: xQueuePeek -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:1986 callee_kind=macro
+- xQueuePeek :: BaseType_t xQueuePeek(QueueHandle_t xQueue, void *pvBuffer, TickType_t xTicksToWait); Reads an item from a queue , but without removing the item from the queue.   The same item will be returned the next time xQueueReceive() or xQueuePeek() is used to obtain an item
+
+Official documentation (full):
+Title: xQueuePeek
+Signature: BaseType_t xQueuePeek(QueueHandle_t xQueue, void *pvBuffer, TickType_t xTicksToWait);
+Summary:
+Reads an item from a queue , but without removing the item from the queue.   The same item
+will be returned the next time xQueueReceive() or xQueuePeek() is used to obtain an item
+from the same queue.
+Parameters:
+- xQueue: QueueHandle_t — The handle of the queue from which data is to be read.
+- pvBuffer: void — A pointer to the memory into which the data read from the queue will be  copied.  The length of the buffer must be at least equal to the queue item size . The  item size will have been set by the uxItemSize parameter of the call to  xQueueCreate() or xQueueCreateStatic() used to create the queue .
+- xTicksToWait: TickType_t — The maximum amount of time the task should remain in the Blocked state to  wait for data to become available on the queue, should the queue already be  empty.  If xTicksToWait is zero , then xQueuePeek() will return immediately if the  queue is already empty.  The block time is specified in tick periods , so the absolute time it represents is  dependent on the tick frequency. The pdMS_TO_TICKS() macro can be used  to convert a time specified in milliseconds to a time specified in ticks.  Setting xTicksToWait to portMAX_DELAY will cause the task to wait  indefinitely (without timing out) provided INCLUDE_vTaskSuspend is set to 1  in FreeRTOSConfig.h.
+Return values:
+- BaseType_t: pdPASS Returned  if data was successfully read from the queue.
+If a block time was s pecified (xTicksToWait was not zero ), then it is
+possible that the calling task was placed in to the Blocked state , to wait
+for data to become available on the queue, but data was successfully
+read from the queue before the block time expired.
+errQUEUE_EMPTY  Returned if data cannot  be read from the queue because the queue is
+already empty.
+If a block time was specified (xTicksToWait was not zero) then the
+calling task will have been placed into the Blocked state to wait for
+another task or interrupt to send data to the queue, but the block time
+expired before this happened .
+Notes:
+None.
+Example:
+struct AMessage
+{
+char ucMessageID;
+char ucData[ 20 ];
+} xMessage;
+QueueHandle_t  xQueue;
+/* Task that creates a queue and post s a value. */
+void vATask( void * pvParameters )
+{
+struct AMessage *pxMessage;
+/* Create a queue capable of containing 10 pointers to AMessage structures.
+Store the handle to the created queue in the xQueue variable. */
+xQueue = xQueueCreate( 10, sizeof( struct AMessage * ) );
+if( xQueue == 0 )
+{
+/* The queue was not created because there was not enough FreeRTOS heap
+memory available to allocate  the queues data structures or storage area . */
+}
+else
+{
+/* ... */
+/* Send a pointer to a struct AMessage object  to the queue referenced by
+the xQueue variable .  Don't block if the queue is already full  (the third
+parameter to xQueueSend() is zero, so not block time is specified) . */
+pxMessage = &xMessage;
+xQueueSend( xQueue, ( void * ) &pxMessage, 0 );
+}
+/* ... Rest of the task code. */
+for( ;; )
+{
+}
+}
+/* Task to peek the data from the queue. */
+void vADifferentTask( void *pvParameters )
+{
+struct AMessage *pxRxedMessage;
+if( xQueue != 0 )
+{
+/* Peek a message on the created queue.  Block for 10 ticks if a message is
+not available  immediately . */
+if( xQueuePeek( xQueue, &( pxRxedMessage ), 10 ) == pdPASS )
+{
+/* pxRxedMessage now points to the struct AMessage variable posted by
+vATask, but the item still remains on the queue. */
+}
+}
+else
+{
+/* The queue could not or has not been created. */
+}
+/* ... Rest of the task code . */
+for( ;; )
+{
+}
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

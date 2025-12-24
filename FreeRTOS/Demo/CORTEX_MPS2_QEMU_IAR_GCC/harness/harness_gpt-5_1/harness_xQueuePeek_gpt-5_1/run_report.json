@@ -1,0 +1,19 @@
+{
+  "overall_status": "PASS",
+  "stage": "run",
+  "classification": "ok",
+  "subtype": null,
+  "details": {
+    "run": {
+      "status": "FAIL",
+      "stage": "run",
+      "command": "qemu-system-arm -machine mps2-an385 -monitor null -semihosting --semihosting-config enable=on,target=native -kernel /home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC/build/gcc/output/RTOSDemo.out -serial stdio -nographic",
+      "returncode": -9,
+      "timeout": true,
+      "stdout_tail": "Hello from FreeRTOS fuzz demo!\r\n[TEST_CASE_COMPLETED]\n",
+      "stderr_tail": "",
+      "log_path": "/home/zwz/rtos_fuzz_agent/src/generated_tests/CORTEX_MPS2_QEMU_IAR_GCC/20251219_001630_xQueuePeek_gpt-5_1/run.log",
+      "reason": "运行超时（>5s）"
+    }
+  }
+}

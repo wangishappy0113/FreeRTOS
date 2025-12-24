@@ -1,0 +1,213 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xQueueReceiveFromISR
+
+### Function xQueueReceiveFromISR
+Signature: BaseType_t(QueueHandle_t,void*,BaseType_t*)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:2045-2142
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, queue.h, croutine.h
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), vAssertCalled(function), <operator>.logicalNot(operator), <operator>.logicalAnd(operator), <operator>.notEquals(operator), <operator>.indirectFieldAccess(operator)
+Incoming callers count: 1
+Full source code:
+BaseType_t xQueueReceiveFromISR( QueueHandle_t xQueue,
+                                 void * const pvBuffer,
+                                 BaseType_t * const pxHigherPriorityTaskWoken )
+{
+    BaseType_t xReturn;
+    UBaseType_t uxSavedInterruptStatus;
+    Queue_t * const pxQueue = xQueue;
+
+    traceENTER_xQueueReceiveFromISR( xQueue, pvBuffer, pxHigherPriorityTaskWoken );
+
+    configASSERT( pxQueue );
+    configASSERT( !( ( pvBuffer == NULL ) && ( pxQueue->uxItemSize != ( UBaseType_t ) 0U ) ) );
+
+    /* RTOS ports that support interrupt nesting have the concept of a maximum
+     * system call (or maximum API call) interrupt priority.  Interrupts that are
+     * above the maximum system call priority are kept permanently enabled, even
+     * when the RTOS kernel is in a critical section, but cannot make any calls to
+     * FreeRTOS API functions.  If configASSERT() is defined in FreeRTOSConfig.h
+     * then portASSERT_IF_INTERRUPT_PRIORITY_INVALID() will result in an assertion
+     * failure if a FreeRTOS API function is called from an interrupt that has been
+     * assigned a priority above the configured maximum system call priority.
+     * Only FreeRTOS functions that end in FromISR can be called from interrupts
+     * that have been assigned a priority at or (logically) below the maximum
+     * system call interrupt priority.  FreeRTOS maintains a separate interrupt
+     * safe API to ensure interrupt entry is as fast and as simple as possible.
+     * More information (albeit Cortex-M specific) is provided on the following
+     * link: https://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html */
+    portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
+
+    /* MISRA Ref 4.7.1 [Return value shall be checked] */
+    /* More details at: https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/main/MISRA.md#dir-47 */
+    /* coverity[misra_c_2012_directive_4_7_violation] */
+    uxSavedInterruptStatus = ( UBaseType_t ) taskENTER_CRITICAL_FROM_ISR();
+    {
+        const UBaseType_t uxMessagesWaiting = pxQueue->uxMessagesWaiting;
+
+        /* Cannot block in an ISR, so check there is data available. */
+        if( uxMessagesWaiting > ( UBaseType_t ) 0 )
+        {
+            const int8_t cRxLock = pxQueue->cRxLock;
+
+            traceQUEUE_RECEIVE_FROM_ISR( pxQueue );
+
+            prvCopyDataFromQueue( pxQueue, pvBuffer );
+            pxQueue->uxMessagesWaiting = ( UBaseType_t ) ( uxMessagesWaiting - ( UBaseType_t ) 1 );
+
+            /* If the queue is locked the event list will not be modified.
+             * Instead update the lock count so the task that unlocks the queue
+             * will know that an ISR has removed data while the queue was
+             * locked. */
+            if( cRxLock == queueUNLOCKED )
+            {
+                if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToSend ) ) == pdFALSE )
+                {
+                    if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToSend ) ) != pdFALSE )
+                    {
+                        /* The task waiting has a higher priority than us so
+                         * force a context switch. */
+                        if( pxHigherPriorityTaskWoken != NULL )
+                        {
+                            *pxHigherPriorityTaskWoken = pdTRUE;
+                        }
+                        else
+                        {
+                            mtCOVERAGE_TEST_MARKER();
+                        }
+                    }
+                    else
+                    {
+                        mtCOVERAGE_TEST_MARKER();
+                    }
+                }
+                else
+                {
+                    mtCOVERAGE_TEST_MARKER();
+                }
+            }
+            else
+            {
+                /* Increment the lock count so the task that unlocks the queue
+                 * knows that data was removed while it was locked. */
+                prvIncrementQueueRxLock( pxQueue, cRxLock );
+            }
+
+            xReturn = pdPASS;
+        }
+        else
+        {
+            xReturn = pdFAIL;
+            traceQUEUE_RECEIVE_FROM_ISR_FAILED( pxQueue );
+        }
+    }
+    taskEXIT_CRITICAL_FROM_ISR( uxSavedInterruptStatus );
+
+    traceRETURN_xQueueReceiveFromISR( xReturn );
+
+    return xReturn;
+}
+
+Official docs (summary):
+Parameters:
+- xQueue: QueueHandle_t — The handle of the queue from which the data is being received  (read). The queue handle will have been returned from the call  to xQueueCreate() or xQueueCreateStatic() used to create the  queue.
+- pvBuffer: void — A pointer to the memory into which the received data will be  copied.  The length of the buffer must be at least equal to the queue item  size. The item size will have been set by the uxItemSize  parameter of the call to xQueueCreate() or  xQueueCreateStatic() used to create the queue.
+- pxHigherPriorityTaskWoken: BaseType_t — It is possible that a single queue will have one or more tasks  blocked on it waiting for space to become available on the  queue . Calling xQueue Receive FromISR() can make space  available, and so cause such a task to leave the Blocked state.  If calling the API function causes a task to leave the Blocked  state, and the unblocked task has a priority equal to or higher  than the currently executing task (the task that was interrupted),  then, internally, the API function will set  *pxHigherPriorityTaskWoken to pdTRUE.  If xQueue ReceiveFr omISR() sets this value to pdTRUE , then a  context switch should be performed before the interrupt is  exited. This will ensure that the interrupt returns directly to the  highest priority Ready state task.  From FreeRTOS V7.3.0 pxHigherPriorityTaskWoken is an  optional parameter and can be set to NULL .
+Return values:
+- BaseType_t: pdPASS Data was successfully received from the queue.
+pdFAIL  Data was not received from the queue because the queue was already empty.
+Related configs: xQueue
+Related APIs: xQueueReceive
+Reference snippets:
+- API xQueueReceiveFromISR Overview (api:xQueueReceiveFromISR:overview#c0) :: API: xQueueReceiveFromISR Signature: BaseType_t xQueueReceiveFromISR(QueueHandle_t xQueue, void *pvBuffer, BaseType_t *pxHigherPriorityTaskWoken); Headers: queue.h, FreeRTOS.h Summary: A version of xQueueReceive() that can be called from an ISR.  Unlike xQueueReceive(), xQueueReceiveFromISR() does not permit a block ti…
+- Function xQueueReceiveFromISR (func:xQueueReceiveFromISR:/home/zwz/FreeRTOS/FreeRTOS/Source/queue.c#c0) :: FUNC xQueueReceiveFromISR BaseType_t(QueueHandle_t,void*,BaseType_t*) file /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:2045-2142 BaseType_t xQueueReceiveFromISR( QueueHandle_t xQueue,                                  void * const pvBuffer,                                  BaseType_t * const pxHigherPriorityTaskWoken ) {…
+- Type xQueueReceiveFromISR (type:xQueueReceiveFromISR#c0) :: TYPE type xQueueReceiveFromISR /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c
+- API xQueueReceiveFromISR Parameters (api:xQueueReceiveFromISR:parameters#c0) :: API: xQueueReceiveFromISR Section: parameters param xQueue: QueueHandle_t The handle of the queue from which the data is being received  (read). The queue handle will have been returned from the call  to xQueueCreate() or xQueueCreateStatic() used to create the  queue. param pvBuffer: void A pointer to the memory into …
+- API xQueueReceiveFromISR Related (api:xQueueReceiveFromISR:related#c0) :: API: xQueueReceiveFromISR Section: related related: xQueueReceive
+- Function xQueueReceiveFromISR (func:xQueueReceiveFromISR:/home/zwz/FreeRTOS/FreeRTOS/Source/queue.c#c1) ::              const int8_t cRxLock = pxQueue->cRxLock;              traceQUEUE_RECEIVE_FROM_ISR( pxQueue );              prvCopyDataFromQueue( pxQueue, pvBuffer );             pxQueue->uxMessagesWaiting = ( UBaseType_t ) ( uxMessagesWaiting - ( UBaseType_t ) 1 );              /* If the queue is locked the event list wil…
+- xQueueReceiveFromISR :: BaseType_t xQueueReceiveFromISR(QueueHandle_t xQueue, void *pvBuffer, BaseType_t *pxHigherPriorityTaskWoken); A version of xQueueReceive() that can be called from an ISR.  Unlike xQueueReceive(), xQueueReceiveFromISR() does not permit a block time to be specified .
+
+Official documentation (full):
+Title: xQueueReceiveFromISR
+Signature: BaseType_t xQueueReceiveFromISR(QueueHandle_t xQueue, void *pvBuffer, BaseType_t *pxHigherPriorityTaskWoken);
+Summary:
+A version of xQueueReceive() that can be called from an ISR.  Unlike xQueueReceive(),
+xQueueReceiveFromISR() does not permit a block time to be specified .
+Parameters:
+- xQueue: QueueHandle_t — The handle of the queue from which the data is being received  (read). The queue handle will have been returned from the call  to xQueueCreate() or xQueueCreateStatic() used to create the  queue.
+- pvBuffer: void — A pointer to the memory into which the received data will be  copied.  The length of the buffer must be at least equal to the queue item  size. The item size will have been set by the uxItemSize  parameter of the call to xQueueCreate() or  xQueueCreateStatic() used to create the queue.
+- pxHigherPriorityTaskWoken: BaseType_t — It is possible that a single queue will have one or more tasks  blocked on it waiting for space to become available on the  queue . Calling xQueue Receive FromISR() can make space  available, and so cause such a task to leave the Blocked state.  If calling the API function causes a task to leave the Blocked  state, and the unblocked task has a priority equal to or higher  than the currently executing task (the task that was interrupted),  then, internally, the API function will set  *pxHigherPriorityTaskWoken to pdTRUE.  If xQueue ReceiveFr omISR() sets this value to pdTRUE , then a  context switch should be performed before the interrupt is  exited. This will ensure that the interrupt returns directly to the  highest priority Ready state task.  From FreeRTOS V7.3.0 pxHigherPriorityTaskWoken is an  optional parameter and can be set to NULL .
+Return values:
+- BaseType_t: pdPASS Data was successfully received from the queue.
+pdFAIL  Data was not received from the queue because the queue was already empty.
+Notes:
+Calling xQueue Receive FromISR()  within an interrupt service routine can potentially cause a
+task that was blocked on a queue to leave the Blocked state .  A context switch should be
+performed if such an unblocked task  has a priority higher than  or equal to  the currently
+executing task  (the task that was interrupted) .  The context switch will ensure that the interrupt
+returns directly to the highest priority Ready state task.    Unlike the xQueueReceive() API
+function, xQueueReceiveFromISR() will not itself perform a context switch.  It will instead just
+indicate whether or not a context switch is required.
+xQueueReceiveFromISR() must not be called prior to the scheduler being started.  Therefore
+an interrupt that calls xQueueReceiveFromISR() must not be allowed to execute prior to the
+scheduler being started.
+Example:
+For clarity of demonstration , the example in this section makes multiple calls to
+xQueueReceiveFromISR() to receive multiple small data items.  This is inefficient and
+therefore not recommended for most applications.  A preferable approach would be to send
+the multiple data items in a structure to the queue in a single post, allowing
+xQueueReceiveFromISR() to be called only once.  Alternatively , and preferably, processing
+can be deferred to the task level.
+/* vISR is an interrupt service routine that empties a queue of values, sending each
+to a peripheral.  It might be that there are multiple tasks blocked on the queue
+waiting for space to write more data to the queue. */
+void vISR( void )
+{
+char cByte;
+BaseType_t  xHigherPriorityTaskWoken;
+/* No tasks have yet been unblocked . */
+xHigherPriorityTaskWoken = pdFALSE;
+/* Loop until the queue is empty.
+xHigherPriorityTaskWoken will get set to pdTRUE internally within
+xQueueReceiveFromISR() if calling xQueueReceiveFrom ISR()caused a task to leave
+the Blocked state, and the unblocked task has a priority equal to or greater than
+the task currently in the Running state (the task this ISR interrupted). */
+while( xQueueReceiveFromISR( xQueue,
+&cByte,
+&xHigherPriorityTaskWoken ) == pdPASS )
+{
+/* Write the received byte to the peripheral. */
+OUTPUT_BYTE( TX_REGISTER_ADDRESS, cByte );
+}
+/* Clear the interrupt source. */
+/* Now the queue is empty and we have cleared the interrupt we can perform a
+context switch if one is required  (if xHigherPriorityTaskWoken has been set to
+pdTRUE. NOTE:  The syntax required to perform a context switch from an ISR varies
+from port to port, and from compiler to compiler. Check the web documentation and
+application . */
+portYIELD_FROM_ISR ( xHigherPriorityTaskWoken  );
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

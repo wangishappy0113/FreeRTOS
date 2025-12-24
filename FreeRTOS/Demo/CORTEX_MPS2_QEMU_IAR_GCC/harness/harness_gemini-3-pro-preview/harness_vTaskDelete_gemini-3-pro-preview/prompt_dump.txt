@@ -1,0 +1,251 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: vTaskDelete
+
+### Function vTaskDelete
+Signature: void(TaskHandle_t)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2213-2359
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:pdFALSE:ANY(0)(macro), <operator>.cast(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0)(macro), vPortEnterCritical(function), /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:prvGetTCBFromHandle:ANY(1)(macro), <operator>.conditional(operator), <operator>.equals(operator)
+Incoming callers count: 2
+Full source code:
+    void vTaskDelete( TaskHandle_t xTaskToDelete )
+    {
+        TCB_t * pxTCB;
+        BaseType_t xDeleteTCBInIdleTask = pdFALSE;
+        BaseType_t xTaskIsRunningOrYielding;
+
+        traceENTER_vTaskDelete( xTaskToDelete );
+
+        taskENTER_CRITICAL();
+        {
+            /* If null is passed in here then it is the calling task that is
+             * being deleted. */
+            pxTCB = prvGetTCBFromHandle( xTaskToDelete );
+            configASSERT( pxTCB != NULL );
+
+            /* Remove task from the ready/delayed list. */
+            if( uxListRemove( &( pxTCB->xStateListItem ) ) == ( UBaseType_t ) 0 )
+            {
+                taskRESET_READY_PRIORITY( pxTCB->uxPriority );
+            }
+            else
+            {
+                mtCOVERAGE_TEST_MARKER();
+            }
+
+            /* Is the task waiting on an event also? */
+            if( listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) ) != NULL )
+            {
+                ( void ) uxListRemove( &( pxTCB->xEventListItem ) );
+            }
+            else
+            {
+                mtCOVERAGE_TEST_MARKER();
+            }
+
+            /* Increment the uxTaskNumber also so kernel aware debuggers can
+             * detect that the task lists need re-generating.  This is done before
+             * portPRE_TASK_DELETE_HOOK() as in the Windows port that macro will
+             * not return. */
+            uxTaskNumber++;
+
+            /* Use temp variable as distinct sequence points for reading volatile
+             * variables prior to a logical operator to ensure compliance with
+             * MISRA C 2012 Rule 13.5. */
+            xTaskIsRunningOrYielding = taskTASK_IS_RUNNING_OR_SCHEDULED_TO_YIELD( pxTCB );
+
+            /* If the task is running (or yielding), we must add it to the
+             * termination list so that an idle task can delete it when it is
+             * no longer running. */
+            if( ( xSchedulerRunning != pdFALSE ) && ( xTaskIsRunningOrYielding != pdFALSE ) )
+            {
+                /* A running task or a task which is scheduled to yield is being
+                 * deleted. This cannot complete when the task is still running
+                 * on a core, as a context switch to another task is required.
+                 * Place the task in the termination list. The idle task will check
+                 * the termination list and free up any memory allocated by the
+                 * scheduler for the TCB and stack of the deleted task. */
+                vListInsertEnd( &xTasksWaitingTermination, &( pxTCB->xStateListItem ) );
+
+                /* Increment the ucTasksDeleted variable so the idle task knows
+                 * there is a task that has been deleted and that it should therefore
+                 * check the xTasksWaitingTermination list. */
+                ++uxDeletedTasksWaitingCleanUp;
+
+                /* Call the delete hook before portPRE_TASK_DELETE_HOOK() as
+                 * portPRE_TASK_DELETE_HOOK() does not return in the Win32 port. */
+                traceTASK_DELETE( pxTCB );
+
+                /* Delete the task TCB in idle task. */
+                xDeleteTCBInIdleTask = pdTRUE;
+
+                /* The pre-delete hook is primarily for the Windows simulator,
+                 * in which Windows specific clean up operations are performed,
+                 * after which it is not possible to yield away from this task -
+                 * hence xYieldPending is used to latch that a context switch is
+                 * required. */
+                #if ( configNUMBER_OF_CORES == 1 )
+                    portPRE_TASK_DELETE_HOOK( pxTCB, &( xYieldPendings[ 0 ] ) );
+                #else
+                    portPRE_TASK_DELETE_HOOK( pxTCB, &( xYieldPendings[ pxTCB->xTaskRunState ] ) );
+                #endif
+
+                /* In the case of SMP, it is possible that the task being deleted
+                 * is running on another core. We must evict the task before
+                 * exiting the critical section to ensure that the task cannot
+                 * take an action which puts it back on ready/state/event list,
+                 * thereby nullifying the delete operation. Once evicted, the
+                 * task won't be scheduled ever as it will no longer be on the
+                 * ready list. */
+                #if ( configNUMBER_OF_CORES > 1 )
+                {
+                    if( taskTASK_IS_RUNNING( pxTCB ) == pdTRUE )
+                    {
+                        if( pxTCB->xTaskRunState == ( BaseType_t ) portGET_CORE_ID() )
+                        {
+                            configASSERT( uxSchedulerSuspended == 0 );
+                            taskYIELD_WITHIN_API();
+                        }
+                        else
+                        {
+                            prvYieldCore( pxTCB->xTaskRunState );
+                        }
+                    }
+                }
+                #endif /* #if ( configNUMBER_OF_CORES > 1 ) */
+            }
+            else
+            {
+                --uxCurrentNumberOfTasks;
+                traceTASK_DELETE( pxTCB );
+
+                /* Reset the next expected unblock time in case it referred to
+                 * the task that has just been deleted. */
+                prvResetNextTaskUnblockTime();
+            }
+        }
+        taskEXIT_CRITICAL();
+
+        /* If the task is not deleting itself, call prvDeleteTCB from outside of
+         * critical section. If a task deletes itself, prvDeleteTCB is called
+         * from prvCheckTasksWaitingTermination which is called from Idle task. */
+        if( xDeleteTCBInIdleTask != pdTRUE )
+        {
+            prvDeleteTCB( pxTCB );
+        }
+
+        /* Force a reschedule if it is the currently running task that has just
+         * been deleted. */
+        #if ( configNUMBER_OF_CORES == 1 )
+        {
+            if( xSchedulerRunning != pdFALSE )
+            {
+                if( pxTCB == pxCurrentTCB )
+                {
+                    configASSERT( uxSchedulerSuspended == 0 );
+                    taskYIELD_WITHIN_API();
+                }
+                else
+                {
+                    mtCOVERAGE_TEST_MARKER();
+                }
+            }
+        }
+        #endif /* #if ( configNUMBER_OF_CORES == 1 ) */
+
+        traceRETURN_vTaskDelete();
+    }
+
+Official docs (summary):
+Parameters:
+- pxTask: TaskHandle_t — The handle of the task being deleted (the subject task) .  To obtain a task’s handle create the task using xTaskCreate() and make use of the  pxCreatedTask parameter, or create the task using xTaskCreateStatic() and store  the returned value, or use the task’s name in a call to xTaskGetHandle().  A task can delete itself by passing NULL in place of a valid task handle.
+Return values:
+- void: This function returns no value.
+Related configs: none
+Related APIs: xTaskCreate, xTaskCreateStatic
+Reference snippets:
+- Incoming of <operator>.preIncrement (rel:in:<operator>.preIncrement#c0) :: incoming: vTaskDelete
+- API vTaskDelete Overview (api:vTaskDelete:overview#c0) :: API: vTaskDelete Signature: void vTaskDelete(TaskHandle_t pxTask); Headers: task.h, FreeRTOS.h Summary: Deletes an instance of a  task that was previously created using a call to xTaskCreate()  or xTaskCreateStatic() . Deleted tasks no longer exist  so cannot enter the Running state . Do not attempt to use a task handl…
+- Function vTaskDelete (func:vTaskDelete:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c0) :: FUNC vTaskDelete void(TaskHandle_t) file /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2213-2359     void vTaskDelete( TaskHandle_t xTaskToDelete )     {         TCB_t * pxTCB;         BaseType_t xDeleteTCBInIdleTask = pdFALSE;         BaseType_t xTaskIsRunningOrYielding;          traceENTER_vTaskDelete( xTaskToDelete ); …
+- API vTaskDelete Returns (api:vTaskDelete:returns#c0) :: API: vTaskDelete Section: returns returns void: This function returns no value.
+- Function <global> (func:<global>:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c45) :: le that the task being deleted                  * is running on another core. We must evict the task before                  * exiting the critical section to ensure that the task cannot                  * take an action which puts it back on ready/state/event list,                  * thereby nullifying the delete oper…
+- Type vTaskDelete (type:vTaskDelete#c0) :: TYPE type vTaskDelete /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c
+- vTaskDelete :: void vTaskDelete(TaskHandle_t pxTask); Deletes an instance of a  task that was previously created using a call to xTaskCreate()  or xTaskCreateStatic() .
+
+Official documentation (full):
+Title: vTaskDelete
+Signature: void vTaskDelete(TaskHandle_t pxTask);
+Summary:
+Deletes an instance of a  task that was previously created using a call to xTaskCreate()  or
+xTaskCreateStatic() .
+Deleted tasks no longer exist  so cannot enter the Running state .
+Do not attempt to use a task handle to reference a task that has been deleted.
+When a task is deleted, i t is the responsibility of the idle task to free the memory that had been
+used to hold the deleted task’s stack and data structures (task control block).   Therefore, if an
+application makes use of the vTaskDelete() API function, it is vital that the application also
+ensures the idle task is not starved of processing time (the idle task must be allocated time in
+the Running state).
+Only memory that is allocated to a task by the kernel itself is automatically freed when a task is
+deleted.  Memory , or any other resource , that the application (rather than the kernel) allocates
+to a task must be explicitly freed by the application when the task is deleted.
+Parameters:
+- pxTask: TaskHandle_t — The handle of the task being deleted (the subject task) .  To obtain a task’s handle create the task using xTaskCreate() and make use of the  pxCreatedTask parameter, or create the task using xTaskCreateStatic() and store  the returned value, or use the task’s name in a call to xTaskGetHandle().  A task can delete itself by passing NULL in place of a valid task handle.
+Return values:
+- void: This function returns no value.
+Example:
+void vAnotherFunction( void )
+{
+TaskHandle_t  xHandle;
+/* Create a task, storing the handle to the created task in xHandle. */
+if(
+xTaskCreate(
+vTaskCode,
+"Demo task",
+STACK_SIZE,
+NULL,
+PRIORITY,
+&xHandle  /* The address of xHandle is passed in as the
+last parameter to xTaskCreate() to obtain a handle
+to the task being created. */
+)
+!= pdPASS )
+{
+/* The task could not be created because there was not enough FreeRTOS  heap
+memory available for the task data structures and stack  to be allocated . */
+}
+else
+{
+/* Delete the task just created .  Use the handle passed out of xTaskCreate()
+to reference the subject task. */
+vTaskDelete( xHandle );
+}
+/* Delete the task that called this function by passing NULL in as the
+vTaskDelete() parameter .  The same task (this task) could also be deleted by
+passing in a valid handle to itself. */
+vTaskDelete( NULL );
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

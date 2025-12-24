@@ -1,0 +1,351 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: vTaskStartScheduler, prvCreateIdleTasks
+
+### Function vTaskStartScheduler
+Signature: void(void)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:3689-3791
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: <operator>.assignment(operator), prvCreateIdleTasks(function), <operator>.equals(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:pdPASS:ANY(0)(macro), <operator>.cast(operator), xTimerCreateTimerTask(function), /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/portmacro.h:portDISABLE_INTERRUPTS:ANY(0)(macro), vPortRaiseBASEPRI(function)
+Incoming callers count: 1
+Full source code:
+void vTaskStartScheduler( void )
+{
+    BaseType_t xReturn;
+
+    traceENTER_vTaskStartScheduler();
+
+    #if ( configUSE_CORE_AFFINITY == 1 ) && ( configNUMBER_OF_CORES > 1 )
+    {
+        /* Sanity check that the UBaseType_t must have greater than or equal to
+         * the number of bits as confNUMBER_OF_CORES. */
+        configASSERT( ( sizeof( UBaseType_t ) * taskBITS_PER_BYTE ) >= configNUMBER_OF_CORES );
+    }
+    #endif /* #if ( configUSE_CORE_AFFINITY == 1 ) && ( configNUMBER_OF_CORES > 1 ) */
+
+    xReturn = prvCreateIdleTasks();
+
+    #if ( configUSE_TIMERS == 1 )
+    {
+        if( xReturn == pdPASS )
+        {
+            xReturn = xTimerCreateTimerTask();
+        }
+        else
+        {
+            mtCOVERAGE_TEST_MARKER();
+        }
+    }
+    #endif /* configUSE_TIMERS */
+
+    if( xReturn == pdPASS )
+    {
+        /* freertos_tasks_c_additions_init() should only be called if the user
+         * definable macro FREERTOS_TASKS_C_ADDITIONS_INIT() is defined, as that is
+         * the only macro called by the function. */
+        #ifdef FREERTOS_TASKS_C_ADDITIONS_INIT
+        {
+            freertos_tasks_c_additions_init();
+        }
+        #endif
+
+        /* Interrupts are turned off here, to ensure a tick does not occur
+         * before or during the call to xPortStartScheduler().  The stacks of
+         * the created tasks contain a status word with interrupts switched on
+         * so interrupts will automatically get re-enabled when the first task
+         * starts to run. */
+        portDISABLE_INTERRUPTS();
+
+        #if ( configUSE_C_RUNTIME_TLS_SUPPORT == 1 )
+        {
+            /* Switch C-Runtime's TLS Block to point to the TLS
+             * block specific to the task that will run first. */
+            configSET_TLS_BLOCK( pxCurrentTCB->xTLSBlock );
+        }
+        #endif
+
+        xNextTaskUnblockTime = portMAX_DELAY;
+        xSchedulerRunning = pdTRUE;
+        xTickCount = ( TickType_t ) configINITIAL_TICK_COUNT;
+
+        /* If configGENERATE_RUN_TIME_STATS is defined then the following
+         * macro must be defined to configure the timer/counter used to generate
+         * the run time counter time base.   NOTE:  If configGENERATE_RUN_TIME_STATS
+         * is set to 0 and the following line fails to build then ensure you do not
+         * have portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() defined in your
+         * FreeRTOSConfig.h file. */
+        portCONFIGURE_TIMER_FOR_RUN_TIME_STATS();
+
+        traceTASK_SWITCHED_IN();
+
+        traceSTARTING_SCHEDULER( xIdleTaskHandles );
+
+        /* Setting up the timer tick is hardware specific and thus in the
+         * portable interface. */
+
+        /* The return value for xPortStartScheduler is not required
+         * hence using a void datatype. */
+        ( void ) xPortStartScheduler();
+
+        /* In most cases, xPortStartScheduler() will not return. If it
+         * returns pdTRUE then there was not enough heap memory available
+         * to create either the Idle or the Timer task. If it returned
+         * pdFALSE, then the application called xTaskEndScheduler().
+         * Most ports don't implement xTaskEndScheduler() as there is
+         * nothing to return to. */
+    }
+    else
+    {
+        /* This line will only be reached if the kernel could not be started,
+         * because there was not enough FreeRTOS heap to create the idle task
+         * or the timer task. */
+        configASSERT( xReturn != errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY );
+    }
+
+    /* Prevent compiler warnings if INCLUDE_xTaskGetIdleTaskHandle is set to 0,
+     * meaning xIdleTaskHandles are not used anywhere else. */
+    ( void ) xIdleTaskHandles;
+
+    /* OpenOCD makes use of uxTopUsedPriority for thread debugging. Prevent uxTopUsedPriority
+     * from getting optimized out as it is no longer used by the kernel. */
+    ( void ) uxTopUsedPriority;
+
+    traceRETURN_vTaskStartScheduler();
+}
+
+Official docs (summary):
+Return values:
+- void: The Idle task is created automatically when the scheduler is started.  vTaskStartScheduler()
+will only return if there is not enough FreeRTOS heap memory available for the Idle task to be
+created .
+Related configs: none
+Related APIs: none
+Reference snippets:
+- Incoming of prvCreateIdleTasks (rel:in:prvCreateIdleTasks#c0) :: incoming: vTaskStartScheduler
+- Incoming of xTimerCreateTimerTask (rel:in:xTimerCreateTimerTask#c0) :: incoming: vTaskStartScheduler
+- Incoming of xPortStartScheduler (rel:in:xPortStartScheduler#c0) :: incoming: vTaskStartScheduler
+- Function vTaskStartScheduler (func:vTaskStartScheduler:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c0) :: FUNC vTaskStartScheduler void(void) file /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:3689-3791 void vTaskStartScheduler( void ) {     BaseType_t xReturn;      traceENTER_vTaskStartScheduler();      #if ( configUSE_CORE_AFFINITY == 1 ) && ( configNUMBER_OF_CORES > 1 )     {         /* Sanity check that the UBaseType_t mu…
+- API vTaskStartScheduler Overview (api:vTaskStartScheduler:overview#c0) :: API: vTaskStartScheduler Signature: void vTaskStartScheduler(void); Headers: task.h, FreeRTOS.h Summary: Starts the FreeRTOS scheduler running. Typically , before the scheduler has been started , main() (or a function called by main()) will be executing.  After the scheduler has been started , only tasks and interrupts…
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOS.h:configINITIAL_TICK_COUNT:int(0) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOS.h:configINITIAL_TICK_COUNT:int(0)#c0) :: incoming: <global>, vTaskResetState, vTaskStartScheduler
+- vTaskStartScheduler :: void vTaskStartScheduler(void); Starts the FreeRTOS scheduler running. Typically , before the scheduler has been started , main() (or a function called by main()) will be
+- vTaskStartScheduler :: void vTaskStartScheduler(void); Starts the FreeRTOS scheduler running. Typically , before the scheduler has been started , main() (or a function called by main()) will be
+
+Official documentation (full):
+Title: vTaskStartScheduler
+Signature: void vTaskStartScheduler(void);
+Summary:
+Starts the FreeRTOS scheduler running.
+Typically , before the scheduler has been started , main() (or a function called by main()) will be
+executing.  After the scheduler has been started , only tasks and interrupts will ever execute.
+Starting the scheduler causes the highest priority task that was created while the scheduler
+was in the Initialization state to enter the Running state.
+Return values:
+- void: The Idle task is created automatically when the scheduler is started.  vTaskStartScheduler()
+will only return if there is not enough FreeRTOS heap memory available for the Idle task to be
+created .
+Notes:
+Ports that execute on ARM7 and ARM9 microcontrollers  require the processor to be in
+Supervisor mode before  vTaskStartScheduler() is called.
+Example:
+TaskHandle_t  xHandle;
+/* Define a task function. */
+void vATask( void )
+{
+for( ;; )
+{
+/* Task code goes here. */
+}
+}
+void main( void )
+{
+/* Create at least one task, in this case the task function defined above is
+created.  Calling vTaskStartScheduler() before any tasks have been created
+will cause the idle task to enter the Running state. */
+xTaskCreate( vTaskCode, "task name", STACK_SIZE, NULL, TASK_PRIORITY, NULL );
+/* Start the scheduler. */
+vTaskStartScheduler();
+/* This co de will only be reached if the i dle task could not be created inside
+vTaskStartScheduler().  An infinite loop is used to assist debugging by
+ensuring this scenario does not result in main() exiting.  */
+for( ;; );
+}
+
+### Function prvCreateIdleTasks
+Signature: BaseType_t(void)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:3540-3685
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:pdPASS:ANY(0)(macro), <operator>.cast(operator), <operator>.alloc(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configMAX_TASK_NAME_LEN:ANY(0)(macro), <operator>.arrayInitializer(operator), <operator>.lessThan(operator), <operator>.subtraction(operator)
+Incoming callers count: 1
+Full source code:
+static BaseType_t prvCreateIdleTasks( void )
+{
+    BaseType_t xReturn = pdPASS;
+    BaseType_t xCoreID;
+    char cIdleName[ configMAX_TASK_NAME_LEN ] = { 0 };
+    TaskFunction_t pxIdleTaskFunction = NULL;
+    UBaseType_t xIdleTaskNameIndex;
+
+    /* MISRA Ref 14.3.1 [Configuration dependent invariant] */
+    /* More details at: https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/main/MISRA.md#rule-143. */
+    /* coverity[misra_c_2012_rule_14_3_violation] */
+    for( xIdleTaskNameIndex = 0U; xIdleTaskNameIndex < ( configMAX_TASK_NAME_LEN - taskRESERVED_TASK_NAME_LENGTH ); xIdleTaskNameIndex++ )
+    {
+        /* MISRA Ref 18.1.1 [Configuration dependent bounds checking] */
+        /* More details at: https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/main/MISRA.md#rule-181. */
+        /* coverity[misra_c_2012_rule_18_1_violation] */
+        cIdleName[ xIdleTaskNameIndex ] = configIDLE_TASK_NAME[ xIdleTaskNameIndex ];
+
+        if( cIdleName[ xIdleTaskNameIndex ] == ( char ) 0x00 )
+        {
+            break;
+        }
+        else
+        {
+            mtCOVERAGE_TEST_MARKER();
+        }
+    }
+
+    /* Ensure null termination. */
+    cIdleName[ xIdleTaskNameIndex ] = '\0';
+
+    /* Add each idle task at the lowest priority. */
+    for( xCoreID = ( BaseType_t ) 0; xCoreID < ( BaseType_t ) configNUMBER_OF_CORES; xCoreID++ )
+    {
+        #if ( configNUMBER_OF_CORES == 1 )
+        {
+            pxIdleTaskFunction = &prvIdleTask;
+        }
+        #else /* #if (  configNUMBER_OF_CORES == 1 ) */
+        {
+            /* In the FreeRTOS SMP, configNUMBER_OF_CORES - 1 passive idle tasks
+             * are also created to ensure that each core has an idle task to
+             * run when no other task is available to run. */
+            if( xCoreID == 0 )
+            {
+                pxIdleTaskFunction = &prvIdleTask;
+            }
+            else
+            {
+                pxIdleTaskFunction = &prvPassiveIdleTask;
+            }
+        }
+        #endif /* #if (  configNUMBER_OF_CORES == 1 ) */
+
+        /* Update the idle task name with suffix to differentiate the idle tasks.
+         * This function is not required in single core FreeRTOS since there is
+         * only one idle task. */
+        #if ( configNUMBER_OF_CORES > 1 )
+        {
+            /* Append the idle task number to the end of the name.
+             *
+             * Note: Idle task name index only supports single-character
+             * core IDs (0-9). If the core ID exceeds 9, the idle task
+             * name will contain an incorrect ASCII character. This is
+             * acceptable as the task name is used mainly for debugging. */
+            cIdleName[ xIdleTaskNameIndex ] = ( char ) ( xCoreID + '0' );
+            cIdleName[ xIdleTaskNameIndex + 1U ] = '\0';
+        }
+        #endif /* if ( configNUMBER_OF_CORES > 1 ) */
+
+        #if ( configSUPPORT_STATIC_ALLOCATION == 1 )
+        {
+            StaticTask_t * pxIdleTaskTCBBuffer = NULL;
+            StackType_t * pxIdleTaskStackBuffer = NULL;
+            configSTACK_DEPTH_TYPE uxIdleTaskStackSize;
+
+            /* The Idle task is created using user provided RAM - obtain the
+             * address of the RAM then create the idle task. */
+            #if ( configNUMBER_OF_CORES == 1 )
+            {
+                vApplicationGetIdleTaskMemory( &pxIdleTaskTCBBuffer, &pxIdleTaskStackBuffer, &uxIdleTaskStackSize );
+            }
+            #else
+            {
+                if( xCoreID == 0 )
+                {
+                    vApplicationGetIdleTaskMemory( &pxIdleTaskTCBBuffer, &pxIdleTaskStackBuffer, &uxIdleTaskStackSize );
+                }
+                else
+                {
+                    vApplicationGetPassiveIdleTaskMemory( &pxIdleTaskTCBBuffer, &pxIdleTaskStackBuffer, &uxIdleTaskStackSize, ( BaseType_t ) ( xCoreID - 1 ) );
+                }
+            }
+            #endif /* if ( configNUMBER_OF_CORES == 1 ) */
+            xIdleTaskHandles[ xCoreID ] = xTaskCreateStatic( pxIdleTaskFunction,
+                                                             cIdleName,
+                                                             uxIdleTaskStackSize,
+                                                             ( void * ) NULL,
+                                                             portPRIVILEGE_BIT, /* In effect ( tskIDLE_PRIORITY | portPRIVILEGE_BIT ), but tskIDLE_PRIORITY is zero. */
+                                                             pxIdleTaskStackBuffer,
+                                                             pxIdleTaskTCBBuffer );
+
+            if( xIdleTaskHandles[ xCoreID ] != NULL )
+            {
+                xReturn = pdPASS;
+            }
+            else
+            {
+                xReturn = pdFAIL;
+            }
+        }
+        #else /* if ( configSUPPORT_STATIC_ALLOCATION == 1 ) */
+        {
+            /* The Idle task is being created using dynamically allocated RAM. */
+            xReturn = xTaskCreate( pxIdleTaskFunction,
+                                   cIdleName,
+                                   configMINIMAL_STACK_SIZE,
+                                   ( void * ) NULL,
+                                   portPRIVILEGE_BIT, /* In effect ( tskIDLE_PRIORITY | portPRIVILEGE_BIT ), but tskIDLE_PRIORITY is zero. */
+                                   &xIdleTaskHandles[ xCoreID ] );
+        }
+        #endif /* configSUPPORT_STATIC_ALLOCATION */
+
+        /* Break the loop if any of the idle task is failed to be created. */
+        if( xReturn != pdPASS )
+        {
+            break;
+        }
+        else
+        {
+            #if ( configNUMBER_OF_CORES == 1 )
+            {
+                mtCOVERAGE_TEST_MARKER();
+            }
+            #else
+            {
+                /* Assign idle task to each core before SMP scheduler is running. */
+                xIdleTaskHandles[ xCoreID ]->xTaskRunState = xCoreID;
+                pxCurrentTCBs[ xCoreID ] = xIdleTaskHandles[ xCoreID ];
+            }
+            #endif
+        }
+    }
+
+    return xReturn;
+}
+
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

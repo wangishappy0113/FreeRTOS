@@ -88,7 +88,7 @@
  */
 extern void main_blinky( void );
 extern void main_full( void );
-
+extern void fuzz_task( void );
 /*
  * Only the comprehensive demo uses application hook (callback) functions.  See
  * https://www.FreeRTOS.org/a00016.html for more information.
@@ -130,6 +130,13 @@ void main( void )
     /* Hardware initialisation.  printf() output uses the UART for IO. */
     prvUARTInit();
 
+    printf("Hello from FreeRTOS fuzz demo!\r\n");
+
+    fuzz_task();
+
+     for( ;; )
+    {
+    }
     /* The mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is described at the top
      * of this file. */
     #if ( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )

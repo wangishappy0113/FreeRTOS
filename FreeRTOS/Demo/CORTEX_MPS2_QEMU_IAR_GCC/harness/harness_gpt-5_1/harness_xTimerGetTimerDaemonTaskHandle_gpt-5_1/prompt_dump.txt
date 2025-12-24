@@ -1,0 +1,77 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xTimerGetTimerDaemonTaskHandle
+
+### Function xTimerGetTimerDaemonTaskHandle
+Signature: TaskHandle_t(void)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/timers.c:539-550
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, FreeRTOS.h, task.h, queue.h, timers.h
+Outgoing calls summary: /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), <operator>.notEquals(operator), vAssertCalled(function)
+Incoming callers count: 2
+Full source code:
+    TaskHandle_t xTimerGetTimerDaemonTaskHandle( void )
+    {
+        traceENTER_xTimerGetTimerDaemonTaskHandle();
+
+        /* If xTimerGetTimerDaemonTaskHandle() is called before the scheduler has been
+         * started, then xTimerTaskHandle will be NULL. */
+        configASSERT( ( xTimerTaskHandle != NULL ) );
+
+        traceRETURN_xTimerGetTimerDaemonTaskHandle( xTimerTaskHandle );
+
+        return xTimerTaskHandle;
+    }
+
+Official docs (summary):
+Return values:
+- TaskHandle_t: The handle of the timer daemon task .  FreeRTOS software timer callback functions run in the
+context of the software daemon task.
+Related configs: configUSE_TIMERS
+Related APIs: none
+Reference snippets:
+- API xTimerGetTimerDaemonTaskHandle Overview (api:xTimerGetTimerDaemonTaskHandle:overview#c0) :: API: xTimerGetTimerDaemonTaskHandle Signature: TaskHandle_t xTimerGetTimerDaemonTaskHandle (void); Headers: timer.h, FreeRTOS.h Summary: Returns the task handle associated with the software timer daemon (or service) task.  If configUSE_TIMERS is set to 1 in FreeRTOSConfig.h, then the timer daemon task is created automa…
+- Function xTimerGetTimerDaemonTaskHandle (func:xTimerGetTimerDaemonTaskHandle:/home/zwz/FreeRTOS/FreeRTOS/Source/timers.c#c0) :: FUNC xTimerGetTimerDaemonTaskHandle TaskHandle_t(void) file /home/zwz/FreeRTOS/FreeRTOS/Source/timers.c:539-550     TaskHandle_t xTimerGetTimerDaemonTaskHandle( void )     {         traceENTER_xTimerGetTimerDaemonTaskHandle();          /* If xTimerGetTimerDaemonTaskHandle() is called before the scheduler has been      …
+- API xTimerGetTimerDaemonTaskHandle Returns (api:xTimerGetTimerDaemonTaskHandle:returns#c0) :: API: xTimerGetTimerDaemonTaskHandle Section: returns returns TaskHandle_t: The handle of the timer daemon task .  FreeRTOS software timer callback functions run in the context of the software daemon task.
+- Type xTimerGetTimerDaemonTaskHandle (type:xTimerGetTimerDaemonTaskHandle#c0) :: TYPE type xTimerGetTimerDaemonTaskHandle /home/zwz/FreeRTOS/FreeRTOS/Source/timers.c
+- Function MPU_xTimerGetTimerDaemonTaskHandleImpl (func:MPU_xTimerGetTimerDaemonTaskHandleImpl:/home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c#c0) :: FUNC MPU_xTimerGetTimerDaemonTaskHandleImpl TaskHandle_t(void) file /home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c:3461-3468         TaskHandle_t MPU_xTimerGetTimerDaemonTaskHandleImpl( void ) /* PRIVILEGED_FUNCTION */         {             TaskHandle_t xReturn;              xReturn = xTimerGetTim…
+- API xTimerGetTimerDaemonTaskHandle Notes (api:xTimerGetTimerDaemonTaskHandle:notes#c0) :: API: xTimerGetTimerDaemonTaskHandle Section: notes configUSE_TIMERS  must be set to 1 in FreeRTOSConfig.h for xTimerGetTimerDaemonTaskHandle() to be available.
+- xTimerGetTimerDaemonTaskHandle :: TaskHandle_t xTimerGetTimerDaemonTaskHandle (void); Returns the task handle associated with the software timer daemon (or service) task.  If configUSE_TIMERS is set to 1 in FreeRTOSConfig.h, then the timer daemon task is created
+
+Official documentation (full):
+Title: xTimerGetTimerDaemonTaskHandle
+Signature: TaskHandle_t xTimerGetTimerDaemonTaskHandle (void);
+Summary:
+Returns the task handle associated with the software timer daemon (or service) task.  If
+configUSE_TIMERS is set to 1 in FreeRTOSConfig.h, then the timer daemon task is created
+automatically when the scheduler is started.  All FreeRTOS software timer callback functions
+run in the context of the timer daemon task.
+Return values:
+- TaskHandle_t: The handle of the timer daemon task .  FreeRTOS software timer callback functions run in the
+context of the software daemon task.
+Notes:
+configUSE_TIMERS  must be set to 1 in FreeRTOSConfig.h for
+xTimerGetTimerDaemonTaskHandle() to be available.
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

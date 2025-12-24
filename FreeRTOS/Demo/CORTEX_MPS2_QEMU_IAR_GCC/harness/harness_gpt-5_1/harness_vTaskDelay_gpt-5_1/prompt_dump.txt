@@ -1,0 +1,131 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: vTaskDelay
+
+### Function vTaskDelay
+Signature: void(TickType_t)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2458-2501
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:pdFALSE:ANY(0)(macro), <operator>.cast(operator), <operator>.greaterThan(operator), vTaskSuspendAll(function), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), vAssertCalled(function)
+Incoming callers count: 1
+Full source code:
+    void vTaskDelay( const TickType_t xTicksToDelay )
+    {
+        BaseType_t xAlreadyYielded = pdFALSE;
+
+        traceENTER_vTaskDelay( xTicksToDelay );
+
+        /* A delay time of zero just forces a reschedule. */
+        if( xTicksToDelay > ( TickType_t ) 0U )
+        {
+            vTaskSuspendAll();
+            {
+                configASSERT( uxSchedulerSuspended == 1U );
+
+                traceTASK_DELAY();
+
+                /* A task that is removed from the event list while the
+                 * scheduler is suspended will not get placed in the ready
+                 * list or removed from the blocked list until the scheduler
+                 * is resumed.
+                 *
+                 * This task cannot be in an event list as it is the currently
+                 * executing task. */
+                prvAddCurrentTaskToDelayedList( xTicksToDelay, pdFALSE );
+            }
+            xAlreadyYielded = xTaskResumeAll();
+        }
+        else
+        {
+            mtCOVERAGE_TEST_MARKER();
+        }
+
+        /* Force a reschedule if xTaskResumeAll has not already done so, we may
+         * have put ourselves to sleep. */
+        if( xAlreadyYielded == pdFALSE )
+        {
+            taskYIELD_WITHIN_API();
+        }
+        else
+        {
+            mtCOVERAGE_TEST_MARKER();
+        }
+
+        traceRETURN_vTaskDelay();
+    }
+
+Official docs (summary):
+Parameters:
+- xTicksToDelay: TickType_t — The number of tick interrupts that the calling task will remain in the Blocked  state before being transitioned back into the Ready state. For example, if a  task called vTaskDelay( 100 ) when the tick count was 10,000, then it would  immediately enter the Blocked state and remain in the Blocked state until the  tick count reached 10,100.  Any time that remains between vTaskDelay() being called, and the next tick  interrupt occurring, counts as one complete tick period. Therefore, the  highest time resolution that can be achieved when specifying a delay period  is, in the worst case, equal to one complete tick interrupt period.  The macro pdMS_TO_TICKS() can be used to convert milliseconds into ticks.  This is demonstrated in the example in this section.
+Return values:
+- void: This function returns no value.
+Related configs: none
+Related APIs: taskYIELD
+Reference snippets:
+- Outgoing of MPU_vTaskDelayImpl (rel:out:MPU_vTaskDelayImpl#c0) :: outgoing: vTaskDelay
+- Call vTaskDelay -> <operator>.cast (edge:vTaskDelay-><operator>.cast:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2460#c0) :: Call: vTaskDelay -> <operator>.cast at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2460 callee_kind=operator
+- Call vTaskDelay -> <operator>.cast (edge:vTaskDelay-><operator>.cast:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2465#c0) :: Call: vTaskDelay -> <operator>.cast at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2465 callee_kind=operator
+- Call vTaskDelay -> xTaskResumeAll (edge:vTaskDelay->xTaskResumeAll:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2482#c0) :: Call: vTaskDelay -> xTaskResumeAll at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2482 callee_kind=function resolved=/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4011-4157
+- Incoming of vTaskDelay (rel:in:vTaskDelay#c0) :: incoming: MPU_vTaskDelayImpl
+- Call vTaskDelay -> <operator>.cast (edge:vTaskDelay-><operator>.cast:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2493#c0) :: Call: vTaskDelay -> <operator>.cast at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2493 callee_kind=operator
+- vTaskDelay :: void vTaskDelay(TickType_t xTicksToDelay); Places the task that calls vTaskDelay() into the Blocked state for a fixed number of tick interrupts .
+
+Official documentation (full):
+Title: vTaskDelay
+Signature: void vTaskDelay(TickType_t xTicksToDelay);
+Summary:
+Places the task that calls vTaskDelay() into the Blocked state for a fixed number of tick
+interrupts .
+Specifying a delay period of zero  ticks will not result in the calling task being placed into the
+Blocked state , but will result in the calling task yield ing to any Ready state tasks that share its
+priority .  Calling vTaskDelay( 0 ) is equivalent to calling taskYIELD().
+Parameters:
+- xTicksToDelay: TickType_t — The number of tick interrupts that the calling task will remain in the Blocked  state before being transitioned back into the Ready state. For example, if a  task called vTaskDelay( 100 ) when the tick count was 10,000, then it would  immediately enter the Blocked state and remain in the Blocked state until the  tick count reached 10,100.  Any time that remains between vTaskDelay() being called, and the next tick  interrupt occurring, counts as one complete tick period. Therefore, the  highest time resolution that can be achieved when specifying a delay period  is, in the worst case, equal to one complete tick interrupt period.  The macro pdMS_TO_TICKS() can be used to convert milliseconds into ticks.  This is demonstrated in the example in this section.
+Return values:
+- void: This function returns no value.
+Notes:
+INCLUDE_vTaskDelay  must be set to 1 in FreeRTOSConfig.h for the vTaskDelay() API
+function to be available.
+Example:
+void vAnotherTask( void * pvParameters )
+{
+for( ;; )
+{
+/* Perform some processing here. */
+…
+/* Enter the Blocked state for 20 tick interrupts – the actual time spent
+in the Blocked state is dependent on the tick frequency. */
+vTaskDelay( 20 );
+/* 20 ticks will have passed since the first call to vTaskDelay() was
+executed. */
+/* Enter the Blocked state for 20 milliseconds.  Using the
+pdMS_TO_TICKS()  macro means the tick frequency can change without
+effecting the time spent  in the blocked state (other than due to the
+resolution of the tick frequency). */
+vTaskDelay( pdMS_TO_TICKS( 20 ) );
+}
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

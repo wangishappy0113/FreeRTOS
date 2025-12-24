@@ -1,0 +1,4336 @@
+FUZZ_INPUT @ 0x20000064
+main address = 0x33bc
+Breakpoint address = 0x34be
+[2025-12-22T10:10:13Z INFO  libafl::events::launcher] spawning on cores: Cores { cmdline: "1", ids: [CoreId(1)] }
+[2025-12-22T10:10:13Z INFO  libafl::events::launcher] child spawned with id 1 and bound to core CoreId(1)
+[2025-12-22T10:10:13Z INFO  libafl::events::launcher] I am broker!!.
+[2025-12-22T10:10:13Z INFO  libafl_bolts::llmp] Successfully setup signal handlers
+[2025-12-22T10:10:13Z INFO  libafl::events::launcher] 1380130 PostFork
+[2025-12-22T10:10:13Z INFO  libafl_bolts::llmp] Connected to port 1337
+[2025-12-22T10:10:13Z INFO  libafl_bolts::llmp] New connection: 127.0.0.1:44118/127.0.0.1:44118
+[2025-12-22T10:10:13Z INFO  libafl::events::llmp::restarting] Setting core affinity to CoreId(1)
+[2025-12-22T10:10:13Z INFO  libafl::events::llmp::restarting] Spawning next client (id 0)
+[2025-12-22T10:10:13Z INFO  libafl::events::llmp::restarting] First run. Let's set it all up
+qemu_baremetal: warning: nic lan9118.0 has no peer
+Devices = ["timer", "cpu_common", "cpu", "armv7m_nvic", "armv7m_systick", "armv7m", "or-irq", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-timer", "cmsdk-apb-timer", "cmsdk-apb-dualtimer", "cmsdk-apb-watchdog", "led", "led", "led", "led", "led", "led", "led", "led", "mps2-scc", "led", "led", "mps2-fpgaio", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "i2c_bus", "i2c_bus", "i2c_bus", "i2c_bus", "lan9118-phy", "lan9118"]
+qemu_baremetal: warning: icount sleep disabled and no active timers
+[2025-12-22T10:10:13Z INFO  libafl_qemu::command::lqemu] Fuzzing starts @ PC 33bc
+[2025-12-22T10:10:13Z INFO  libafl::state] Loading file /home/zwz/Libafl/fuzzers/full_system/qemu_baremetal/corpus/golden_seed ...
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 0, objectives: 0, executions: 1, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 0, objectives: 0, executions: 1, exec/sec: 0.000, edges: 514/514 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000, edges: 514/514 (100%)
+We imported 1 inputs from disk.
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 1, objectives: 0, executions: 3, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 1, objectives: 0, executions: 3, exec/sec: 0.000, edges: 529/529 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 2, objectives: 0, executions: 3, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 2, objectives: 0, executions: 3, exec/sec: 0.000, edges: 529/529 (100%)
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 2, objectives: 0, executions: 4, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 2, objectives: 0, executions: 4, exec/sec: 0.000, edges: 553/553 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 3, objectives: 0, executions: 4, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 3, objectives: 0, executions: 4, exec/sec: 0.000, edges: 553/553 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1s, clients: 1, corpus: 3, objectives: 0, executions: 5, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 3, objectives: 0, executions: 5, exec/sec: 0.000, edges: 554/554 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1s, clients: 1, corpus: 4, objectives: 0, executions: 5, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 4, objectives: 0, executions: 5, exec/sec: 0.000, edges: 554/554 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1s, clients: 1, corpus: 4, objectives: 0, executions: 7, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 4, objectives: 0, executions: 7, exec/sec: 0.000, edges: 555/555 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1s, clients: 1, corpus: 5, objectives: 0, executions: 7, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 0, executions: 7, exec/sec: 0.000, edges: 555/555 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1s, clients: 1, corpus: 5, objectives: 0, executions: 8, exec/sec: 6.893, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 0, executions: 8, exec/sec: 6.893, edges: 560/560 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1s, clients: 1, corpus: 6, objectives: 0, executions: 8, exec/sec: 6.892, edges: 100.000%
+                  (CLIENT) corpus: 6, objectives: 0, executions: 8, exec/sec: 6.892, edges: 560/560 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1s, clients: 1, corpus: 6, objectives: 0, executions: 9, exec/sec: 6.545, edges: 100.000%
+                  (CLIENT) corpus: 6, objectives: 0, executions: 9, exec/sec: 6.544, edges: 562/562 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1s, clients: 1, corpus: 7, objectives: 0, executions: 9, exec/sec: 6.543, edges: 100.000%
+                  (CLIENT) corpus: 7, objectives: 0, executions: 9, exec/sec: 6.543, edges: 562/562 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2s, clients: 1, corpus: 7, objectives: 0, executions: 12, exec/sec: 6.294, edges: 100.000%
+                  (CLIENT) corpus: 7, objectives: 0, executions: 12, exec/sec: 6.294, edges: 563/563 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2s, clients: 1, corpus: 8, objectives: 0, executions: 12, exec/sec: 6.293, edges: 100.000%
+                  (CLIENT) corpus: 8, objectives: 0, executions: 12, exec/sec: 6.293, edges: 563/563 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2s, clients: 1, corpus: 8, objectives: 0, executions: 13, exec/sec: 6.188, edges: 100.000%
+                  (CLIENT) corpus: 8, objectives: 0, executions: 13, exec/sec: 6.188, edges: 565/565 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2s, clients: 1, corpus: 9, objectives: 0, executions: 13, exec/sec: 6.187, edges: 100.000%
+                  (CLIENT) corpus: 9, objectives: 0, executions: 13, exec/sec: 6.187, edges: 565/565 (100%)
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 2s, clients: 1, corpus: 9, objectives: 0, executions: 14, exec/sec: 6.086, edges: 100.000%
+                  (CLIENT) corpus: 9, objectives: 0, executions: 14, exec/sec: 6.086, edges: 565/565 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 2s, clients: 1, corpus: 10, objectives: 0, executions: 14, exec/sec: 6.086, edges: 100.000%
+                  (CLIENT) corpus: 10, objectives: 0, executions: 14, exec/sec: 6.086, edges: 565/565 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 2s, clients: 1, corpus: 10, objectives: 0, executions: 17, exec/sec: 6.347, edges: 100.000%
+                  (CLIENT) corpus: 10, objectives: 0, executions: 17, exec/sec: 6.347, edges: 565/565 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 2s, clients: 1, corpus: 11, objectives: 0, executions: 17, exec/sec: 6.347, edges: 100.000%
+                  (CLIENT) corpus: 11, objectives: 0, executions: 17, exec/sec: 6.347, edges: 565/565 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 3s, clients: 1, corpus: 11, objectives: 0, executions: 19, exec/sec: 6.432, edges: 100.000%
+                  (CLIENT) corpus: 11, objectives: 0, executions: 19, exec/sec: 6.432, edges: 565/565 (100%)
+[Testcase    #1]  (GLOBAL) run time: 3s, clients: 1, corpus: 12, objectives: 0, executions: 19, exec/sec: 6.431, edges: 100.000%
+                  (CLIENT) corpus: 12, objectives: 0, executions: 19, exec/sec: 6.431, edges: 565/565 (100%)
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 3s, clients: 1, corpus: 12, objectives: 0, executions: 20, exec/sec: 6.076, edges: 100.000%
+                  (CLIENT) corpus: 12, objectives: 0, executions: 20, exec/sec: 6.076, edges: 565/565 (100%)
+[Testcase    #1]  (GLOBAL) run time: 3s, clients: 1, corpus: 13, objectives: 0, executions: 20, exec/sec: 6.076, edges: 100.000%
+                  (CLIENT) corpus: 13, objectives: 0, executions: 20, exec/sec: 6.076, edges: 565/565 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 3s, clients: 1, corpus: 13, objectives: 0, executions: 22, exec/sec: 6.046, edges: 100.000%
+                  (CLIENT) corpus: 13, objectives: 0, executions: 22, exec/sec: 6.046, edges: 571/571 (100%)
+[Testcase    #1]  (GLOBAL) run time: 3s, clients: 1, corpus: 14, objectives: 0, executions: 22, exec/sec: 6.045, edges: 100.000%
+                  (CLIENT) corpus: 14, objectives: 0, executions: 22, exec/sec: 6.045, edges: 571/571 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 4s, clients: 1, corpus: 14, objectives: 0, executions: 24, exec/sec: 6.020, edges: 100.000%
+                  (CLIENT) corpus: 14, objectives: 0, executions: 24, exec/sec: 6.020, edges: 571/571 (100%)
+[Testcase    #1]  (GLOBAL) run time: 4s, clients: 1, corpus: 15, objectives: 0, executions: 24, exec/sec: 6.020, edges: 100.000%
+                  (CLIENT) corpus: 15, objectives: 0, executions: 24, exec/sec: 6.020, edges: 571/571 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 4s, clients: 1, corpus: 15, objectives: 0, executions: 25, exec/sec: 6.168, edges: 100.000%
+                  (CLIENT) corpus: 15, objectives: 0, executions: 25, exec/sec: 6.168, edges: 571/571 (100%)
+[Testcase    #1]  (GLOBAL) run time: 4s, clients: 1, corpus: 16, objectives: 0, executions: 25, exec/sec: 6.168, edges: 100.000%
+                  (CLIENT) corpus: 16, objectives: 0, executions: 25, exec/sec: 6.168, edges: 571/571 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 4s, clients: 1, corpus: 16, objectives: 0, executions: 26, exec/sec: 6.211, edges: 100.000%
+                  (CLIENT) corpus: 16, objectives: 0, executions: 26, exec/sec: 6.211, edges: 571/571 (100%)
+[Testcase    #1]  (GLOBAL) run time: 4s, clients: 1, corpus: 17, objectives: 0, executions: 26, exec/sec: 6.211, edges: 100.000%
+                  (CLIENT) corpus: 17, objectives: 0, executions: 26, exec/sec: 6.211, edges: 571/571 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 5s, clients: 1, corpus: 17, objectives: 0, executions: 29, exec/sec: 6.094, edges: 100.000%
+                  (CLIENT) corpus: 17, objectives: 0, executions: 29, exec/sec: 6.094, edges: 571/571 (100%)
+[Testcase    #1]  (GLOBAL) run time: 5s, clients: 1, corpus: 18, objectives: 0, executions: 29, exec/sec: 6.094, edges: 100.000%
+                  (CLIENT) corpus: 18, objectives: 0, executions: 29, exec/sec: 6.094, edges: 571/571 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 5s, clients: 1, corpus: 18, objectives: 0, executions: 32, exec/sec: 6.286, edges: 100.000%
+                  (CLIENT) corpus: 18, objectives: 0, executions: 32, exec/sec: 6.286, edges: 571/571 (100%)
+[Testcase    #1]  (GLOBAL) run time: 5s, clients: 1, corpus: 19, objectives: 0, executions: 32, exec/sec: 6.286, edges: 100.000%
+                  (CLIENT) corpus: 19, objectives: 0, executions: 32, exec/sec: 6.286, edges: 571/571 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 6s, clients: 1, corpus: 19, objectives: 0, executions: 39, exec/sec: 6.550, edges: 100.000%
+                  (CLIENT) corpus: 19, objectives: 0, executions: 39, exec/sec: 6.550, edges: 572/572 (100%)
+[Testcase    #1]  (GLOBAL) run time: 6s, clients: 1, corpus: 20, objectives: 0, executions: 39, exec/sec: 6.550, edges: 100.000%
+                  (CLIENT) corpus: 20, objectives: 0, executions: 39, exec/sec: 6.550, edges: 572/572 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 7s, clients: 1, corpus: 20, objectives: 0, executions: 42, exec/sec: 6.016, edges: 100.000%
+                  (CLIENT) corpus: 20, objectives: 0, executions: 42, exec/sec: 6.016, edges: 572/572 (100%)
+[Testcase    #1]  (GLOBAL) run time: 7s, clients: 1, corpus: 21, objectives: 0, executions: 42, exec/sec: 6.016, edges: 100.000%
+                  (CLIENT) corpus: 21, objectives: 0, executions: 42, exec/sec: 6.016, edges: 572/572 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 7s, clients: 1, corpus: 21, objectives: 0, executions: 47, exec/sec: 6.144, edges: 100.000%
+                  (CLIENT) corpus: 21, objectives: 0, executions: 47, exec/sec: 6.144, edges: 572/572 (100%)
+[Testcase    #1]  (GLOBAL) run time: 7s, clients: 1, corpus: 22, objectives: 0, executions: 47, exec/sec: 6.143, edges: 100.000%
+                  (CLIENT) corpus: 22, objectives: 0, executions: 47, exec/sec: 6.143, edges: 572/572 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 9s, clients: 1, corpus: 22, objectives: 0, executions: 57, exec/sec: 6.274, edges: 100.000%
+                  (CLIENT) corpus: 22, objectives: 0, executions: 57, exec/sec: 6.274, edges: 573/573 (100%)
+[Testcase    #1]  (GLOBAL) run time: 9s, clients: 1, corpus: 23, objectives: 0, executions: 57, exec/sec: 6.273, edges: 100.000%
+                  (CLIENT) corpus: 23, objectives: 0, executions: 57, exec/sec: 6.273, edges: 573/573 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 9s, clients: 1, corpus: 23, objectives: 0, executions: 58, exec/sec: 6.380, edges: 100.000%
+                  (CLIENT) corpus: 23, objectives: 0, executions: 58, exec/sec: 6.380, edges: 573/573 (100%)
+[Testcase    #1]  (GLOBAL) run time: 9s, clients: 1, corpus: 24, objectives: 0, executions: 58, exec/sec: 6.380, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 0, executions: 58, exec/sec: 6.380, edges: 573/573 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 9s, clients: 1, corpus: 24, objectives: 0, executions: 59, exec/sec: 6.372, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 0, executions: 59, exec/sec: 6.372, edges: 574/574 (100%)
+[Testcase    #1]  (GLOBAL) run time: 9s, clients: 1, corpus: 25, objectives: 0, executions: 59, exec/sec: 6.371, edges: 100.000%
+                  (CLIENT) corpus: 25, objectives: 0, executions: 59, exec/sec: 6.371, edges: 574/574 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 9s, clients: 1, corpus: 25, objectives: 0, executions: 60, exec/sec: 6.222, edges: 100.000%
+                  (CLIENT) corpus: 25, objectives: 0, executions: 60, exec/sec: 6.222, edges: 574/574 (100%)
+[Testcase    #1]  (GLOBAL) run time: 9s, clients: 1, corpus: 26, objectives: 0, executions: 60, exec/sec: 6.222, edges: 100.000%
+                  (CLIENT) corpus: 26, objectives: 0, executions: 60, exec/sec: 6.222, edges: 574/574 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 11s, clients: 1, corpus: 26, objectives: 0, executions: 66, exec/sec: 6.153, edges: 100.000%
+                  (CLIENT) corpus: 26, objectives: 0, executions: 66, exec/sec: 6.153, edges: 574/574 (100%)
+[Testcase    #1]  (GLOBAL) run time: 11s, clients: 1, corpus: 27, objectives: 0, executions: 66, exec/sec: 6.153, edges: 100.000%
+                  (CLIENT) corpus: 27, objectives: 0, executions: 66, exec/sec: 6.153, edges: 574/574 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 11s, clients: 1, corpus: 27, objectives: 0, executions: 69, exec/sec: 6.138, edges: 100.000%
+                  (CLIENT) corpus: 27, objectives: 0, executions: 69, exec/sec: 6.138, edges: 574/574 (100%)
+[Testcase    #1]  (GLOBAL) run time: 11s, clients: 1, corpus: 28, objectives: 0, executions: 69, exec/sec: 6.137, edges: 100.000%
+                  (CLIENT) corpus: 28, objectives: 0, executions: 69, exec/sec: 6.137, edges: 574/574 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 12s, clients: 1, corpus: 28, objectives: 0, executions: 75, exec/sec: 6.264, edges: 100.000%
+                  (CLIENT) corpus: 28, objectives: 0, executions: 75, exec/sec: 6.264, edges: 574/574 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPL[Testcase    #1]  (GLOBAL) run time: 12s, clients: 1, corpus: 29, objectives: 0, executions: 75, exec/sec: 6.261, edges: 100.000%
+ETED                  (CLIENT) corpus: 29, objectives: 0, executions: 75, exec/sec: 6.261, edges: 574/574 (100%)
+]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 13s, clients: 1, corpus: 29, objectives: 0, executions: 85, exec/sec: 6.604, edges: 100.000%
+                  (CLIENT) corpus: 29, objectives: 0, executions: 85, exec/sec: 6.604, edges: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 13s, clients: 1, corpus: 30, objectives: 0, executions: 85, exec/sec: 6.603, edges: 100.000%
+                  (CLIENT) corpus: 30, objectives: 0, executions: 85, exec/sec: 6.603, edges: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 14s, clients: 1, corpus: 30, objectives: 0, executions: 91, exec/sec: 6.476, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 30, objectives: 0, executions: 91, exec/sec: 6.476, edges: 575/575 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 15s, clients: 1, corpus: 30, objectives: 0, executions: 100, exec/sec: 6.483, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 30, objectives: 0, executions: 100, exec/sec: 6.483, edges: 575/575 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 15s, clients: 1, corpus: 31, objectives: 0, executions: 100, exec/sec: 6.483, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 31, objectives: 0, executions: 100, exec/sec: 6.483, edges: 575/575 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 18s, clients: 1, corpus: 31, objectives: 0, executions: 121, exec/sec: 6.627, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 31, objectives: 0, executions: 121, exec/sec: 6.627, edges: 576/576 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 18s, clients: 1, corpus: 32, objectives: 0, executions: 121, exec/sec: 6.626, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 32, objectives: 0, executions: 121, exec/sec: 6.626, edges: 576/576 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 20s, clients: 1, corpus: 32, objectives: 0, executions: 133, exec/sec: 6.577, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 32, objectives: 0, executions: 133, exec/sec: 6.577, edges: 577/577 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 20s, clients: 1, corpus: 33, objectives: 0, executions: 133, exec/sec: 6.577, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 33, objectives: 0, executions: 133, exec/sec: 6.577, edges: 577/577 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 23s, clients: 1, corpus: 33, objectives: 0, executions: 156, exec/sec: 6.616, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 33, objectives: 0, executions: 156, exec/sec: 6.616, edges: 578/578 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 23s, clients: 1, corpus: 34, objectives: 0, executions: 156, exec/sec: 6.616, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 34, objectives: 0, executions: 156, exec/sec: 6.616, edges: 578/578 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 24s, clients: 1, corpus: 34, objectives: 0, executions: 157, exec/sec: 6.568, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 34, objectives: 0, executions: 157, exec/sec: 6.568, edges: 578/578 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 24s, clients: 1, corpus: 35, objectives: 0, executions: 157, exec/sec: 6.568, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 35, objectives: 0, executions: 157, exec/sec: 6.568, edges: 578/578 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 24s, clients: 1, corpus: 35, objectives: 0, executions: 158, exec/sec: 6.462, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 35, objectives: 0, executions: 158, exec/sec: 6.462, edges: 578/578 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 24s, clients: 1, corpus: 36, objectives: 0, executions: 158, exec/sec: 6.462, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 36, objectives: 0, executions: 158, exec/sec: 6.462, edges: 578/578 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 27s, clients: 1, corpus: 36, objectives: 0, executions: 176, exec/sec: 6.562, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 36, objectives: 0, executions: 176, exec/sec: 6.562, edges: 578/578 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 27s, clients: 1, corpus: 37, objectives: 0, executions: 176, exec/sec: 6.562, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 37, objectives: 0, executions: 176, exec/sec: 6.562, edges: 578/578 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 30s, clients: 1, corpus: 37, objectives: 0, executions: 199, exec/sec: 6.631, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 37, objectives: 0, executions: 199, exec/sec: 6.631, edges: 579/579 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 30s, clients: 1, corpus: 38, objectives: 0, executions: 199, exec/sec: 6.631, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 38, objectives: 0, executions: 199, exec/sec: 6.631, edges: 579/579 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from Fr[UserStats   #1]  (GLOBAL) run time: 31s, clients: 1, corpus: 38, objectives: 0, executions: 210, exec/sec: 6.639, edges: 100.000%, stability: 100.000%
+eeRTOS                   (CLIENT) corpus: 38, objectives: 0, executions: 210, exec/sec: 6.639, edges: 580/580 (100%), stability: 575/575 (100%)
+fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 31s, clients: 1, corpus: 39, objectives: 0, executions: 210, exec/sec: 6.639, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 39, objectives: 0, executions: 210, exec/sec: 6.639, edges: 580/580 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[Client Heartbeat #1]  (GLOBAL) run time: 32s, clients: 1, corpus: 39, objectives: 0, executions: 217, exec/sec: 6.746, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 39, objectives: 0, executions: 217, exec/sec: 6.746, edges: 580/580 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 33s, clients: 1, corpus: 39, objectives: 0, executions: 222, exec/sec: 6.700, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 39, objectives: 0, executions: 222, exec/sec: 6.700, edges: 587/587 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 33s, clients: 1, corpus: 40, objectives: 0, executions: 222, exec/sec: 6.700, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 40, objectives: 0, executions: 222, exec/sec: 6.700, edges: 587/587 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 34s, clients: 1, corpus: 40, objectives: 0, executions: 225, exec/sec: 6.635, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 40, objectives: 0, executions: 225, exec/sec: 6.635, edges: 588/588 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 34s, clients: 1, corpus: 41, objectives: 0, executions: 225, exec/sec: 6.635, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 41, objectives: 0, executions: 225, exec/sec: 6.635, edges: 588/588 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 35s, clients: 1, corpus: 41, objectives: 0, executions: 231, exec/sec: 6.646, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 41, objectives: 0, executions: 231, exec/sec: 6.646, edges: 588/588 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 35s, clients: 1, corpus: 42, objectives: 0, executions: 231, exec/sec: 6.646, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 42, objectives: 0, executions: 231, exec/sec: 6.646, edges: 588/588 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 36s, clients: 1, corpus: 42, objectives: 0, executions: 238, exec/sec: 6.649, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 42, objectives: 0, executions: 238, exec/sec: 6.649, edges: 588/588 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 36s, clients: 1, corpus: 43, objectives: 0, executions: 238, exec/sec: 6.649, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 43, objectives: 0, executions: 238, exec/sec: 6.649, edges: 588/588 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 39s, clients: 1, corpus: 43, objectives: 0, executions: 256, exec/sec: 6.584, edges: 100.000%, stability: 100.000%
+Hello f                  (CLIENT) corpus: 43, objectives: 0, executions: 256, exec/sec: 6.584, edges: 588/588 (100%), stability: 575/575 (100%)
+rom FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 39s, clients: 1, corpus: 44, objectives: 0, executions: 256, exec/sec: 6.584, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 44, objectives: 0, executions: 256, exec/sec: 6.584, edges: 588/588 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 42s, clients: 1, corpus: 44, objectives: 0, executions: 274, exec/sec: 6.531, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 44, objectives: 0, executions: 274, exec/sec: 6.531, edges: 588/588 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 42s, clients: 1, corpus: 45, objectives: 0, executions: 274, exec/sec: 6.531, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 45, objectives: 0, executions: 274, exec/sec: 6.531, edges: 588/588 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 43s, clients: 1, corpus: 45, objectives: 0, executions: 281, exec/sec: 6.511, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 45, objectives: 0, executions: 281, exec/sec: 6.511, edges: 588/588 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 43s, clients: 1, corpus: 46, objectives: 0, executions: 281, exec/sec: 6.511, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 46, objectives: 0, executions: 281, exec/sec: 6.511, edges: 588/588 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 44s, clients: 1, corpus: 46, objectives: 0, executions: 288, exec/sec: 6.496, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 46, objectives: 0, executions: 288, exec/sec: 6.496, edges: 589/589 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 44s, clients: 1, corpus: 47, objectives: 0, executions: 288, exec/sec: 6.496, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 47, objectives: 0, executions: 288, exec/sec: 6.496, edges: 589/589 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 49s, clients: 1, corpus: 47, objectives: 0, executions: 318, exec/sec: 6.402, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 47, objectives: 0, executions: 318, exec/sec: 6.402, edges: 590/590 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 49s, clients: 1, corpus: 48, objectives: 0, executions: 318, exec/sec: 6.402, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 48, objectives: 0, executions: 318, exec/sec: 6.402, edges: 590/590 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 51s, clients: 1, corpus: 48, objectives: 0, executions: 328, exec/sec: 6.437, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 48, objectives: 0, executions: 328, exec/sec: 6.437, edges: 590/590 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 51s, clients: 1, corpus: 49, objectives: 0, executions: 328, exec/sec: 6.437, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 49, objectives: 0, executions: 328, exec/sec: 6.437, edges: 590/590 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[Client Heartbeat #1]  (GLOBAL) run time: 52s, clients: 1, corpus: 49, objectives: 0, executions: 336, exec/sec: 6.435, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 49, objectives: 0, executions: 336, exec/sec: 6.435, edges: 590/590 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 55s, clients: 1, corpus: 49, objectives: 0, executions: 359, exec/sec: 6.542, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 49, objectives: 0, executions: 359, exec/sec: 6.542, edges: 595/595 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 55s, clients: 1, corpus: 50, objectives: 0, executions: 359, exec/sec: 6.542, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 50, objectives: 0, executions: 359, exec/sec: 6.542, edges: 595/595 (100%), stability: 575/575 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1m-1s, clients: 1, corpus: 50, objectives: 0, executions: 409, exec/sec: 6.682, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 50, objectives: 0, executions: 409, exec/sec: 6.682, edges: 596/596 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1m-1s, clients: 1, corpus: 51, objectives: 0, executions: 409, exec/sec: 6.682, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 51, objectives: 0, executions: 409, exec/sec: 6.682, edges: 596/596 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1m-2s, clients: 1, corpus: 51, objectives: 0, executions: 413, exec/sec: 6.673, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 51, objectives: 0, executions: 413, exec/sec: 6.673, edges: 597/597 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1m-2s, clients: 1, corpus: 52, objectives: 0, executions: 413, exec/sec: 6.673, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 52, objectives: 0, executions: 413, exec/sec: 6.673, edges: 597/597 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1m-4s, clients: 1, corpus: 52, objectives: 0, executions: 427, exec/sec: 6.640, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 52, objectives: 0, executions: 427, exec/sec: 6.640, edges: 597/597 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1m-4s, clients: 1, corpus: 53, objectives: 0, executions: 427, exec/sec: 6.640, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 53, objectives: 0, executions: 427, exec/sec: 6.640, edges: 597/597 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1m-7s, clients: 1, corpus: 53, objectives: 0, executions: 451, exec/sec: 6.703, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 53, objectives: 0, executions: 451, exec/sec: 6.703, edges: 597/597 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1m-7s, clients: 1, corpus: 54, objectives: 0, executions: 451, exec/sec: 6.703, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 54, objectives: 0, executions: 451, exec/sec: 6.703, edges: 597/597 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1m-8s, clients: 1, corpus: 54, objectives: 0, executions: 455, exec/sec: 6.719, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 54, objectives: 0, executions: 455, exec/sec: 6.719, edges: 598/598 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1m-8s, clients: 1, corpus: 55, objectives: 0, executions: 455, exec/sec: 6.719, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 55, objectives: 0, executions: 455, exec/sec: 6.719, edges: 598/598 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1m-11s, clients: 1, corpus: 55, objectives: 0, executions: 481, exec/sec: 6.753, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 55, objectives: 0, executions: 481, exec/sec: 6.753, edges: 598/598 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1m-11s, clients: 1, corpus: 56, objectives: 0, executions: 481, exec/sec: 6.753, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 56, objectives: 0, executions: 481, exec/sec: 6.753, edges: 598/598 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1m-14s, clients: 1, corpus: 56, objectives: 0, executions: 503, exec/sec: 6.752, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 56, objectives: 0, executions: 503, exec/sec: 6.752, edges: 599/599 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1m-14s, clients: 1, corpus: 57, objectives: 0, executions: 503, exec/sec: 6.752, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 57, objectives: 0, executions: 503, exec/sec: 6.752, edges: 599/599 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[Client Heartbeat #1]  (GLOBAL) run time: 1m-21s, clients: 1, corpus: 57, objectives: 0, executions: 564, exec/sec: 6.923, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 57, objectives: 0, executions: 564, exec/sec: 6.923, edges: 599/599 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1m-29s, clients: 1, corpus: 57, objectives: 0, executions: 612, exec/sec: 6.854, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 57, objectives: 0, executions: 612, exec/sec: 6.854, edges: 599/599 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1m-29s, clients: 1, corpus: 58, objectives: 0, executions: 612, exec/sec: 6.854, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 58, objectives: 0, executions: 612, exec/sec: 6.854, edges: 599/599 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1m-32s, clients: 1, corpus: 58, objectives: 0, executions: 631, exec/sec: 6.808, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 58, objectives: 0, executions: 631, exec/sec: 6.808, edges: 600/600 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1m-32s, clients: 1, corpus: 59, objectives: 0, executions: 631, exec/sec: 6.808, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 59, objectives: 0, executions: 631, exec/sec: 6.808, edges: 600/600 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1m-42s, clients: 1, corpus: 59, objectives: 0, executions: 679, exec/sec: 6.658, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 59, objectives: 0, executions: 679, exec/sec: 6.658, edges: 600/600 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1m-42s, clients: 1, corpus: 60, objectives: 0, executions: 679, exec/sec: 6.658, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 60, objectives: 0, executions: 679, exec/sec: 6.658, edges: 600/600 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo[Client Heartbeat #1]  (GLOBAL) run time: 1m-44s, clients: 1, corpus: 60, objectives: 0, executions: 689, exec/sec: 6.592, edges: 100.000%, stability: 100.000%
+!
+                       (CLIENT) corpus: 60, objectives: 0, executions: 689, exec/sec: 6.591, edges: 600/600 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 1m-59s, clients: 1, corpus: 60, objectives: 0, executions: 776, exec/sec: 6.519, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 60, objectives: 0, executions: 776, exec/sec: 6.519, edges: 600/600 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 1m-59s, clients: 1, corpus: 61, objectives: 0, executions: 776, exec/sec: 6.519, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 61, objectives: 0, executions: 776, exec/sec: 6.519, edges: 600/600 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2m-1s, clients: 1, corpus: 61, objectives: 0, executions: 786, exec/sec: 6.492, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 61, objectives: 0, executions: 786, exec/sec: 6.492, edges: 601/601 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2m-1s, clients: 1, corpus: 62, objectives: 0, executions: 786, exec/sec: 6.492, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 62, objectives: 0, executions: 786, exec/sec: 6.492, edges: 601/601 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2m-1s, clients: 1, corpus: 62, objectives: 0, executions: 789, exec/sec: 6.496, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 62, objectives: 0, executions: 789, exec/sec: 6.496, edges: 601/601 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2m-1s, clients: 1, corpus: 63, objectives: 0, executions: 789, exec/sec: 6.496, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 63, objectives: 0, executions: 789, exec/sec: 6.496, edges: 601/601 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[Client Heartbeat #1]  (GLOBAL) run time: 2m-3s, clients: 1, corpus: 63, objectives: 0, executions: 810, exec/sec: 6.550, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 63, objectives: 0, executions: 810, exec/sec: 6.550, edges: 601/601 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2m-7s, clients: 1, corpus: 63, objectives: 0, executions: 835, exec/sec: 6.559, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 63, objectives: 0, executions: 835, exec/sec: 6.559, edges: 602/602 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2m-7s, clients: 1, corpus: 64, objectives: 0, executions: 835, exec/sec: 6.559, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 64, objectives: 0, executions: 835, exec/sec: 6.559, edges: 602/602 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2m-12s, clients: 1, corpus: 64, objectives: 0, executions: 862, exec/sec: 6.533, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 64, objectives: 0, executions: 862, exec/sec: 6.533, edges: 602/602 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2m-12s, clients: 1, corpus: 65, objectives: 0, executions: 862, exec/sec: 6.533, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 65, objectives: 0, executions: 862, exec/sec: 6.533, edges: 602/602 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[Client Heartbeat #1]  (GLOBAL) run time: 2m-21s, clients: 1, corpus: 65, objectives: 0, executions: 932, exec/sec: 6.580, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 65, objectives: 0, executions: 932, exec/sec: 6.580, edges: 602/602 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2m-32s, clients: 1, corpus: 65, objectives: 0, executions: 1002, exec/sec: 6.594, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 65, objectives: 0, executions: 1002, exec/sec: 6.594, edges: 602/602 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2m-32s, clients: 1, corpus: 66, objectives: 0, executions: 1002, exec/sec: 6.594, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 66, objectives: 0, executions: 1002, exec/sec: 6.594, edges: 602/602 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2m-35s, clients: 1, corpus: 66, objectives: 0, executions: 1021, exec/sec: 6.574, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 66, objectives: 0, executions: 1021, exec/sec: 6.574, edges: 603/603 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2m-35s, clients: 1, corpus: 67, objectives: 0, executions: 1021, exec/sec: 6.574, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 67, objectives: 0, executions: 1021, exec/sec: 6.574, edges: 603/603 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2m-36s, clients: 1, corpus: 67, objectives: 0, executions: 1028, exec/sec: 6.576, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 67, objectives: 0, executions: 1028, exec/sec: 6.576, edges: 604/604 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2m-36s, clients: 1, corpus: 68, objectives: 0, executions: 1028, exec/sec: 6.576, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 68, objectives: 0, executions: 1028, exec/sec: 6.576, edges: 604/604 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[Client Heartbeat #1]  (GLOBAL) run time: 2m-40s, clients: 1, corpus: 68, objectives: 0, executions: 1050, exec/sec: 6.555, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 68, objectives: 0, executions: 1050, exec/sec: 6.555, edges: 604/604 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2m-41s, clients: 1, corpus: 68, objectives: 0, executions: 1059, exec/sec: 6.566, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 68, objectives: 0, executions: 1059, exec/sec: 6.566, edges: 604/604 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2m-41s, clients: 1, corpus: 69, objectives: 0, executions: 1059, exec/sec: 6.566, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 69, objectives: 0, executions: 1059, exec/sec: 6.566, edges: 604/604 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2m-42s, clients: 1, corpus: 69, objectives: 0, executions: 1064, exec/sec: 6.578, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 69, objectives: 0, executions: 1064, exec/sec: 6.578, edges: 605/605 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2m-42s, clients: 1, corpus: 70, objectives: 0, executions: 1064, exec/sec: 6.578, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 70, objectives: 0, executions: 1064, exec/sec: 6.578, edges: 605/605 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2m-44s, clients: 1, corpus: 70, objectives: 0, executions: 1084, exec/sec: 6.613, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 70, objectives: 0, executions: 1084, exec/sec: 6.613, edges: 606/606 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2m-44s, clients: 1, corpus: 71, objectives: 0, executions: 1084, exec/sec: 6.613, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 71, objectives: 0, executions: 1084, exec/sec: 6.613, edges: 606/606 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 2m-58s, clients: 1, corpus: 71, objectives: 0, executions: 1192, exec/sec: 6.677, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 71, objectives: 0, executions: 1192, exec/sec: 6.677, edges: 606/606 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 2m-58s, clients: 1, corpus: 72, objectives: 0, executions: 1192, exec/sec: 6.677, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 72, objectives: 0, executions: 1192, exec/sec: 6.677, edges: 606/606 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 3m-4s, clients: 1, corpus: 72, objectives: 0, executions: 1221, exec/sec: 6.641, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 72, objectives: 0, executions: 1221, exec/sec: 6.641, edges: 607/607 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 3m-4s, clients: 1, corpus: 73, objectives: 0, executions: 1221, exec/sec: 6.641, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 73, objectives: 0, executions: 1221, exec/sec: 6.641, edges: 607/607 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 3m-8s, clients: 1, corpus: 73, objectives: 0, executions: 1248, exec/sec: 6.619, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 73, objectives: 0, executions: 1248, exec/sec: 6.619, edges: 607/607 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 3m-8s, clients: 1, corpus: 74, objectives: 0, executions: 1248, exec/sec: 6.619, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 74, objectives: 0, executions: 1248, exec/sec: 6.619, edges: 607/607 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[Client Heartbeat #1]  (GLOBAL) run time: 3m-14s, clients: 1, corpus: 74, objectives: 0, executions: 1282, exec/sec: 6.589, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 74, objectives: 0, executions: 1282, exec/sec: 6.589, edges: 607/607 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 3m-22s, clients: 1, corpus: 74, objectives: 0, executions: 1328, exec/sec: 6.567, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 74, objectives: 0, executions: 1328, exec/sec: 6.567, edges: 608/608 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 3m-22s, clients: 1, corpus: 75, objectives: 0, executions: 1328, exec/sec: 6.567, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 75, objectives: 0, executions: 1328, exec/sec: 6.567, edges: 608/608 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 3m-24s, clients: 1, corpus: 75, objectives: 0, executions: 1338, exec/sec: 6.563, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 75, objectives: 0, executions: 1338, exec/sec: 6.563, edges: 609/609 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 3m-24s, clients: 1, corpus: 76, objectives: 0, executions: 1338, exec/sec: 6.563, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 76, objectives: 0, executions: 1338, exec/sec: 6.563, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[Client Heartbeat #1]  (GLOBAL) run time: 3m-30s, clients: 1, corpus: 76, objectives: 0, executions: 1383, exec/sec: 6.589, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 76, objectives: 0, executions: 1383, exec/sec: 6.589, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 3m-30s, clients: 1, corpus: 76, objectives: 0, executions: 1387, exec/sec: 6.589, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 76, objectives: 0, executions: 1387, exec/sec: 6.589, edges: 609/609 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 3m-30s, clients: 1, corpus: 77, objectives: 0, executions: 1387, exec/sec: 6.589, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 77, objectives: 0, executions: 1387, exec/sec: 6.589, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 3m-37s, clients: 1, corpus: 77, objectives: 0, executions: 1427, exec/sec: 6.578, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 77, objectives: 0, executions: 1427, exec/sec: 6.578, edges: 609/609 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 3m-37s, clients: 1, corpus: 78, objectives: 0, executions: 1427, exec/sec: 6.578, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 78, objectives: 0, executions: 1427, exec/sec: 6.578, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 3m-42s, clients: 1, corpus: 78, objectives: 0, executions: 1454, exec/sec: 6.543, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 78, objectives: 0, executions: 1454, exec/sec: 6.543, edges: 609/609 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 3m-42s, clients: 1, corpus: 79, objectives: 0, executions: 1454, exec/sec: 6.543, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 79, objectives: 0, executions: 1454, exec/sec: 6.543, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 3m-45s, clients: 1, corpus: 79, objectives: 0, executions: 1473, exec/sec: 6.542, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 79, objectives: 0, executions: 1473, exec/sec: 6.542, edges: 609/609 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 3m-45s, clients: 1, corpus: 80, objectives: 0, executions: 1473, exec/sec: 6.542, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 80, objectives: 0, executions: 1473, exec/sec: 6.542, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[Client Heartbeat #1]  (GLOBAL) run time: 3m-47s, clients: 1, corpus: 80, objectives: 0, executions: 1486, exec/sec: 6.534, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 80, objectives: 0, executions: 1486, exec/sec: 6.534, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 3m-50s, clients: 1, corpus: 80, objectives: 0, executions: 1503, exec/sec: 6.529, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 80, objectives: 0, executions: 1503, exec/sec: 6.529, edges: 609/609 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 3m-50s, clients: 1, corpus: 81, objectives: 0, executions: 1503, exec/sec: 6.529, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 81, objectives: 0, executions: 1503, exec/sec: 6.529, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[Client Heartbeat #1]  (GLOBAL) run time: 4m-9s, clients: 1, corpus: 81, objectives: 0, executions: 1615, exec/sec: 6.490, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 81, objectives: 0, executions: 1615, exec/sec: 6.490, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 4m-18s, clients: 1, corpus: 81, objectives: 0, executions: 1669, exec/sec: 6.457, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 81, objectives: 0, executions: 1669, exec/sec: 6.457, edges: 609/609 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 4m-18s, clients: 1, corpus: 82, objectives: 0, executions: 1669, exec/sec: 6.457, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 82, objectives: 0, executions: 1669, exec/sec: 6.457, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[Client Heartbeat #1]  (GLOBAL) run time: 4m-26s, clients: 1, corpus: 82, objectives: 0, executions: 1707, exec/sec: 6.413, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 82, objectives: 0, executions: 1707, exec/sec: 6.413, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 4m-30s, clients: 1, corpus: 82, objectives: 0, executions: 1724, exec/sec: 6.390, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 82, objectives: 0, executions: 1724, exec/sec: 6.390, edges: 609/609 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 4m-30s, clients: 1, corpus: 83, objectives: 0, executions: 1724, exec/sec: 6.390, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 83, objectives: 0, executions: 1724, exec/sec: 6.390, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 4m-39s, clients: 1, corpus: 83, objectives: 0, executions: 1792, exec/sec: 6.410, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 83, objectives: 0, executions: 1792, exec/sec: 6.410, edges: 609/609 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 4m-39s, clients: 1, corpus: 84, objectives: 0, executions: 1792, exec/sec: 6.410, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 84, objectives: 0, executions: 1792, exec/sec: 6.410, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 4m-43s, clients: 1, corpus: 84, objectives: 0, executions: 1818, exec/sec: 6.423, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 84, objectives: 0, executions: 1818, exec/sec: 6.423, edges: 609/609 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 4m-43s, clients: 1, corpus: 85, objectives: 0, executions: 1818, exec/sec: 6.423, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 85, objectives: 0, executions: 1818, exec/sec: 6.423, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 4m-45s, clients: 1, corpus: 85, objectives: 0, executions: 1836, exec/sec: 6.431, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 85, objectives: 0, executions: 1836, exec/sec: 6.431, edges: 609/609 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 4m-45s, clients: 1, corpus: 86, objectives: 0, executions: 1836, exec/sec: 6.431, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 86, objectives: 0, executions: 1836, exec/sec: 6.431, edges: 609/609 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 4m-50s, clients: 1, corpus: 86, objectives: 0, executions: 1865, exec/sec: 6.433, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 86, objectives: 0, executions: 1865, exec/sec: 6.433, edges: 610/610 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 4m-50s, clients: 1, corpus: 87, objectives: 0, executions: 1865, exec/sec: 6.433, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 87, objectives: 0, executions: 1865, exec/sec: 6.433, edges: 610/610 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 4m-50s, clients: 1, corpus: 87, objectives: 0, executions: 1867, exec/sec: 6.427, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 87, objectives: 0, executions: 1867, exec/sec: 6.427, edges: 610/610 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 4m-50s, clients: 1, corpus: 88, objectives: 0, executions: 1867, exec/sec: 6.427, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 88, objectives: 0, executions: 1867, exec/sec: 6.427, edges: 610/610 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 4m-51s, clients: 1, corpus: 88, objectives: 0, executions: 1871, exec/sec: 6.421, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 88, objectives: 0, executions: 1871, exec/sec: 6.421, edges: 610/610 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 4m-51s, clients: 1, corpus: 89, objectives: 0, executions: 1871, exec/sec: 6.421, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 89, objectives: 0, executions: 1871, exec/sec: 6.421, edges: 610/610 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[Client Heartbeat #1]  (GLOBAL) run time: 4m-57s, clients: 1, corpus: 89, objectives: 0, executions: 1908, exec/sec: 6.419, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 89, objectives: 0, executions: 1908, exec/sec: 6.419, edges: 610/610 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 5m-4s, clients: 1, corpus: 89, objectives: 0, executions: 1955, exec/sec: 6.428, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 89, objectives: 0, executions: 1955, exec/sec: 6.428, edges: 611/611 (100%), stability: 575/575 (100%)
+[Testcase    #1]  (GLOBAL) run time: 5m-4s, clients: 1, corpus: 90, objectives: 0, executions: 1955, exec/sec: 6.428, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 90, objectives: 0, executions: 1955, exec/sec: 6.428, edges: 611/611 (100%), stability: 575/575 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!

@@ -1,0 +1,21 @@
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=726 | finish_reason=completed
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=5510 | finish_reason=completed
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=33145 | finish_reason=completed
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=12628 | finish_reason=completed
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=12795 | finish_reason=completed
+[OpenAI/responses] ✅ 使用 responses 输出 | prompt=0, completion=0, total=12846 | finish_reason=completed
+
+🎉 函数级 Harness 已生成: /home/zwz/rtos_fuzz_agent/src/generated_tests/CORTEX_MPS2_QEMU_IAR_GCC/20251218_212606_xTaskGetCurrentTaskHandle_gpt-5_1
+👉 提示已写入: prompt_dump.txt 便于审计与对比
+
+📜 多轮执行详情：
+  - round: compile=PASS(attempts=2), run=FAIL(TIMEOUT), repair=OK
+  - round: compile=PASS(attempts=1), run=FAIL(TIMEOUT), repair=OK
+  - round: compile=PASS(attempts=1), run=FAIL(TIMEOUT), repair=OK
+  - round: compile=PASS(attempts=1), run=FAIL
+
+🔧 最终编译验证: PASS（尝试 1 次）。日志见 /home/zwz/rtos_fuzz_agent/src/generated_tests/CORTEX_MPS2_QEMU_IAR_GCC/20251218_212606_xTaskGetCurrentTaskHandle_gpt-5_1/compile.log
+🚀 最终运行结果: PASS（日志见 /home/zwz/rtos_fuzz_agent/src/generated_tests/CORTEX_MPS2_QEMU_IAR_GCC/20251218_212606_xTaskGetCurrentTaskHandle_gpt-5_1/run.log）
+📈 多轮执行摘要: stage=run, status=FAIL (共 4 轮)
+
+⏱ 本次 generate-func 总耗时: 404.93 秒

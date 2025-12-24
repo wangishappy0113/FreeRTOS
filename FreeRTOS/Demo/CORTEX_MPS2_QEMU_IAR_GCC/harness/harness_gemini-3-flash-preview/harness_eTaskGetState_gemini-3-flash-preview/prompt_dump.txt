@@ -1,0 +1,207 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: eTaskGetState
+
+### Function eTaskGetState
+Signature: eTaskState(TaskHandle_t)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2508-2633
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), <operator>.notEquals(operator), vAssertCalled(function), /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0)(macro), vPortEnterCritical(function), /home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listLIST_ITEM_CONTAINER:ANY(1)(macro)
+Incoming callers count: 3
+Full source code:
+    eTaskState eTaskGetState( TaskHandle_t xTask )
+    {
+        eTaskState eReturn;
+        List_t const * pxStateList;
+        List_t const * pxEventList;
+        List_t const * pxDelayedList;
+        List_t const * pxOverflowedDelayedList;
+        const TCB_t * const pxTCB = xTask;
+
+        traceENTER_eTaskGetState( xTask );
+
+        configASSERT( pxTCB != NULL );
+
+        #if ( configNUMBER_OF_CORES == 1 )
+            if( pxTCB == pxCurrentTCB )
+            {
+                /* The task calling this function is querying its own state. */
+                eReturn = eRunning;
+            }
+            else
+        #endif
+        {
+            taskENTER_CRITICAL();
+            {
+                pxStateList = listLIST_ITEM_CONTAINER( &( pxTCB->xStateListItem ) );
+                pxEventList = listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) );
+                pxDelayedList = pxDelayedTaskList;
+                pxOverflowedDelayedList = pxOverflowDelayedTaskList;
+            }
+            taskEXIT_CRITICAL();
+
+            if( pxEventList == &xPendingReadyList )
+            {
+                /* The task has been placed on the pending ready list, so its
+                 * state is eReady regardless of what list the task's state list
+                 * item is currently placed on. */
+                eReturn = eReady;
+            }
+            else if( ( pxStateList == pxDelayedList ) || ( pxStateList == pxOverflowedDelayedList ) )
+            {
+                /* The task being queried is referenced from one of the Blocked
+                 * lists. */
+                eReturn = eBlocked;
+            }
+
+            #if ( INCLUDE_vTaskSuspend == 1 )
+                else if( pxStateList == &xSuspendedTaskList )
+                {
+                    /* The task being queried is referenced from the suspended
+                     * list.  Is it genuinely suspended or is it blocked
+                     * indefinitely? */
+                    if( listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) ) == NULL )
+                    {
+                        #if ( configUSE_TASK_NOTIFICATIONS == 1 )
+                        {
+                            BaseType_t x;
+
+                            /* The task does not appear on the event list item of
+                             * and of the RTOS objects, but could still be in the
+                             * blocked state if it is waiting on its notification
+                             * rather than waiting on an object.  If not, is
+                             * suspended. */
+                            eReturn = eSuspended;
+
+                            for( x = ( BaseType_t ) 0; x < ( BaseType_t ) configTASK_NOTIFICATION_ARRAY_ENTRIES; x++ )
+                            {
+                                if( pxTCB->ucNotifyState[ x ] == taskWAITING_NOTIFICATION )
+                                {
+                                    eReturn = eBlocked;
+                                    break;
+                                }
+                            }
+                        }
+                        #else /* if ( configUSE_TASK_NOTIFICATIONS == 1 ) */
+                        {
+                            eReturn = eSuspended;
+                        }
+                        #endif /* if ( configUSE_TASK_NOTIFICATIONS == 1 ) */
+                    }
+                    else
+                    {
+                        eReturn = eBlocked;
+                    }
+                }
+            #endif /* if ( INCLUDE_vTaskSuspend == 1 ) */
+
+            #if ( INCLUDE_vTaskDelete == 1 )
+                else if( ( pxStateList == &xTasksWaitingTermination ) || ( pxStateList == NULL ) )
+                {
+                    /* The task being queried is referenced from the deleted
+                     * tasks list, or it is not referenced from any lists at
+                     * all. */
+                    eReturn = eDeleted;
+                }
+            #endif
+
+            else
+            {
+                #if ( configNUMBER_OF_CORES == 1 )
+                {
+                    /* If the task is not in any other state, it must be in the
+                     * Ready (including pending ready) state. */
+                    eReturn = eReady;
+                }
+                #else /* #if ( configNUMBER_OF_CORES == 1 ) */
+                {
+                    if( taskTASK_IS_RUNNING( pxTCB ) == pdTRUE )
+                    {
+                        /* Is it actively running on a core? */
+                        eReturn = eRunning;
+                    }
+                    else
+                    {
+                        /* If the task is not in any other state, it must be in the
+                         * Ready (including pending ready) state. */
+                        eReturn = eReady;
+                    }
+                }
+                #endif /* #if ( configNUMBER_OF_CORES == 1 ) */
+            }
+        }
+
+        traceRETURN_eTaskGetState( eReturn );
+
+        return eReturn;
+    }
+
+Official docs (summary):
+Parameters:
+- pxTask: TaskHandle_t — The handle of the subject task.  To obtain a task’s handle create the task using xTaskCreate() and make use of the  pxCreatedTask parameter, or create the task using xTaskCreateStatic () and store  the returned value, or use the task’s name in a call to xTaskGetHandle().
+Return values:
+- eTaskState: Table 1 lists the value that eTaskGetState() will return for each possible state that the task
+referenced by the pxTask parameter can exist in.
+Table 1.  eTaskGetState() return values
+State  Return Value
+Running  eRunning (the task is querying its own state)
+Ready  eReady
+Blocked  eBlocked
+Suspended  eSuspended
+Deleted  eDeleted (the task’s structures are waiting to be cleaned up)
+Related configs: none
+Related APIs: none
+Reference snippets:
+- API eTaskGetState Returns (api:eTaskGetState:returns#c0) :: API: eTaskGetState Section: returns returns eTaskState: Table 1 lists the value that eTaskGetState() will return for each possible state that the task referenced by the pxTask parameter can exist in. Table 1.  eTaskGetState() return values State  Return Value Running  eRunning (the task is querying its own state) Ready…
+- API eTaskGetState Overview (api:eTaskGetState:overview#c0) :: API: eTaskGetState Signature: eTaskState eTaskGetState (TaskHandle_t pxTask); Headers: task.h, FreeRTOS.h Summary: Returns as an enumerated type the state in which a task existed at the time eTaskGetState() was executed.
+- Function eTaskGetState (func:eTaskGetState:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c0) :: FUNC eTaskGetState eTaskState(TaskHandle_t) file /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2508-2633     eTaskState eTaskGetState( TaskHandle_t xTask )     {         eTaskState eReturn;         List_t const * pxStateList;         List_t const * pxEventList;         List_t const * pxDelayedList;         List_t const * …
+- Function eTaskGetState (func:eTaskGetState:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c2) ::                          eReturn = eRunning;                     }                     else                     {                         /* If the task is not in any other state, it must be in the                          * Ready (including pending ready) state. */                         eReturn = eReady;            …
+- Type eTaskGetState (type:eTaskGetState#c0) :: TYPE type eTaskGetState /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c
+- Function <global> (func:<global>:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c49) :: nced from the suspended                      * list.  Is it genuinely suspended or is it blocked                      * indefinitely? */                     if( listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) ) == NULL )                     {                         #if ( configUSE_TASK_NOTIFICATIONS == 1 )        …
+- eTaskGetState :: eTaskState eTaskGetState (TaskHandle_t pxTask); Returns as an enumerated type the state in which a task existed at the time eTaskGetState() was executed.
+
+Official documentation (full):
+Title: eTaskGetState
+Signature: eTaskState eTaskGetState (TaskHandle_t pxTask);
+Summary:
+Returns as an enumerated type the state in which a task existed at the time eTaskGetState()
+was executed.
+Parameters:
+- pxTask: TaskHandle_t — The handle of the subject task.  To obtain a task’s handle create the task using xTaskCreate() and make use of the  pxCreatedTask parameter, or create the task using xTaskCreateStatic () and store  the returned value, or use the task’s name in a call to xTaskGetHandle().
+Return values:
+- eTaskState: Table 1 lists the value that eTaskGetState() will return for each possible state that the task
+referenced by the pxTask parameter can exist in.
+Table 1.  eTaskGetState() return values
+State  Return Value
+Running  eRunning (the task is querying its own state)
+Ready  eReady
+Blocked  eBlocked
+Suspended  eSuspended
+Deleted  eDeleted (the task’s structures are waiting to be cleaned up)
+Notes:
+INCLUDE_eTaskGetState must be set to 1 in FreeRTOSConfig.h for the eTaskGetState() API
+function to be available.
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

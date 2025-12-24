@@ -1,0 +1,267 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xTaskResumeAll
+
+### Function xTaskResumeAll
+Signature: BaseType_t(void)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4011-4157
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:pdFALSE:ANY(0)(macro), <operator>.cast(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0)(macro), vPortEnterCritical(function), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOS.h:portGET_CORE_ID:int(0)(function), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator)
+Incoming callers count: 24
+Full source code:
+BaseType_t xTaskResumeAll( void )
+{
+    TCB_t * pxTCB = NULL;
+    BaseType_t xAlreadyYielded = pdFALSE;
+
+    traceENTER_xTaskResumeAll();
+
+    #if ( configNUMBER_OF_CORES > 1 )
+        if( xSchedulerRunning != pdFALSE )
+    #endif
+    {
+        /* It is possible that an ISR caused a task to be removed from an event
+         * list while the scheduler was suspended.  If this was the case then the
+         * removed task will have been added to the xPendingReadyList.  Once the
+         * scheduler has been resumed it is safe to move all the pending ready
+         * tasks from this list into their appropriate ready list. */
+        taskENTER_CRITICAL();
+        {
+            const BaseType_t xCoreID = ( BaseType_t ) portGET_CORE_ID();
+
+            /* If uxSchedulerSuspended is zero then this function does not match a
+             * previous call to vTaskSuspendAll(). */
+            configASSERT( uxSchedulerSuspended != 0U );
+
+            uxSchedulerSuspended = ( UBaseType_t ) ( uxSchedulerSuspended - 1U );
+            portRELEASE_TASK_LOCK( xCoreID );
+
+            if( uxSchedulerSuspended == ( UBaseType_t ) 0U )
+            {
+                if( uxCurrentNumberOfTasks > ( UBaseType_t ) 0U )
+                {
+                    /* Move any readied tasks from the pending list into the
+                     * appropriate ready list. */
+                    while( listLIST_IS_EMPTY( &xPendingReadyList ) == pdFALSE )
+                    {
+                        /* MISRA Ref 11.5.3 [Void pointer assignment] */
+                        /* More details at: https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/main/MISRA.md#rule-115 */
+                        /* coverity[misra_c_2012_rule_11_5_violation] */
+                        pxTCB = listGET_OWNER_OF_HEAD_ENTRY( ( &xPendingReadyList ) );
+                        listREMOVE_ITEM( &( pxTCB->xEventListItem ) );
+                        portMEMORY_BARRIER();
+                        listREMOVE_ITEM( &( pxTCB->xStateListItem ) );
+                        prvAddTaskToReadyList( pxTCB );
+
+                        #if ( configNUMBER_OF_CORES == 1 )
+                        {
+                            /* If the moved task has a priority higher than the current
+                             * task then a yield must be performed. */
+                            if( pxTCB->uxPriority > pxCurrentTCB->uxPriority )
+                            {
+                                xYieldPendings[ xCoreID ] = pdTRUE;
+                            }
+                            else
+                            {
+                                mtCOVERAGE_TEST_MARKER();
+                            }
+                        }
+                        #else /* #if ( configNUMBER_OF_CORES == 1 ) */
+                        {
+                            /* All appropriate tasks yield at the moment a task is added to xPendingReadyList.
+                             * If the current core yielded then vTaskSwitchContext() has already been called
+                             * which sets xYieldPendings for the current core to pdTRUE. */
+                        }
+                        #endif /* #if ( configNUMBER_OF_CORES == 1 ) */
+                    }
+
+                    if( pxTCB != NULL )
+                    {
+                        /* A task was unblocked while the scheduler was suspended,
+                         * which may have prevented the next unblock time from being
+                         * re-calculated, in which case re-calculate it now.  Mainly
+                         * important for low power tickless implementations, where
+                         * this can prevent an unnecessary exit from low power
+                         * state. */
+                        prvResetNextTaskUnblockTime();
+                    }
+
+                    /* If any ticks occurred while the scheduler was suspended then
+                     * they should be processed now.  This ensures the tick count does
+                     * not  slip, and that any delayed tasks are resumed at the correct
+                     * time.
+                     *
+                     * It should be safe to call xTaskIncrementTick here from any core
+                     * since we are in a critical section and xTaskIncrementTick itself
+                     * protects itself within a critical section. Suspending the scheduler
+                     * from any core causes xTaskIncrementTick to increment uxPendedCounts. */
+                    {
+                        TickType_t xPendedCounts = xPendedTicks; /* Non-volatile copy. */
+
+                        if( xPendedCounts > ( TickType_t ) 0U )
+                        {
+                            do
+                            {
+                                if( xTaskIncrementTick() != pdFALSE )
+                                {
+                                    /* Other cores are interrupted from
+                                     * within xTaskIncrementTick(). */
+                                    xYieldPendings[ xCoreID ] = pdTRUE;
+                                }
+                                else
+                                {
+                                    mtCOVERAGE_TEST_MARKER();
+                                }
+
+                                --xPendedCounts;
+                            } while( xPendedCounts > ( TickType_t ) 0U );
+
+                            xPendedTicks = 0;
+                        }
+                        else
+                        {
+                            mtCOVERAGE_TEST_MARKER();
+                        }
+                    }
+
+                    if( xYieldPendings[ xCoreID ] != pdFALSE )
+                    {
+                        #if ( configUSE_PREEMPTION != 0 )
+                        {
+                            xAlreadyYielded = pdTRUE;
+                        }
+                        #endif /* #if ( configUSE_PREEMPTION != 0 ) */
+
+                        #if ( configNUMBER_OF_CORES == 1 )
+                        {
+                            taskYIELD_TASK_CORE_IF_USING_PREEMPTION( pxCurrentTCB );
+                        }
+                        #endif /* #if ( configNUMBER_OF_CORES == 1 ) */
+                    }
+                    else
+                    {
+                        mtCOVERAGE_TEST_MARKER();
+                    }
+                }
+            }
+            else
+            {
+                mtCOVERAGE_TEST_MARKER();
+            }
+        }
+        taskEXIT_CRITICAL();
+    }
+
+    traceRETURN_xTaskResumeAll( xAlreadyYielded );
+
+    return xAlreadyYielded;
+}
+
+Official docs (summary):
+Return values:
+- BaseType_t: pdTRUE The scheduler was transitioned into the Active state.  The transition caused a
+pending context switch to occur.
+pdFALSE  Either the scheduler was transitioned into the Active state and the transition did not
+cause a context switch to occur, or the scheduler was left in the Suspended state
+due to nested calls to vTaskSuspendAll ().
+Related configs: none
+Related APIs: vTaskSuspendAll
+Reference snippets:
+- Function xTaskResumeAll (func:xTaskResumeAll:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c0) :: FUNC xTaskResumeAll BaseType_t(void) file /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4011-4157 BaseType_t xTaskResumeAll( void ) {     TCB_t * pxTCB = NULL;     BaseType_t xAlreadyYielded = pdFALSE;      traceENTER_xTaskResumeAll();      #if ( configNUMBER_OF_CORES > 1 )         if( xSchedulerRunning != pdFALSE )     #…
+- API xTaskResumeAll Overview (api:xTaskResumeAll:overview#c0) :: API: xTaskResumeAll Signature: BaseType_t xTaskResumeAll(void); Headers: task.h, FreeRTOS.h Summary: Resumes scheduler activity , following a previous call to vTaskSuspendAll(), by transitioning the scheduler into the Active state from the Suspended state.
+- API xTaskResumeAll Related (api:xTaskResumeAll:related#c0) :: API: xTaskResumeAll Section: related related: vTaskSuspendAll
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskYIELD_TASK_CORE_IF_USING_PREEMPTION:ANY(1) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskYIELD_TASK_CORE_IF_USING_PREEMPTION:ANY(1)#c0) :: incoming: vTaskPrioritySet, xTaskResumeAll
+- Call xTaskResumeAll -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) (edge:xTaskResumeAll->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4151#c0) :: Call: xTaskResumeAll -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4151 callee_kind=macro
+- API xTaskResumeAll Notes (api:xTaskResumeAll:notes#c0) :: API: xTaskResumeAll Section: notes The scheduler can be suspended by calling vTaskSuspendAll().  When the scheduler is suspended , interrupts remain enabled, but a context switch will not  occur.  If a context switch is requested while the  scheduler is s uspended , then the  request will be held pending until such tim…
+- xTaskResumeAll :: BaseType_t xTaskResumeAll(void); Resumes scheduler activity , following a previous call to vTaskSuspendAll(), by transitioning the scheduler into the Active state from the Suspended state.
+
+Official documentation (full):
+Title: xTaskResumeAll
+Signature: BaseType_t xTaskResumeAll(void);
+Summary:
+Resumes scheduler activity , following a previous call to vTaskSuspendAll(), by transitioning
+the scheduler into the Active state from the Suspended state.
+Return values:
+- BaseType_t: pdTRUE The scheduler was transitioned into the Active state.  The transition caused a
+pending context switch to occur.
+pdFALSE  Either the scheduler was transitioned into the Active state and the transition did not
+cause a context switch to occur, or the scheduler was left in the Suspended state
+due to nested calls to vTaskSuspendAll ().
+Notes:
+The scheduler can be suspended by calling vTaskSuspendAll().  When the scheduler is
+suspended , interrupts remain enabled, but a context switch will not  occur.  If a context switch
+is requested while the  scheduler is s uspended , then the  request will be held pending until such
+time that the scheduler is resumed (un -suspended).
+Calls to vTaskSuspendAll () can be nested.  The same number of calls must be made to
+xTaskResumeAll () as have previously been made to vTaskSuspendAll () before the scheduler
+will leave the Suspended state and re -enter the Active state.
+xTaskResumeAll () must only be called from an executing task and therefore must not be
+called while the scheduler is in the Initialization state (prior to the scheduler being started).
+Other FreeRTOS API functions should not be called while the scheduler is suspended.
+Example:
+/* A function that suspends then resumes the scheduler. */
+void vDemoFunction( void )
+{
+/* This function suspends the scheduler.  When it is called from vTask1 the
+scheduler is already suspended, so this call creates a nesting depth of 2. */
+vTaskSuspendAll();
+/* Perform an action here. */
+/* As calls to vTaskSuspendAll() are now nested, resuming the scheduler here
+does not cause the scheduler to re -enter the active state. */
+xTaskResumeAll();
+}
+void vTask1( void * pvParameters )
+{
+for( ;; )
+{
+/* Perform some actions here. */
+/* At some point the task wants to perform an operation during which it
+does not want to get swapped out, or it wants to access data  which is also
+accessed from another task (but not from an interrupt).  It cannot use
+taskENTER_CRITICAL()/taskEXIT_CRITICAL() as the length of the operation may
+cause interrupts to be missed. */
+/* Prevent the scheduler from performing a context switch. */
+vTaskSuspendAll();
+/* Perform the operation here.  There is no need to use critical  sections
+as the task has all the processing time other than that utilized by interrupt
+service routines.*/
+/* Calls to vTaskSuspendAll() can be nested , so it is safe to call a (non
+API) function that also calls vTaskSuspendAll().  API functions should not
+be called while the scheduler is suspended. */
+vDemoFunction();
+/* The operation is complete.  Set the scheduler back into the Active
+state. */
+if( xTaskResumeAll() == pdTRUE )
+{
+/* A context switch occurred within xTaskResumeAll(). */
+}
+else
+{
+/* A context switch did not occur within xTaskResumeAll(). */
+}
+}
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

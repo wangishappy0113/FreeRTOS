@@ -1,0 +1,1494 @@
+FUZZ_INPUT @ 0x20000064
+main address = 0x34dc
+Breakpoint address = 0x35d8
+[2025-12-22T14:07:24Z INFO  libafl::events::launcher] spawning on cores: Cores { cmdline: "1", ids: [CoreId(1)] }
+[2025-12-22T14:07:24Z INFO  libafl::events::launcher] child spawned with id 1 and bound to core CoreId(1)
+[2025-12-22T14:07:24Z INFO  libafl::events::launcher] I am broker!!.
+[2025-12-22T14:07:24Z INFO  libafl_bolts::llmp] Successfully setup signal handlers
+[2025-12-22T14:07:24Z INFO  libafl::events::launcher] 1519223 PostFork
+[2025-12-22T14:07:24Z INFO  libafl_bolts::llmp] Connected to port 1337
+[2025-12-22T14:07:24Z INFO  libafl_bolts::llmp] New connection: 127.0.0.1:33336/127.0.0.1:33336
+[2025-12-22T14:07:24Z INFO  libafl::events::llmp::restarting] Setting core affinity to CoreId(1)
+[2025-12-22T14:07:24Z INFO  libafl::events::llmp::restarting] Spawning next client (id 0)
+[2025-12-22T14:07:24Z INFO  libafl::events::llmp::restarting] First run. Let's set it all up
+qemu_baremetal: warning: nic lan9118.0 has no peer
+Devices = ["timer", "cpu_common", "cpu", "armv7m_nvic", "armv7m_systick", "armv7m", "or-irq", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-timer", "cmsdk-apb-timer", "cmsdk-apb-dualtimer", "cmsdk-apb-watchdog", "led", "led", "led", "led", "led", "led", "led", "led", "mps2-scc", "led", "led", "mps2-fpgaio", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "i2c_bus", "i2c_bus", "i2c_bus", "i2c_bus", "lan9118-phy", "lan9118"]
+qemu_baremetal: warning: icount sleep disabled and no active timers
+[2025-12-22T14:07:24Z INFO  libafl_qemu::command::lqemu] Fuzzing starts @ PC 34dc
+[2025-12-22T14:07:24Z INFO  libafl::state] Loading file /home/zwz/Libafl/fuzzers/full_system/qemu_baremetal/corpus/golden_seed ...
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 0, objectives: 0, executions: 1, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 0, objectives: 0, executions: 1, exec/sec: 0.000, edges: 427/427 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000, edges: 427/427 (100%)
+We imported 1 inputs from disk.
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 1, objectives: 0, executions: 2, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 1, objectives: 0, executions: 2, exec/sec: 0.000, edges: 439/439 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 2, objectives: 0, executions: 2, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 2, objectives: 0, executions: 2, exec/sec: 0.000, edges: 439/439 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 2, objectives: 0, executions: 4, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 2, objectives: 0, executions: 4, exec/sec: 0.000, edges: 444/444 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 3, objectives: 0, executions: 4, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 3, objectives: 0, executions: 4, exec/sec: 0.000, edges: 444/444 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 3, objectives: 0, executions: 5, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 3, objectives: 0, executions: 5, exec/sec: 0.000, edges: 447/447 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 4, objectives: 0, executions: 5, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 4, objectives: 0, executions: 5, exec/sec: 0.000, edges: 447/447 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 4, objectives: 0, executions: 6, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 4, objectives: 0, executions: 6, exec/sec: 0.000, edges: 448/448 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 5, objectives: 0, executions: 6, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 0, executions: 6, exec/sec: 0.000, edges: 448/448 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 5, objectives: 0, executions: 7, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 0, executions: 7, exec/sec: 0.000, edges: 448/448 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 6, objectives: 0, executions: 7, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 6, objectives: 0, executions: 7, exec/sec: 0.000, edges: 448/448 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 6, objectives: 0, executions: 9, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 6, objectives: 0, executions: 9, exec/sec: 0.000, edges: 449/449 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 7, objectives: 0, executions: 9, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 7, objectives: 0, executions: 9, exec/sec: 0.000, edges: 449/449 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 7, objectives: 0, executions: 11, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 7, objectives: 0, executions: 11, exec/sec: 0.000, edges: 449/449 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 8, objectives: 0, executions: 11, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 8, objectives: 0, executions: 11, exec/sec: 0.000, edges: 449/449 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 8, objectives: 0, executions: 13, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 8, objectives: 0, executions: 13, exec/sec: 0.000, edges: 466/466 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 9, objectives: 0, executions: 13, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 9, objectives: 0, executions: 13, exec/sec: 0.000, edges: 466/466 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 9, objectives: 0, executions: 14, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 9, objectives: 0, executions: 14, exec/sec: 0.000, edges: 467/467 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 10, objectives: 0, executions: 14, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 10, objectives: 0, executions: 14, exec/sec: 0.000, edges: 467/467 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 10, objectives: 0, executions: 15, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 10, objectives: 0, executions: 15, exec/sec: 0.000, edges: 468/468 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 11, objectives: 0, executions: 15, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 11, objectives: 0, executions: 15, exec/sec: 0.000, edges: 468/468 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 11, objectives: 0, executions: 16, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 11, objectives: 0, executions: 16, exec/sec: 0.000, edges: 469/469 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 12, objectives: 0, executions: 16, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 12, objectives: 0, executions: 16, exec/sec: 0.000, edges: 469/469 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 12, objectives: 0, executions: 20, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 12, objectives: 0, executions: 20, exec/sec: 0.000, edges: 473/473 (100%)
+[TEST_CASE_COMPLETED][Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 13, objectives: 0, executions: 20, exec/sec: 0.000, edges: 100.000%
+
+                  (CLIENT) corpus: 13, objectives: 0, executions: 20, exec/sec: 0.000, edges: 473/473 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 13, objectives: 0, executions: 23, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 13, objectives: 0, executions: 23, exec/sec: 0.000, edges: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 14, objectives: 0, executions: 23, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 14, objectives: 0, executions: 23, exec/sec: 0.000, edges: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 14, objectives: 0, executions: 31, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 14, objectives: 0, executions: 31, exec/sec: 0.000, edges: 475/475 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 14, objectives: 0, executions: 32, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 14, objectives: 0, executions: 32, exec/sec: 0.000, edges: 475/475 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 15, objectives: 0, executions: 32, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 15, objectives: 0, executions: 32, exec/sec: 0.000, edges: 475/475 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 15, objectives: 0, executions: 36, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 15, objectives: 0, executions: 36, exec/sec: 0.000, edges: 476/476 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 16, objectives: 0, executions: 36, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 16, objectives: 0, executions: 36, exec/sec: 0.000, edges: 476/476 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 16, objectives: 0, executions: 38, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 16, objectives: 0, executions: 38, exec/sec: 0.000, edges: 479/479 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 17, objectives: 0, executions: 38, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 17, objectives: 0, executions: 38, exec/sec: 0.000, edges: 479/479 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 17, objectives: 0, executions: 39, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 17, objectives: 0, executions: 39, exec/sec: 0.000, edges: 480/480 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 18, objectives: 0, executions: 39, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 18, objectives: 0, executions: 39, exec/sec: 0.000, edges: 480/480 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 18, objectives: 0, executions: 41, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 18, objectives: 0, executions: 41, exec/sec: 0.000, edges: 486/486 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 19, objectives: 0, executions: 41, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 19, objectives: 0, executions: 41, exec/sec: 0.000, edges: 486/486 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 19, objectives: 0, executions: 43, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 19, objectives: 0, executions: 43, exec/sec: 0.000, edges: 487/487 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 20, objectives: 0, executions: 43, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 20, objectives: 0, executions: 43, exec/sec: 0.000, edges: 487/487 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 20, objectives: 0, executions: 44, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 20, objectives: 0, executions: 44, exec/sec: 0.000, edges: 487/487 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 21, objectives: 0, executions: 44, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 21, objectives: 0, executions: 44, exec/sec: 0.000, edges: 487/487 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 21, objectives: 0, executions: 45, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 21, objectives: 0, executions: 45, exec/sec: 0.000, edges: 492/492 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 22, objectives: 0, executions: 45, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 22, objectives: 0, executions: 45, exec/sec: 0.000, edges: 492/492 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 22, objectives: 0, executions: 48, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 22, objectives: 0, executions: 48, exec/sec: 0.000, edges: 493/493 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 23, objectives: 0, executions: 48, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 23, objectives: 0, executions: 48, exec/sec: 0.000, edges: 493/493 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 23, objectives: 0, executions: 52, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 23, objectives: 0, executions: 52, exec/sec: 0.000, edges: 494/494 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 24, objectives: 0, executions: 52, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 24, objectives: 0, executions: 52, exec/sec: 0.000, edges: 494/494 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 24, objectives: 0, executions: 61, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 24, objectives: 0, executions: 61, exec/sec: 0.000, edges: 495/495 (100%), stability: 475/475 (100%)
+H[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 25, objectives: 0, executions: 61, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+e                  (CLIENT) corpus: 25, objectives: 0, executions: 61, exec/sec: 0.000, edges: 495/495 (100%), stability: 475/475 (100%)
+llo from FreeRTOS [UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 25, objectives: 0, executions: 62, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+fuz                  (CLIENT) corpus: 25, objectives: 0, executions: 62, exec/sec: 0.000, edges: 498/498 (100%), stability: 475/475 (100%)
+z demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 26, objectives: 0, executions: 62, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 26, objectives: 0, executions: 62, exec/sec: 0.000, edges: 498/498 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 26, objectives: 0, executions: 63, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 26, objectives: 0, executions: 63, exec/sec: 0.000, edges: 499/499 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 27, objectives: 0, executions: 63, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 27, objectives: 0, executions: 63, exec/sec: 0.000, edges: 499/499 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 27, objectives: 0, executions: 64, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 27, objectives: 0, executions: 64, exec/sec: 0.000, edges: 500/500 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 28, objectives: 0, executions: 64, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 28, objectives: 0, executions: 64, exec/sec: 0.000, edges: 500/500 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 28, objectives: 0, executions: 67, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 28, objectives: 0, executions: 67, exec/sec: 0.000, edges: 501/501 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 29, objectives: 0, executions: 67, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 29, objectives: 0, executions: 67, exec/sec: 0.000, edges: 501/501 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 29, objectives: 0, executions: 68, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 29, objectives: 0, executions: 68, exec/sec: 0.000, edges: 502/502 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 30, objectives: 0, executions: 68, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 30, objectives: 0, executions: 68, exec/sec: 0.000, edges: 502/502 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 30, objectives: 0, executions: 72, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 30, objectives: 0, executions: 72, exec/sec: 0.000, edges: 505/505 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 31, objectives: 0, executions: 72, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 31, objectives: 0, executions: 72, exec/sec: 0.000, edges: 505/505 (100%), stability: 475/475 (100%)
+Hello from Fr[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 31, objectives: 0, executions: 73, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+eeR                  (CLIENT) corpus: 31, objectives: 0, executions: 73, exec/sec: 0.000, edges: 506/506 (100%), stability: 475/475 (100%)
+TOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 32, objectives: 0, executions: 73, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 32, objectives: 0, executions: 73, exec/sec: 0.000, edges: 506/506 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 32, objectives: 0, executions: 77, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 32, objectives: 0, executions: 77, exec/sec: 0.000, edges: 507/507 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 33, objectives: 0, executions: 77, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 33, objectives: 0, executions: 77, exec/sec: 0.000, edges: 507/507 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 33, objectives: 0, executions: 85, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 33, objectives: 0, executions: 85, exec/sec: 0.000, edges: 507/507 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 34, objectives: 0, executions: 85, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 34, objectives: 0, executions: 85, exec/sec: 0.000, edges: 507/507 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 34, objectives: 0, executions: 93, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 34, objectives: 0, executions: 93, exec/sec: 0.000, edges: 508/508 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 35, objectives: 0, executions: 93, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 35, objectives: 0, executions: 93, exec/sec: 0.000, edges: 508/508 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 35, objectives: 0, executions: 96, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 35, objectives: 0, executions: 96, exec/sec: 0.000, edges: 508/508 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 36, objectives: 0, executions: 96, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 36, objectives: 0, executions: 96, exec/sec: 0.000, edges: 508/508 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 36, objectives: 0, executions: 99, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 36, objectives: 0, executions: 99, exec/sec: 0.000, edges: 509/509 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 37, objectives: 0, executions: 99, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 37, objectives: 0, executions: 99, exec/sec: 0.000, edges: 509/509 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 37, objectives: 0, executions: 100, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 37, objectives: 0, executions: 100, exec/sec: 0.000, edges: 511/511 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 38, objectives: 0, executions: 100, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 38, objectives: 0, executions: 100, exec/sec: 0.000, edges: 511/511 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 38, objectives: 0, executions: 102, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 38, objectives: 0, executions: 102, exec/sec: 0.000, edges: 511/511 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 39, objectives: 0, executions: 102, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 39, objectives: 0, executions: 102, exec/sec: 0.000, edges: 511/511 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 39, objectives: 0, executions: 104, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 39, objectives: 0, executions: 104, exec/sec: 0.000, edges: 512/512 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 40, objectives: 0, executions: 104, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 40, objectives: 0, executions: 104, exec/sec: 0.000, edges: 512/512 (100%), stability: 475/475 (100%)
+Hello [UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 40, objectives: 0, executions: 105, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+fr                  (CLIENT) corpus: 40, objectives: 0, executions: 105, exec/sec: 0.000, edges: 513/513 (100%), stability: 475/475 (100%)
+om FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 41, objectives: 0, executions: 105, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 41, objectives: 0, executions: 105, exec/sec: 0.000, edges: 513/513 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 41, objectives: 0, executions: 110, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 41, objectives: 0, executions: 110, exec/sec: 0.000, edges: 514/514 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 42, objectives: 0, executions: 110, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 42, objectives: 0, executions: 110, exec/sec: 0.000, edges: 514/514 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 42, objectives: 0, executions: 114, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 42, objectives: 0, executions: 114, exec/sec: 0.000, edges: 516/516 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 43, objectives: 0, executions: 114, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 43, objectives: 0, executions: 114, exec/sec: 0.000, edges: 516/516 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 43, objectives: 0, executions: 115, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 43, objectives: 0, executions: 115, exec/sec: 0.000, edges: 517/517 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 44, objectives: 0, executions: 115, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 44, objectives: 0, executions: 115, exec/sec: 0.000, edges: 517/517 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo![UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 44, objectives: 0, executions: 122, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+
+                  (CLIENT) corpus: 44, objectives: 0, executions: 122, exec/sec: 0.000, edges: 518/518 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 45, objectives: 0, executions: 122, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 45, objectives: 0, executions: 122, exec/sec: 0.000, edges: 518/518 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 45, objectives: 0, executions: 123, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 45, objectives: 0, executions: 123, exec/sec: 0.000, edges: 520/520 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 46, objectives: 0, executions: 123, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 46, objectives: 0, executions: 123, exec/sec: 0.000, edges: 520/520 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 46, objectives: 0, executions: 139, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 46, objectives: 0, executions: 139, exec/sec: 0.000, edges: 520/520 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 47, objectives: 0, executions: 139, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 47, objectives: 0, executions: 139, exec/sec: 0.000, edges: 520/520 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 47, objectives: 0, executions: 142, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 47, objectives: 0, executions: 142, exec/sec: 0.000, edges: 521/521 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 48, objectives: 0, executions: 142, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 48, objectives: 0, executions: 142, exec/sec: 0.000, edges: 521/521 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 48, objectives: 0, executions: 144, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 48, objectives: 0, executions: 144, exec/sec: 0.000, edges: 523/523 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 49, objectives: 0, executions: 144, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 49, objectives: 0, executions: 144, exec/sec: 0.000, edges: 523/523 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 49, objectives: 0, executions: 145, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 49, objectives: 0, executions: 145, exec/sec: 0.000, edges: 523/523 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 50, objectives: 0, executions: 145, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 50, objectives: 0, executions: 145, exec/sec: 0.000, edges: 523/523 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 50, objectives: 0, executions: 149, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 50, objectives: 0, executions: 149, exec/sec: 0.000, edges: 524/524 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 51, objectives: 0, executions: 149, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 51, objectives: 0, executions: 149, exec/sec: 0.000, edges: 524/524 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 51, objectives: 0, executions: 153, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 51, objectives: 0, executions: 153, exec/sec: 0.000, edges: 525/525 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 52, objectives: 0, executions: 153, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 52, objectives: 0, executions: 153, exec/sec: 0.000, edges: 525/525 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 52, objectives: 0, executions: 154, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 52, objectives: 0, executions: 154, exec/sec: 0.000, edges: 525/525 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 53, objectives: 0, executions: 154, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 53, objectives: 0, executions: 154, exec/sec: 0.000, edges: 525/525 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 53, objectives: 0, executions: 161, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 53, objectives: 0, executions: 161, exec/sec: 0.000, edges: 526/526 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 54, objectives: 0, executions: 161, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 54, objectives: 0, executions: 161, exec/sec: 0.000, edges: 526/526 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 54, objectives: 0, executions: 169, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 54, objectives: 0, executions: 169, exec/sec: 0.000, edges: 527/527 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 55, objectives: 0, executions: 169, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 55, objectives: 0, executions: 169, exec/sec: 0.000, edges: 527/527 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 55, objectives: 0, executions: 172, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 55, objectives: 0, executions: 172, exec/sec: 0.000, edges: 527/527 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 56, objectives: 0, executions: 172, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 56, objectives: 0, executions: 172, exec/sec: 0.000, edges: 527/527 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 56, objectives: 0, executions: 175, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 56, objectives: 0, executions: 175, exec/sec: 0.000, edges: 528/528 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 57, objectives: 0, executions: 175, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 57, objectives: 0, executions: 175, exec/sec: 0.000, edges: 528/528 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 57, objectives: 0, executions: 176, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 57, objectives: 0, executions: 176, exec/sec: 0.000, edges: 529/529 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 58, objectives: 0, executions: 176, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 58, objectives: 0, executions: 176, exec/sec: 0.000, edges: 529/529 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 58, objectives: 0, executions: 187, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 58, objectives: 0, executions: 187, exec/sec: 0.000, edges: 530/530 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 59, objectives: 0, executions: 187, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 59, objectives: 0, executions: 187, exec/sec: 0.000, edges: 530/530 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 59, objectives: 0, executions: 197, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 59, objectives: 0, executions: 197, exec/sec: 0.000, edges: 531/531 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 60, objectives: 0, executions: 197, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 60, objectives: 0, executions: 197, exec/sec: 0.000, edges: 531/531 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 60, objectives: 0, executions: 204, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 60, objectives: 0, executions: 204, exec/sec: 0.000, edges: 532/532 (100%), stability: 475/475 (100%)
+[TEST_CAS[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 61, objectives: 0, executions: 204, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+E_                  (CLIENT) corpus: 61, objectives: 0, executions: 204, exec/sec: 0.000, edges: 532/532 (100%), stability: 475/475 (100%)
+COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 61, objectives: 0, executions: 205, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+COM                  (CLIENT) corpus: 61, objectives: 0, executions: 205, exec/sec: 0.000, edges: 534/534 (100%), stability: 475/475 (100%)
+PLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 62, objectives: 0, executions: 205, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 62, objectives: 0, executions: 205, exec/sec: 0.000, edges: 534/534 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 62, objectives: 0, executions: 206, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 62, objectives: 0, executions: 206, exec/sec: 0.000, edges: 536/536 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 63, objectives: 0, executions: 206, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 63, objectives: 0, executions: 206, exec/sec: 0.000, edges: 536/536 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz [UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 63, objectives: 0, executions: 218, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+de                  (CLIENT) corpus: 63, objectives: 0, executions: 218, exec/sec: 0.000, edges: 536/536 (100%), stability: 475/475 (100%)
+mo!
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 64, objectives: 0, executions: 218, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 64, objectives: 0, executions: 218, exec/sec: 0.000, edges: 536/536 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 64, objectives: 0, executions: 220, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 64, objectives: 0, executions: 220, exec/sec: 0.000, edges: 537/537 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 65, objectives: 0, executions: 220, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 65, objectives: 0, executions: 220, exec/sec: 0.000, edges: 537/537 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CAS[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 65, objectives: 0, executions: 228, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+E_C                  (CLIENT) corpus: 65, objectives: 0, executions: 228, exec/sec: 0.000, edges: 539/539 (100%), stability: 475/475 (100%)
+OMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 66, objectives: 0, executions: 228, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 66, objectives: 0, executions: 228, exec/sec: 0.000, edges: 539/539 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 66, objectives: 0, executions: 231, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 66, objectives: 0, executions: 231, exec/sec: 0.000, edges: 540/540 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 67, objectives: 0, executions: 231, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 67, objectives: 0, executions: 231, exec/sec: 0.000, edges: 540/540 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 67, objectives: 0, executions: 242, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 67, objectives: 0, executions: 242, exec/sec: 0.000, edges: 541/541 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 68, objectives: 0, executions: 242, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 68, objectives: 0, executions: 242, exec/sec: 0.000, edges: 541/541 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 68, objectives: 0, executions: 246, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 68, objectives: 0, executions: 246, exec/sec: 0.000, edges: 542/542 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 69, objectives: 0, executions: 246, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 69, objectives: 0, executions: 246, exec/sec: 0.000, edges: 542/542 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 69, objectives: 0, executions: 258, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 69, objectives: 0, executions: 258, exec/sec: 0.000, edges: 543/543 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 70, objectives: 0, executions: 258, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 70, objectives: 0, executions: 258, exec/sec: 0.000, edges: 543/543 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 70, objectives: 0, executions: 260, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 70, objectives: 0, executions: 260, exec/sec: 0.000, edges: 544/544 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 71, objectives: 0, executions: 260, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 71, objectives: 0, executions: 260, exec/sec: 0.000, edges: 544/544 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 71, objectives: 0, executions: 266, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 71, objectives: 0, executions: 266, exec/sec: 0.000, edges: 545/545 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 72, objectives: 0, executions: 266, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 72, objectives: 0, executions: 266, exec/sec: 0.000, edges: 545/545 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 72, objectives: 0, executions: 267, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 72, objectives: 0, executions: 267, exec/sec: 0.000, edges: 546/546 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 73, objectives: 0, executions: 267, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+He                  (CLIENT) corpus: 73, objectives: 0, executions: 267, exec/sec: 0.000, edges: 546/546 (100%), stability: 475/475 (100%)
+llo from FreeRTOS[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 73, objectives: 0, executions: 268, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+ fu                  (CLIENT) corpus: 73, objectives: 0, executions: 268, exec/sec: 0.000, edges: 546/546 (100%), stability: 475/475 (100%)
+zz demo!
+[[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 74, objectives: 0, executions: 268, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+TE                  (CLIENT) corpus: 74, objectives: 0, executions: 268, exec/sec: 0.000, edges: 546/546 (100%), stability: 475/475 (100%)
+ST_CASE_COMPLETE[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 74, objectives: 0, executions: 269, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+D]                  (CLIENT) corpus: 74, objectives: 0, executions: 269, exec/sec: 0.000, edges: 547/547 (100%), stability: 475/475 (100%)
+
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 75, objectives: 0, executions: 269, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 75, objectives: 0, executions: 269, exec/sec: 0.000, edges: 547/547 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 75, objectives: 0, executions: 272, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 75, objectives: 0, executions: 272, exec/sec: 0.000, edges: 548/548 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 76, objectives: 0, executions: 272, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 76, objectives: 0, executions: 272, exec/sec: 0.000, edges: 548/548 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 76, objectives: 0, executions: 273, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 76, objectives: 0, executions: 273, exec/sec: 0.000, edges: 550/550 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 77, objectives: 0, executions: 273, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 77, objectives: 0, executions: 273, exec/sec: 0.000, edges: 550/550 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 77, objectives: 0, executions: 278, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 77, objectives: 0, executions: 278, exec/sec: 0.000, edges: 551/551 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 78, objectives: 0, executions: 278, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 78, objectives: 0, executions: 278, exec/sec: 0.000, edges: 551/551 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 78, objectives: 0, executions: 279, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 78, objectives: 0, executions: 279, exec/sec: 0.000, edges: 552/552 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 79, objectives: 0, executions: 279, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 79, objectives: 0, executions: 279, exec/sec: 0.000, edges: 552/552 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 79, objectives: 0, executions: 280, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 79, objectives: 0, executions: 280, exec/sec: 0.000, edges: 553/553 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 80, objectives: 0, executions: 280, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 80, objectives: 0, executions: 280, exec/sec: 0.000, edges: 553/553 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 80, objectives: 0, executions: 294, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 80, objectives: 0, executions: 294, exec/sec: 0.000, edges: 555/555 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 81, objectives: 0, executions: 294, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 81, objectives: 0, executions: 294, exec/sec: 0.000, edges: 555/555 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 81, objectives: 0, executions: 299, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 81, objectives: 0, executions: 299, exec/sec: 0.000, edges: 556/556 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 82, objectives: 0, executions: 299, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 82, objectives: 0, executions: 299, exec/sec: 0.000, edges: 556/556 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 82, objectives: 0, executions: 301, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 82, objectives: 0, executions: 301, exec/sec: 0.000, edges: 557/557 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 83, objectives: 0, executions: 301, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 83, objectives: 0, executions: 301, exec/sec: 0.000, edges: 557/557 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 83, objectives: 0, executions: 307, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 83, objectives: 0, executions: 307, exec/sec: 0.000, edges: 558/558 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 84, objectives: 0, executions: 307, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 84, objectives: 0, executions: 307, exec/sec: 0.000, edges: 558/558 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 84, objectives: 0, executions: 308, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 84, objectives: 0, executions: 308, exec/sec: 0.000, edges: 559/559 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 85, objectives: 0, executions: 308, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 85, objectives: 0, executions: 308, exec/sec: 0.000, edges: 559/559 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 85, objectives: 0, executions: 310, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 85, objectives: 0, executions: 310, exec/sec: 0.000, edges: 560/560 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 86, objectives: 0, executions: 310, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 86, objectives: 0, executions: 310, exec/sec: 0.000, edges: 560/560 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 86, objectives: 0, executions: 311, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+ d                  (CLIENT) corpus: 86, objectives: 0, executions: 311, exec/sec: 0.000, edges: 561/561 (100%), stability: 475/475 (100%)
+emo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 87, objectives: 0, executions: 311, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 87, objectives: 0, executions: 311, exec/sec: 0.000, edges: 561/561 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 87, objectives: 0, executions: 312, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 87, objectives: 0, executions: 312, exec/sec: 0.000, edges: 562/562 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 88, objectives: 0, executions: 312, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 88, objectives: 0, executions: 312, exec/sec: 0.000, edges: 562/562 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 88, objectives: 0, executions: 315, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 88, objectives: 0, executions: 315, exec/sec: 0.000, edges: 563/563 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 89, objectives: 0, executions: 315, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 89, objectives: 0, executions: 315, exec/sec: 0.000, edges: 563/563 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 89, objectives: 0, executions: 317, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 89, objectives: 0, executions: 317, exec/sec: 0.000, edges: 564/564 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 90, objectives: 0, executions: 317, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 90, objectives: 0, executions: 317, exec/sec: 0.000, edges: 564/564 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 90, objectives: 0, executions: 319, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 90, objectives: 0, executions: 319, exec/sec: 0.000, edges: 565/565 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 91, objectives: 0, executions: 319, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 91, objectives: 0, executions: 319, exec/sec: 0.000, edges: 565/565 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 91, objectives: 0, executions: 320, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 91, objectives: 0, executions: 320, exec/sec: 0.000, edges: 566/566 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 92, objectives: 0, executions: 320, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 92, objectives: 0, executions: 320, exec/sec: 0.000, edges: 566/566 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 92, objectives: 0, executions: 329, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 92, objectives: 0, executions: 329, exec/sec: 0.000, edges: 567/567 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 93, objectives: 0, executions: 329, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 93, objectives: 0, executions: 329, exec/sec: 0.000, edges: 567/567 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 93, objectives: 0, executions: 334, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 93, objectives: 0, executions: 334, exec/sec: 0.000, edges: 567/567 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 94, objectives: 0, executions: 334, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 94, objectives: 0, executions: 334, exec/sec: 0.000, edges: 567/567 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 94, objectives: 0, executions: 339, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 94, objectives: 0, executions: 339, exec/sec: 0.000, edges: 569/569 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 95, objectives: 0, executions: 339, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 95, objectives: 0, executions: 339, exec/sec: 0.000, edges: 569/569 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 95, objectives: 0, executions: 341, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 95, objectives: 0, executions: 341, exec/sec: 0.000, edges: 570/570 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 96, objectives: 0, executions: 341, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 96, objectives: 0, executions: 341, exec/sec: 0.000, edges: 570/570 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 96, objectives: 0, executions: 346, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 96, objectives: 0, executions: 346, exec/sec: 0.000, edges: 571/571 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 97, objectives: 0, executions: 346, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 97, objectives: 0, executions: 346, exec/sec: 0.000, edges: 571/571 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 97, objectives: 0, executions: 347, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 97, objectives: 0, executions: 347, exec/sec: 0.000, edges: 572/572 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 98, objectives: 0, executions: 347, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 98, objectives: 0, executions: 347, exec/sec: 0.000, edges: 572/572 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 98, objectives: 0, executions: 351, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 98, objectives: 0, executions: 351, exec/sec: 0.000, edges: 573/573 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 99, objectives: 0, executions: 351, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 99, objectives: 0, executions: 351, exec/sec: 0.000, edges: 573/573 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 99, objectives: 0, executions: 352, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 99, objectives: 0, executions: 352, exec/sec: 0.000, edges: 573/573 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 100, objectives: 0, executions: 352, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 100, objectives: 0, executions: 352, exec/sec: 0.000, edges: 573/573 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 100, objectives: 0, executions: 355, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 100, objectives: 0, executions: 355, exec/sec: 0.000, edges: 574/574 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 101, objectives: 0, executions: 355, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 101, objectives: 0, executions: 355, exec/sec: 0.000, edges: 574/574 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 101, objectives: 0, executions: 359, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 101, objectives: 0, executions: 359, exec/sec: 0.000, edges: 575/575 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 102, objectives: 0, executions: 359, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 102, objectives: 0, executions: 359, exec/sec: 0.000, edges: 575/575 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 102, objectives: 0, executions: 379, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 102, objectives: 0, executions: 379, exec/sec: 0.000, edges: 576/576 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 103, objectives: 0, executions: 379, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 103, objectives: 0, executions: 379, exec/sec: 0.000, edges: 576/576 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 103, objectives: 0, executions: 385, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 103, objectives: 0, executions: 385, exec/sec: 0.000, edges: 577/577 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 104, objectives: 0, executions: 385, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 104, objectives: 0, executions: 385, exec/sec: 0.000, edges: 577/577 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 104, objectives: 0, executions: 390, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 104, objectives: 0, executions: 390, exec/sec: 0.000, edges: 578/578 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 105, objectives: 0, executions: 390, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 105, objectives: 0, executions: 390, exec/sec: 0.000, edges: 578/578 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 105, objectives: 0, executions: 402, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+CO                  (CLIENT) corpus: 105, objectives: 0, executions: 402, exec/sec: 0.000, edges: 580/580 (100%), stability: 475/475 (100%)
+MPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 106, objectives: 0, executions: 402, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 106, objectives: 0, executions: 402, exec/sec: 0.000, edges: 580/580 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 106, objectives: 0, executions: 403, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 106, objectives: 0, executions: 403, exec/sec: 0.000, edges: 581/581 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 107, objectives: 0, executions: 403, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 107, objectives: 0, executions: 403, exec/sec: 0.000, edges: 581/581 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 107, objectives: 0, executions: 409, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 107, objectives: 0, executions: 409, exec/sec: 0.000, edges: 581/581 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 108, objectives: 0, executions: 409, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 108, objectives: 0, executions: 409, exec/sec: 0.000, edges: 581/581 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 108, objectives: 0, executions: 412, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 108, objectives: 0, executions: 412, exec/sec: 0.000, edges: 582/582 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 109, objectives: 0, executions: 412, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 109, objectives: 0, executions: 412, exec/sec: 0.000, edges: 582/582 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 109, objectives: 0, executions: 415, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 109, objectives: 0, executions: 415, exec/sec: 0.000, edges: 583/583 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 110, objectives: 0, executions: 415, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 110, objectives: 0, executions: 415, exec/sec: 0.000, edges: 583/583 (100%), stability: 475/475 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 110, objectives: 0, executions: 418, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 110, objectives: 0, executions: 418, exec/sec: 0.000, edges: 584/584 (100%), stability: 475/475 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 111, objectives: 0, executions: 418, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 111, objectives: 0, executions: 418, exec/sec: 0.000, edges: 584/584 (100%), stability: 475/475 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 111, objectives: 0, executions: 419, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 111, objectives: 0, executions: 419, exec/sec: 0.000, edges: 585/585 (100%), stability: 475/475 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 112, objectives: 0, executions: 419, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 0, executions: 419, exec/sec: 0.000, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3s, clients: 1, corpus: 112, objectives: 1, executions: 422, exec/sec: 111.0, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 1, executions: 422, exec/sec: 111.0, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 6s, clients: 1, corpus: 112, objectives: 2, executions: 423, exec/sec: 62.20, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 2, executions: 423, exec/sec: 62.20, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 9s, clients: 1, corpus: 112, objectives: 3, executions: 424, exec/sec: 43.26, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 3, executions: 424, exec/sec: 43.26, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 12s, clients: 1, corpus: 112, objectives: 4, executions: 425, exec/sec: 33.20, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 4, executions: 425, exec/sec: 33.20, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 15s, clients: 1, corpus: 112, objectives: 5, executions: 426, exec/sec: 26.95, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 5, executions: 426, exec/sec: 26.95, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 18s, clients: 1, corpus: 112, objectives: 6, executions: 427, exec/sec: 22.71, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 6, executions: 427, exec/sec: 22.71, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 21s, clients: 1, corpus: 112, objectives: 7, executions: 428, exec/sec: 19.63, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 7, executions: 428, exec/sec: 19.63, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 24s, clients: 1, corpus: 112, objectives: 8, executions: 429, exec/sec: 17.29, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 8, executions: 429, exec/sec: 17.29, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 27s, clients: 1, corpus: 112, objectives: 9, executions: 430, exec/sec: 15.46, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 9, executions: 430, exec/sec: 15.46, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 30s, clients: 1, corpus: 112, objectives: 10, executions: 431, exec/sec: 13.99, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 10, executions: 431, exec/sec: 13.99, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 33s, clients: 1, corpus: 112, objectives: 11, executions: 432, exec/sec: 12.78, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 11, executions: 432, exec/sec: 12.78, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 36s, clients: 1, corpus: 112, objectives: 12, executions: 433, exec/sec: 11.76, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 12, executions: 433, exec/sec: 11.76, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 39s, clients: 1, corpus: 112, objectives: 13, executions: 434, exec/sec: 10.90, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 13, executions: 434, exec/sec: 10.90, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 42s, clients: 1, corpus: 112, objectives: 14, executions: 435, exec/sec: 10.16, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 14, executions: 435, exec/sec: 10.16, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 45s, clients: 1, corpus: 112, objectives: 15, executions: 436, exec/sec: 9.515, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 15, executions: 436, exec/sec: 9.515, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 48s, clients: 1, corpus: 112, objectives: 16, executions: 437, exec/sec: 8.951, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 16, executions: 437, exec/sec: 8.951, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 51s, clients: 1, corpus: 112, objectives: 17, executions: 438, exec/sec: 8.452, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 17, executions: 438, exec/sec: 8.452, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 54s, clients: 1, corpus: 112, objectives: 18, executions: 439, exec/sec: 8.008, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 18, executions: 439, exec/sec: 8.008, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 57s, clients: 1, corpus: 112, objectives: 19, executions: 440, exec/sec: 7.609, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 19, executions: 440, exec/sec: 7.609, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-0s, clients: 1, corpus: 112, objectives: 20, executions: 441, exec/sec: 7.250, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 20, executions: 441, exec/sec: 7.250, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-3s, clients: 1, corpus: 112, objectives: 21, executions: 442, exec/sec: 6.925, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 21, executions: 442, exec/sec: 6.925, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-6s, clients: 1, corpus: 112, objectives: 22, executions: 443, exec/sec: 6.629, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 22, executions: 443, exec/sec: 6.629, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-9s, clients: 1, corpus: 112, objectives: 23, executions: 444, exec/sec: 6.359, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 23, executions: 444, exec/sec: 6.359, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-12s, clients: 1, corpus: 112, objectives: 24, executions: 445, exec/sec: 6.110, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 24, executions: 445, exec/sec: 6.110, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-15s, clients: 1, corpus: 112, objectives: 25, executions: 446, exec/sec: 5.882, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 25, executions: 446, exec/sec: 5.882, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-18s, clients: 1, corpus: 112, objectives: 26, executions: 447, exec/sec: 5.670, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 26, executions: 447, exec/sec: 5.670, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-21s, clients: 1, corpus: 112, objectives: 27, executions: 448, exec/sec: 5.474, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 27, executions: 448, exec/sec: 5.474, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-24s, clients: 1, corpus: 112, objectives: 28, executions: 449, exec/sec: 5.293, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 28, executions: 449, exec/sec: 5.293, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-27s, clients: 1, corpus: 112, objectives: 29, executions: 450, exec/sec: 5.123, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 29, executions: 450, exec/sec: 5.123, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-30s, clients: 1, corpus: 112, objectives: 30, executions: 451, exec/sec: 4.965, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 30, executions: 451, exec/sec: 4.965, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-33s, clients: 1, corpus: 112, objectives: 31, executions: 452, exec/sec: 4.817, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 31, executions: 452, exec/sec: 4.817, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-36s, clients: 1, corpus: 112, objectives: 32, executions: 453, exec/sec: 4.678, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 32, executions: 453, exec/sec: 4.678, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-39s, clients: 1, corpus: 112, objectives: 33, executions: 454, exec/sec: 4.547, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 33, executions: 454, exec/sec: 4.547, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-42s, clients: 1, corpus: 112, objectives: 34, executions: 455, exec/sec: 4.424, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 34, executions: 455, exec/sec: 4.424, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-45s, clients: 1, corpus: 112, objectives: 35, executions: 456, exec/sec: 4.308, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 35, executions: 456, exec/sec: 4.308, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-48s, clients: 1, corpus: 112, objectives: 36, executions: 457, exec/sec: 4.199, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 36, executions: 457, exec/sec: 4.199, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-51s, clients: 1, corpus: 112, objectives: 37, executions: 458, exec/sec: 4.095, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 37, executions: 458, exec/sec: 4.095, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-54s, clients: 1, corpus: 112, objectives: 38, executions: 459, exec/sec: 3.997, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 38, executions: 459, exec/sec: 3.997, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-57s, clients: 1, corpus: 112, objectives: 39, executions: 460, exec/sec: 3.903, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 39, executions: 460, exec/sec: 3.903, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-0s, clients: 1, corpus: 112, objectives: 40, executions: 461, exec/sec: 3.815, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 40, executions: 461, exec/sec: 3.815, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-3s, clients: 1, corpus: 112, objectives: 41, executions: 462, exec/sec: 3.730, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 41, executions: 462, exec/sec: 3.730, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-6s, clients: 1, corpus: 112, objectives: 42, executions: 463, exec/sec: 3.650, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 42, executions: 463, exec/sec: 3.650, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-9s, clients: 1, corpus: 112, objectives: 43, executions: 464, exec/sec: 3.573, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 43, executions: 464, exec/sec: 3.573, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-12s, clients: 1, corpus: 112, objectives: 44, executions: 465, exec/sec: 3.500, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 44, executions: 465, exec/sec: 3.500, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-15s, clients: 1, corpus: 112, objectives: 45, executions: 466, exec/sec: 3.430, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 45, executions: 466, exec/sec: 3.430, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-18s, clients: 1, corpus: 112, objectives: 46, executions: 467, exec/sec: 3.363, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 46, executions: 467, exec/sec: 3.363, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-21s, clients: 1, corpus: 112, objectives: 47, executions: 468, exec/sec: 3.299, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 47, executions: 468, exec/sec: 3.299, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-24s, clients: 1, corpus: 112, objectives: 48, executions: 469, exec/sec: 3.238, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 48, executions: 469, exec/sec: 3.238, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-27s, clients: 1, corpus: 112, objectives: 49, executions: 470, exec/sec: 3.179, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 49, executions: 470, exec/sec: 3.179, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-30s, clients: 1, corpus: 112, objectives: 50, executions: 471, exec/sec: 3.122, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 50, executions: 471, exec/sec: 3.122, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-33s, clients: 1, corpus: 112, objectives: 51, executions: 472, exec/sec: 3.068, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 51, executions: 472, exec/sec: 3.068, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-36s, clients: 1, corpus: 112, objectives: 52, executions: 473, exec/sec: 3.015, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 52, executions: 473, exec/sec: 3.015, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-39s, clients: 1, corpus: 112, objectives: 53, executions: 474, exec/sec: 2.965, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 53, executions: 474, exec/sec: 2.965, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-42s, clients: 1, corpus: 112, objectives: 54, executions: 475, exec/sec: 2.917, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 54, executions: 475, exec/sec: 2.917, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-45s, clients: 1, corpus: 112, objectives: 55, executions: 476, exec/sec: 2.870, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 55, executions: 476, exec/sec: 2.870, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-48s, clients: 1, corpus: 112, objectives: 56, executions: 477, exec/sec: 2.825, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 56, executions: 477, exec/sec: 2.825, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-51s, clients: 1, corpus: 112, objectives: 57, executions: 478, exec/sec: 2.781, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 57, executions: 478, exec/sec: 2.781, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-54s, clients: 1, corpus: 112, objectives: 58, executions: 479, exec/sec: 2.739, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 58, executions: 479, exec/sec: 2.739, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-57s, clients: 1, corpus: 112, objectives: 59, executions: 480, exec/sec: 2.699, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 59, executions: 480, exec/sec: 2.699, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-0s, clients: 1, corpus: 112, objectives: 60, executions: 481, exec/sec: 2.659, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 60, executions: 481, exec/sec: 2.659, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-3s, clients: 1, corpus: 112, objectives: 61, executions: 482, exec/sec: 2.621, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 61, executions: 482, exec/sec: 2.621, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-6s, clients: 1, corpus: 112, objectives: 62, executions: 483, exec/sec: 2.585, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 62, executions: 483, exec/sec: 2.585, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-9s, clients: 1, corpus: 112, objectives: 63, executions: 484, exec/sec: 2.549, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 63, executions: 484, exec/sec: 2.549, edges: 585/585 (100%), stability: 475/475 (100%)
+[Client Heartbeat #1]  (GLOBAL) run time: 3m-27s, clients: 1, corpus: 112, objectives: 63, executions: 490, exec/sec: 2.357, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 112, objectives: 63, executions: 490, exec/sec: 2.357, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-30s, clients: 1, corpus: 112, objectives: 64, executions: 491, exec/sec: 2.328, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 64, executions: 491, exec/sec: 2.328, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-33s, clients: 1, corpus: 112, objectives: 65, executions: 492, exec/sec: 2.300, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 65, executions: 492, exec/sec: 2.300, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-36s, clients: 1, corpus: 112, objectives: 66, executions: 493, exec/sec: 2.273, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 66, executions: 493, exec/sec: 2.273, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-39s, clients: 1, corpus: 112, objectives: 67, executions: 494, exec/sec: 2.247, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 67, executions: 494, exec/sec: 2.247, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-42s, clients: 1, corpus: 112, objectives: 68, executions: 495, exec/sec: 2.221, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 68, executions: 495, exec/sec: 2.221, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-45s, clients: 1, corpus: 112, objectives: 69, executions: 496, exec/sec: 2.196, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 69, executions: 496, exec/sec: 2.196, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-48s, clients: 1, corpus: 112, objectives: 70, executions: 497, exec/sec: 2.171, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 70, executions: 497, exec/sec: 2.171, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-51s, clients: 1, corpus: 112, objectives: 71, executions: 498, exec/sec: 2.148, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 71, executions: 498, exec/sec: 2.148, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-54s, clients: 1, corpus: 112, objectives: 72, executions: 499, exec/sec: 2.124, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 72, executions: 499, exec/sec: 2.124, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-57s, clients: 1, corpus: 112, objectives: 73, executions: 500, exec/sec: 2.102, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 73, executions: 500, exec/sec: 2.102, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-0s, clients: 1, corpus: 112, objectives: 74, executions: 501, exec/sec: 2.080, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 74, executions: 501, exec/sec: 2.080, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-3s, clients: 1, corpus: 112, objectives: 75, executions: 502, exec/sec: 2.058, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 75, executions: 502, exec/sec: 2.058, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-6s, clients: 1, corpus: 112, objectives: 76, executions: 503, exec/sec: 2.037, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 76, executions: 503, exec/sec: 2.037, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-9s, clients: 1, corpus: 112, objectives: 77, executions: 504, exec/sec: 2.017, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 77, executions: 504, exec/sec: 2.017, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-12s, clients: 1, corpus: 112, objectives: 78, executions: 505, exec/sec: 1.997, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 78, executions: 505, exec/sec: 1.997, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-15s, clients: 1, corpus: 112, objectives: 79, executions: 506, exec/sec: 1.977, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 79, executions: 506, exec/sec: 1.977, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-18s, clients: 1, corpus: 112, objectives: 80, executions: 507, exec/sec: 1.958, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 80, executions: 507, exec/sec: 1.958, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-21s, clients: 1, corpus: 112, objectives: 81, executions: 508, exec/sec: 1.940, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 81, executions: 508, exec/sec: 1.940, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-24s, clients: 1, corpus: 112, objectives: 82, executions: 509, exec/sec: 1.921, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 82, executions: 509, exec/sec: 1.921, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-27s, clients: 1, corpus: 112, objectives: 83, executions: 510, exec/sec: 1.904, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 83, executions: 510, exec/sec: 1.904, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-30s, clients: 1, corpus: 112, objectives: 84, executions: 511, exec/sec: 1.886, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 84, executions: 511, exec/sec: 1.886, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-33s, clients: 1, corpus: 112, objectives: 85, executions: 512, exec/sec: 1.869, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 85, executions: 512, exec/sec: 1.869, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-36s, clients: 1, corpus: 112, objectives: 86, executions: 513, exec/sec: 1.853, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 86, executions: 513, exec/sec: 1.853, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-39s, clients: 1, corpus: 112, objectives: 87, executions: 514, exec/sec: 1.836, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 87, executions: 514, exec/sec: 1.836, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-43s, clients: 1, corpus: 112, objectives: 88, executions: 515, exec/sec: 1.820, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 88, executions: 515, exec/sec: 1.820, edges: 585/585 (100%), stability: 475/475 (100%)
+[Client Heartbeat #1]  (GLOBAL) run time: 5m-1s, clients: 1, corpus: 112, objectives: 88, executions: 521, exec/sec: 1.731, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 112, objectives: 88, executions: 521, exec/sec: 1.731, edges: 585/585 (100%), stability: 475/475 (100%)
+[Objective   #1]  (GLOBAL) run time: 5m-4s, clients: 1, corpus: 112, objectives: 89, executions: 522, exec/sec: 1.718, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 112, objectives: 89, executions: 522, exec/sec: 1.718, edges: 585/585 (100%), stability: 475/475 (100%)

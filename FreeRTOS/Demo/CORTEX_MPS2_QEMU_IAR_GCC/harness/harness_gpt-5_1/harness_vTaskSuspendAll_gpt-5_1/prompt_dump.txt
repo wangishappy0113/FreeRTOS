@@ -1,0 +1,219 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: vTaskSuspendAll
+
+### Function vTaskSuspendAll
+Signature: void(void)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:3837-3943
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: <operator>.assignment(operator), <operator>.cast(operator), <operator>.addition(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/portmacro.h:portMEMORY_BARRIER:ANY(0)(macro)
+Incoming callers count: 24
+Full source code:
+void vTaskSuspendAll( void )
+{
+    traceENTER_vTaskSuspendAll();
+
+    #if ( configNUMBER_OF_CORES == 1 )
+    {
+        /* A critical section is not required as the variable is of type
+         * BaseType_t. Each task maintains its own context, and a context switch
+         * cannot occur if the variable is non zero. So, as long as the writing
+         * from the register back into the memory is atomic, it is not a
+         * problem.
+         *
+         * Consider the following scenario, which starts with
+         * uxSchedulerSuspended at zero.
+         *
+         * 1. load uxSchedulerSuspended into register.
+         * 2. Now a context switch causes another task to run, and the other
+         *    task uses the same variable. The other task will see the variable
+         *    as zero because the variable has not yet been updated by the
+         *    original task. Eventually the original task runs again. **That can
+         *    only happen when uxSchedulerSuspended is once again zero**. When
+         *    the original task runs again, the contents of the CPU registers
+         *    are restored to exactly how they were when it was switched out -
+         *    therefore the value it read into the register still matches the
+         *    value of the uxSchedulerSuspended variable.
+         *
+         * 3. increment register.
+         * 4. store register into uxSchedulerSuspended. The value restored to
+         *    uxSchedulerSuspended will be the correct value of 1, even though
+         *    the variable was used by other tasks in the mean time.
+         */
+
+        /* portSOFTWARE_BARRIER() is only implemented for emulated/simulated ports that
+         * do not otherwise exhibit real time behaviour. */
+        portSOFTWARE_BARRIER();
+
+        /* The scheduler is suspended if uxSchedulerSuspended is non-zero.  An increment
+         * is used to allow calls to vTaskSuspendAll() to nest. */
+        uxSchedulerSuspended = ( UBaseType_t ) ( uxSchedulerSuspended + 1U );
+
+        /* Enforces ordering for ports and optimised compilers that may otherwise place
+         * the above increment elsewhere. */
+        portMEMORY_BARRIER();
+    }
+    #else /* #if ( configNUMBER_OF_CORES == 1 ) */
+    {
+        UBaseType_t ulState;
+        BaseType_t xCoreID;
+
+        /* This must only be called from within a task. */
+        portASSERT_IF_IN_ISR();
+
+        if( xSchedulerRunning != pdFALSE )
+        {
+            /* Writes to uxSchedulerSuspended must be protected by both the task AND ISR locks.
+             * We must disable interrupts before we grab the locks in the event that this task is
+             * interrupted and switches context before incrementing uxSchedulerSuspended.
+             * It is safe to re-enable interrupts after releasing the ISR lock and incrementing
+             * uxSchedulerSuspended since that will prevent context switches. */
+            ulState = portSET_INTERRUPT_MASK();
+
+            xCoreID = ( BaseType_t ) portGET_CORE_ID();
+
+            /* This must never be called from inside a critical section. */
+            configASSERT( portGET_CRITICAL_NESTING_COUNT( xCoreID ) == 0 );
+
+            /* portSOFTWARE_BARRIER() is only implemented for emulated/simulated ports that
+             * do not otherwise exhibit real time behaviour. */
+            portSOFTWARE_BARRIER();
+
+            portGET_TASK_LOCK( xCoreID );
+
+            /* uxSchedulerSuspended is increased after prvCheckForRunStateChange. The
+             * purpose is to prevent altering the variable when fromISR APIs are readying
+             * it. */
+            if( uxSchedulerSuspended == 0U )
+            {
+                prvCheckForRunStateChange();
+            }
+            else
+            {
+                mtCOVERAGE_TEST_MARKER();
+            }
+
+            /* Query the coreID again as prvCheckForRunStateChange may have
+             * caused the task to get scheduled on a different core. The correct
+             * task lock for the core is acquired in prvCheckForRunStateChange. */
+            xCoreID = ( BaseType_t ) portGET_CORE_ID();
+
+            portGET_ISR_LOCK( xCoreID );
+
+            /* The scheduler is suspended if uxSchedulerSuspended is non-zero. An increment
+             * is used to allow calls to vTaskSuspendAll() to nest. */
+            ++uxSchedulerSuspended;
+            portRELEASE_ISR_LOCK( xCoreID );
+
+            portCLEAR_INTERRUPT_MASK( ulState );
+        }
+        else
+        {
+            mtCOVERAGE_TEST_MARKER();
+        }
+    }
+    #endif /* #if ( configNUMBER_OF_CORES == 1 ) */
+
+    traceRETURN_vTaskSuspendAll();
+}
+
+Official docs (summary):
+Return values:
+- void: This function returns no value.
+Related configs: none
+Related APIs: xTaskResumeAll
+Reference snippets:
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/portmacro.h:portMEMORY_BARRIER:ANY(0) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/portmacro.h:portMEMORY_BARRIER:ANY(0)#c0) :: incoming: vTaskSuspendAll, xTaskResumeAll
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/portmacro.h:portYIELD_WITHIN_API:ANY(0) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/portmacro.h:portYIELD_WITHIN_API:ANY(0)#c0) :: incoming: vTaskSuspend
+- Incoming of vTaskSwitchContext (rel:in:vTaskSwitchContext#c0) :: incoming: vTaskSuspend
+- Type vTaskSuspendAll (type:vTaskSuspendAll#c0) :: TYPE type vTaskSuspendAll /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c
+- Call vTaskDelay -> vTaskSuspendAll (edge:vTaskDelay->vTaskSuspendAll:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2467#c0) :: Call: vTaskDelay -> vTaskSuspendAll at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2467 callee_kind=function resolved=/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:3837-3943
+- Call vTaskSuspendAll -> /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/portmacro.h:portMEMORY_BARRIER:ANY(0) (edge:vTaskSuspendAll->/home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/portmacro.h:portMEMORY_BARRIER:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:3879#c0) :: Call: vTaskSuspendAll -> /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/portmacro.h:portMEMORY_BARRIER:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:3879 callee_kind=macro
+- vTaskSuspendAll :: void vTaskSuspendAll(void); Suspends the scheduler.   Suspending the scheduler prevents a context switch from occurring but leaves interrupts enabled.  If an interrupt requests a context switch while the scheduler is
+
+Official documentation (full):
+Title: vTaskSuspendAll
+Signature: void vTaskSuspendAll(void);
+Summary:
+Suspends the scheduler.   Suspending the scheduler prevents a context switch from occurring
+but leaves interrupts enabled.  If an interrupt requests a context switch while the scheduler is
+suspended , then the request is held pending and is performed only when the scheduler is
+resumed (un -suspended) .
+Return values:
+- void: This function returns no value.
+Notes:
+Calls to xTaskResumeAll () transition the scheduler out of the Suspended state following a
+previous call to vTaskSuspendAll ().
+Calls to vTaskSuspendAll () can be nested.  The same number of calls must be made to
+xTaskResumeAll () as have previously been made to vTaskSuspendAll () before the scheduler
+will leave the Suspended state  and re -enter the Active state.
+xTaskResumeAll () must only be called from an executing task and therefore must not be
+called while the scheduler is in the Initialization state (prior to the scheduler being started).
+Other FreeRTOS API functions must  not be called while the scheduler is suspended.
+Example:
+/* A function that suspends then resumes the scheduler. */
+void vDemoFunction( void )
+{
+/* This function suspends the scheduler.  When it is called from vTask1 the
+scheduler is already suspended, so this call creates a nesting depth of 2. */
+vTaskSuspendAll();
+/* Perform an action here. */
+/* As calls to vTaskSuspendAll() are nested, resuming the scheduler here will
+not cause the schedul er to re -enter the active state.  */
+xTaskResumeAll();
+}
+void vTask1( void * pvParameters )
+{
+for( ;; )
+{
+/* Perform some actions here. */
+/* At some point the task wants to perform an operation during which it does
+not want to get swapped out, or it wants to access data which is also
+accessed from another task (but not from an interrupt).  It cannot use
+taskENTER_CRITICAL()/taskEXIT_CRITICAL() as the length of the operation may
+cause interrupts to be missed. */
+/* Prevent the scheduler from performing a context switch. */
+vTaskSuspendAll();
+/* Perform the operation here.  There is no need to use critical sections as
+the task has all the processing time other than that utilized by interrupt
+service routines.*/
+/* Calls to vTaskSuspendAll() can be nested so it is safe to call a (non API)
+function which also contains calls to vTaskSuspendAll().  API  functions
+should not be called while the scheduler is suspended. */
+vDemoFunction();
+/* The operation is complete.  Set the scheduler back into the Active
+state. */
+if( xTaskResumeAll() == pdTRUE )
+{
+/* A context switch occurred within xTaskResumeAll(). */
+}
+else
+{
+/* A context switch did not occur within xTaskResumeAll(). */
+}
+}
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

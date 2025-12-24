@@ -1,0 +1,239 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xTaskCreateRestricted, prvCreateRestrictedTask
+
+### Function xTaskCreateRestricted
+Signature: BaseType_t(TaskParameters_t*,TaskHandle_t*)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1571-1602, mpu_demo.c:109-109
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: <operator>.assignment(operator), prvCreateRestrictedTask(function), <operator>.notEquals(operator), prvAddNewTaskToReadyList(function), /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:pdPASS:ANY(0)(macro), <operator>.cast(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY:ANY(0)(macro), <operator>.minus(operator)
+Incoming callers count: 1
+Full source code:
+    BaseType_t xTaskCreateRestricted( const TaskParameters_t * const pxTaskDefinition,
+                                      TaskHandle_t * pxCreatedTask )
+    {
+        TCB_t * pxNewTCB;
+        BaseType_t xReturn;
+
+        traceENTER_xTaskCreateRestricted( pxTaskDefinition, pxCreatedTask );
+
+        pxNewTCB = prvCreateRestrictedTask( pxTaskDefinition, pxCreatedTask );
+
+        if( pxNewTCB != NULL )
+        {
+            #if ( ( configNUMBER_OF_CORES > 1 ) && ( configUSE_CORE_AFFINITY == 1 ) )
+            {
+                /* Set the task's affinity before scheduling it. */
+                pxNewTCB->uxCoreAffinityMask = configTASK_DEFAULT_CORE_AFFINITY;
+            }
+            #endif /* #if ( ( configNUMBER_OF_CORES > 1 ) && ( configUSE_CORE_AFFINITY == 1 ) ) */
+
+            prvAddNewTaskToReadyList( pxNewTCB );
+
+            xReturn = pdPASS;
+        }
+        else
+        {
+            xReturn = errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY;
+        }
+
+        traceRETURN_xTaskCreateRestricted( xReturn );
+
+        return xReturn;
+    }
+
+Official docs (summary):
+Parameters:
+- pxTaskDefinition: TaskParameters_t — Pointer to a structure that defines the tas k. The structure is described under  the notes heading in this section of the reference manual .
+- pxCreatedTask: TaskHandle_t — pxCreatedTask can be used to pass out a handle to the task being created.  This handle can then be used to reference the task in API calls that, for  Unlike standard FreeRTOS tasks, protected tasks can be created in either  User (un -privileged) or Supervisor (privileged) modes, and the uxPriority  structure member is used to control this option. To create a task in User  mode, uxPriority is set to equal the priority at which the task is to be  created. To create a task in Supervisor mode, uxPriority is set to equal the  priority at which the task is to be created and to have its most significant bit  set. The macro portPRIVILEGE_BIT is provided for this purpose.  For example, to create a User mode task at priority three, set uxPriority to  equal 3. To create a Supervisor mode task at priority three, set uxPriority  to equal ( 3 | portPRIVILEGE_BIT ).  puxStackBuffer The xTaskCreate( ) API function will automatically allocate a stack for use  by the task being created. The restrictions imposed by using an MPU  means that the xTaskCreateRestricted() function cannot do the same, and  instead , the stack used by the task being created must be statically  allocated and passed into the xTaskCreateRestricted() function using the  puxStackBuffer parameter.  Each time a restricted task is switched in (transitioned to the Running  state) the MPU is dynamically re -configured to define an MPU region that  provides the task read and write access to its own stack. Therefore, the  statically allocated task stack must comply with the size and alignment  restrictions imposed by the MPU . In particular, the size and alignment of  each region must both be equal to the same power of two value.  Statically declaring a stack buffer allows the alignment to be managed  using compiler extensions, and allows the linker to take care of stack  placement, which it will do as efficiently as possible. For example, if using  GCC, a stack can be declared and correctly aligned using the following  syntax:  char cTaskStack[ 1024 ] __attribute__((align(1024));  Listing 19 Statically declaring a correctly aligned stack  for use by a restricted task  MemoryRegion_t An array of MemoryRegion_t structures . Each MemoryRegion_t structure  defines a single MPU memory region for use by the task being created.  The Cortex -M3 FreeRTOS -MPU port defines  portNUM_CONFIGURABLE_REGIONS to be 3. Three regions can be  defined when the task is created. The regions can be redefined at run time  using the vTaskAllocateMPURegions() function.  The pvBaseAddress and ulLengthInBytes members are self explanatory as  the start of the memory region and the length of the memory region  respectively. ulParameters defines how the task is permitted to access the  memory region being defined, and can take the bitwise OR of the following  values:  • portMPU_REGION_READ_WRITE  • portMPU_REGION_PRIVILEGED_READ_ONLY  • portMPU_REGION_READ_ONLY  • portMPU_REGION_PRIVILEGED_READ_WRITE  • portMPU_REGION_CACHEABLE_BUFFERABLE  • portMPU_REGION_EXECUTE_NEVER
+Return values:
+- BaseType_t: pdPASS Indicates that the task has been created successfully.
+Any other value  Indicates that the task could not be created as specified, probably because
+there is insufficient FreeRTOS heap memory available to allocate the task
+data structures .
+If heap_1.c , heap_2.c or heap_4.c are included in the project then the total
+amount of heap available is defined by configTOTAL_HEAP_SIZE in
+FreeRTOSConfig.h, and failure to allocate memory can be trapped using
+the vApplicationMallocFailedHook()  callback (or ‘hook’) function, and the
+amount of free heap memory remaining can be queried using the
+xPortGetFreeHeapSize()  API function.
+If heap_3.c is included in the project then the total heap size is defined by
+the linker configuration.
+Related configs: pcName, portNUM_CONFIGURABLE_REGIONS, portSTACK_TYPE, puxStackBuffer, pvBaseAddress, pvParameters, pvTaskCode, ulLengthInBytes, ulParameters, usStackDepth, uxPriority, xMEMORY_REGION, xRegions, xTASK_PARAMTERS
+Related APIs: xTaskCreate, xTaskCreateRestricted
+Reference snippets:
+- Incoming of prvCreateRestrictedTask (rel:in:prvCreateRestrictedTask#c0) :: incoming: xTaskCreateRestricted
+- Incoming of prvCreateRestrictedStaticTask (rel:in:prvCreateRestrictedStaticTask#c0) :: incoming: xTaskCreateRestrictedStatic
+- API xTaskCreateRestricted Overview (api:xTaskCreateRestricted:overview#c0) :: API: xTaskCreateRestricted Signature: BaseType_t xTaskCreateRestricted(TaskParameters_t *pxTaskDefinition, TaskHandle_t *pxCreatedTask); Headers: task.h, FreeRTOS.h Summary: This function is intended for advanced users only and is only relevant to FreeRTOS MPU ports (FreeRTOS ports that make use of a Memory Protection …
+- Incoming of xTaskCreateRestricted (rel:in:xTaskCreateRestricted#c0) :: incoming: MPU_xTaskCreateRestricted
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY:ANY(0) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY:ANY(0)#c0) :: incoming: xTaskCreate, xTaskCreateRestricted, xTaskCreateRestrictedStatic
+- Function xTaskCreateRestricted (func:xTaskCreateRestricted:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c0) :: FUNC xTaskCreateRestricted BaseType_t(TaskParameters_t*,TaskHandle_t*) file /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1571-1602     BaseType_t xTaskCreateRestricted( const TaskParameters_t * const pxTaskDefinition,                                       TaskHandle_t * pxCreatedTask )     {         TCB_t * pxNewTCB;    …
+- xTaskCreateRestricted :: BaseType_t xTaskCreateRestricted(TaskParameters_t *pxTaskDefinition, TaskHandle_t *pxCreatedTask); This function is intended for advanced users only and is only relevant to FreeRTOS MPU ports (FreeRTOS ports that make use of a Memory Protection Unit).
+
+Official documentation (full):
+Title: xTaskCreateRestricted
+Signature: BaseType_t xTaskCreateRestricted(TaskParameters_t *pxTaskDefinition, TaskHandle_t *pxCreatedTask);
+Summary:
+This function is intended for advanced users only and is only relevant to FreeRTOS MPU ports
+(FreeRTOS ports that make use of a Memory Protection Unit).
+Create a new Memory Protection Unit (MPU) restricted task.
+Newly created tasks are initially placed in the Ready state, but will immediately become the
+Running state task if there are no higher priority tasks that are able to run.
+Tasks can be created both before and after the scheduler has been started.
+Parameters:
+- pxTaskDefinition: TaskParameters_t — Pointer to a structure that defines the tas k. The structure is described under  the notes heading in this section of the reference manual .
+- pxCreatedTask: TaskHandle_t — pxCreatedTask can be used to pass out a handle to the task being created.  This handle can then be used to reference the task in API calls that, for  Unlike standard FreeRTOS tasks, protected tasks can be created in either  User (un -privileged) or Supervisor (privileged) modes, and the uxPriority  structure member is used to control this option. To create a task in User  mode, uxPriority is set to equal the priority at which the task is to be  created. To create a task in Supervisor mode, uxPriority is set to equal the  priority at which the task is to be created and to have its most significant bit  set. The macro portPRIVILEGE_BIT is provided for this purpose.  For example, to create a User mode task at priority three, set uxPriority to  equal 3. To create a Supervisor mode task at priority three, set uxPriority  to equal ( 3 | portPRIVILEGE_BIT ).  puxStackBuffer The xTaskCreate( ) API function will automatically allocate a stack for use  by the task being created. The restrictions imposed by using an MPU  means that the xTaskCreateRestricted() function cannot do the same, and  instead , the stack used by the task being created must be statically  allocated and passed into the xTaskCreateRestricted() function using the  puxStackBuffer parameter.  Each time a restricted task is switched in (transitioned to the Running  state) the MPU is dynamically re -configured to define an MPU region that  provides the task read and write access to its own stack. Therefore, the  statically allocated task stack must comply with the size and alignment  restrictions imposed by the MPU . In particular, the size and alignment of  each region must both be equal to the same power of two value.  Statically declaring a stack buffer allows the alignment to be managed  using compiler extensions, and allows the linker to take care of stack  placement, which it will do as efficiently as possible. For example, if using  GCC, a stack can be declared and correctly aligned using the following  syntax:  char cTaskStack[ 1024 ] __attribute__((align(1024));  Listing 19 Statically declaring a correctly aligned stack  for use by a restricted task  MemoryRegion_t An array of MemoryRegion_t structures . Each MemoryRegion_t structure  defines a single MPU memory region for use by the task being created.  The Cortex -M3 FreeRTOS -MPU port defines  portNUM_CONFIGURABLE_REGIONS to be 3. Three regions can be  defined when the task is created. The regions can be redefined at run time  using the vTaskAllocateMPURegions() function.  The pvBaseAddress and ulLengthInBytes members are self explanatory as  the start of the memory region and the length of the memory region  respectively. ulParameters defines how the task is permitted to access the  memory region being defined, and can take the bitwise OR of the following  values:  • portMPU_REGION_READ_WRITE  • portMPU_REGION_PRIVILEGED_READ_ONLY  • portMPU_REGION_READ_ONLY  • portMPU_REGION_PRIVILEGED_READ_WRITE  • portMPU_REGION_CACHEABLE_BUFFERABLE  • portMPU_REGION_EXECUTE_NEVER
+Return values:
+- BaseType_t: pdPASS Indicates that the task has been created successfully.
+Any other value  Indicates that the task could not be created as specified, probably because
+there is insufficient FreeRTOS heap memory available to allocate the task
+data structures .
+If heap_1.c , heap_2.c or heap_4.c are included in the project then the total
+amount of heap available is defined by configTOTAL_HEAP_SIZE in
+FreeRTOSConfig.h, and failure to allocate memory can be trapped using
+the vApplicationMallocFailedHook()  callback (or ‘hook’) function, and the
+amount of free heap memory remaining can be queried using the
+xPortGetFreeHeapSize()  API function.
+If heap_3.c is included in the project then the total heap size is defined by
+the linker configuration.
+Notes:
+xTaskCreateRestricted() makes use of the two data structures shown in Listing 18.
+typedef struct xTASK_PARAMTERS
+{
+TaskFunction_t  pvTaskCode;
+const signed char * const pcName;
+unsigned short usStackDepth;
+void *pvParameters;
+UBaseType_t  uxPriority;
+portSTACK_TYPE *puxStackBuffer;
+MemoryRegion_t  xRegions[ portNUM_CONFIGURABLE_REGIONS ];
+} TaskParameters_t ;
+/* ....where MemoryRegion_t  is defined as: */
+typedef struct xMEMORY_REGION
+{
+void *pvBaseAddress;
+unsigned long ulLengthInBytes;
+unsigned long ulParameters;
+} MemoryRegion_t ;
+A description of the Listing 18 structure members is given below.
+pvTaskCode
+to
+uxPriority  These structure members are equivalent to the xTaskCreate() API function
+Example:
+If your application has no use for the task handle , then pxCreatedTask can
+be set to NULL.
+/* Declare the stack that will be used by the protected task  being created .  The stack alignment
+must match its size , and be a power of 2 .  So, if 128 words are reserved for the stack then it
+must be aligned on a ( 128  * 4 ) byte boundary.  This example uses  GCC syntax. */
+static portSTACK_TYPE xTaskStack[ 128 ] __attribute__((aligned(128*4)));
+/* Declare an array that will be accessed by the  protected  task being created .  The task should
+only be able to read from the array, and not write to it. */
+char cReadOnlyArray[ 512 ] __attribute__((aligned(512)));
+/* Fill in a TaskParameters_t  structure to define the task - this is the  structure passed to the
+xTaskCreateRestricted() function. */
+static const TaskParameters_t  xTaskDefinition =
+{
+vTaskFunction,   /* pvTaskCode */
+"A task",        /* pcName */
+128,             /* usStackDepth - defined in words, not bytes. */
+NULL,            /* pvParameters */
+1,               /* uxPriority - priority 1, start in User mode. */
+xTaskStack,      /* puxStackBuffer - the array to use as the task stack. */
+/* xRegions - In this case only one of the three user definable regions is actually used.
+The parameters are used to set the region to read only. */
+{
+/* Base address   Length    Parameters */
+{ cReadOnlyArray, 512,      portMPU_REGION_READ_ONLY },
+{ 0,            0,        0                        },
+{ 0,            0,        0                        },
+}
+};
+void main( void )
+{
+/* Create the task defined by xTaskDefinition.  NULL is used as the second parameter as a
+task handle is not required. */
+xTaskCreateRestricted( &xTaskDefinition, NULL );
+/* Start the scheduler. */
+vTaskStartScheduler();
+/* Should not reach here! */
+}
+
+### Function prvCreateRestrictedTask
+Signature: TCB_t(TaskParameters_t*,TaskHandle_t*)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1523-1568
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.indirectFieldAccess(operator), <operator>.equals(operator), vAssertCalled(function), <operator>.notEquals(operator), <operator>.assignment(operator), <operator>.cast(operator), pvPortMalloc(function)
+Incoming callers count: 1
+Full source code:
+    static TCB_t * prvCreateRestrictedTask( const TaskParameters_t * const pxTaskDefinition,
+                                            TaskHandle_t * const pxCreatedTask )
+    {
+        TCB_t * pxNewTCB;
+
+        configASSERT( pxTaskDefinition->puxStackBuffer );
+
+        if( pxTaskDefinition->puxStackBuffer != NULL )
+        {
+            /* MISRA Ref 11.5.1 [Malloc memory assignment] */
+            /* More details at: https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/main/MISRA.md#rule-115 */
+            /* coverity[misra_c_2012_rule_11_5_violation] */
+            pxNewTCB = ( TCB_t * ) pvPortMalloc( sizeof( TCB_t ) );
+
+            if( pxNewTCB != NULL )
+            {
+                ( void ) memset( ( void * ) pxNewTCB, 0x00, sizeof( TCB_t ) );
+
+                /* Store the stack location in the TCB. */
+                pxNewTCB->pxStack = pxTaskDefinition->puxStackBuffer;
+
+                #if ( tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE != 0 )
+                {
+                    /* Tasks can be created statically or dynamically, so note
+                     * this task had a statically allocated stack in case it is
+                     * later deleted.  The TCB was allocated dynamically. */
+                    pxNewTCB->ucStaticallyAllocated = tskSTATICALLY_ALLOCATED_STACK_ONLY;
+                }
+                #endif /* tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE */
+
+                prvInitialiseNewTask( pxTaskDefinition->pvTaskCode,
+                                      pxTaskDefinition->pcName,
+                                      pxTaskDefinition->usStackDepth,
+                                      pxTaskDefinition->pvParameters,
+                                      pxTaskDefinition->uxPriority,
+                                      pxCreatedTask, pxNewTCB,
+                                      pxTaskDefinition->xRegions );
+            }
+        }
+        else
+        {
+            pxNewTCB = NULL;
+        }
+
+        return pxNewTCB;
+    }
+
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

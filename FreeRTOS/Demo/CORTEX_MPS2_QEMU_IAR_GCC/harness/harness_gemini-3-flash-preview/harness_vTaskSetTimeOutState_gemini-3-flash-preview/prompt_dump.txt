@@ -1,0 +1,170 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: vTaskSetTimeOutState, vAssertCalled, vPortEnterCritical
+
+### Function vTaskSetTimeOutState
+Signature: void(TimeOut_t*)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:5559-5572
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), vAssertCalled(function), /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0)(macro), vPortEnterCritical(function), <operator>.assignment(operator), <operator>.indirectFieldAccess(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0)(macro)
+Incoming callers count: 2
+Full source code:
+void vTaskSetTimeOutState( TimeOut_t * const pxTimeOut )
+{
+    traceENTER_vTaskSetTimeOutState( pxTimeOut );
+
+    configASSERT( pxTimeOut );
+    taskENTER_CRITICAL();
+    {
+        pxTimeOut->xOverflowCount = xNumOfOverflows;
+        pxTimeOut->xTimeOnEntering = xTickCount;
+    }
+    taskEXIT_CRITICAL();
+
+    traceRETURN_vTaskSetTimeOutState();
+}
+
+Official docs (summary):
+Parameters:
+- pxTimeOut: TimeOut_t * const — A pointer to a structure that will be initialized to hold information necessary to  determine if a timeout has occurred.
+Return values:
+- void: This function returns no value.
+Related configs: none
+Related APIs: xTaskCheckForTimeOut
+Reference snippets:
+- API vTaskSetTimeOutState Overview (api:vTaskSetTimeOutState:overview#c0) :: API: vTaskSetTimeOutState Signature: void vTaskSetTimeOutState(TimeOut_t * const pxTimeOut) ; Headers: task.h, FreeRTOS.h Summary: This function is intended for advanced users only. A task can enter the Blocked state to wait for an event.  Typically, the task will not wait in the Blocked state indefinitely, but instead…
+- Type vTaskSetTimeOutState (type:vTaskSetTimeOutState#c0) :: TYPE type vTaskSetTimeOutState /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c
+- API vTaskSetTimeOutState Returns (api:vTaskSetTimeOutState:returns#c0) :: API: vTaskSetTimeOutState Section: returns returns void: This function returns no value.
+- API vTaskSetTimeOutState Related (api:vTaskSetTimeOutState:related#c0) :: API: vTaskSetTimeOutState Section: related related: xTaskCheckForTimeOut
+- API vTaskSetTimeOutState Parameters (api:vTaskSetTimeOutState:parameters#c0) :: API: vTaskSetTimeOutState Section: parameters param pxTimeOut: TimeOut_t * const A pointer to a structure that will be initialized to hold information necessary to  determine if a timeout has occurred.
+- API vTaskSetTimeOutState Example (api:vTaskSetTimeOutState:example#c0) :: API: vTaskSetTimeOutState Section: example /* Driver library function used to receive uxWantedBytes from an Rx buffer that is filled by a UART interrupt.  If there are not enough bytes in the Rx buffer then the task enters the Blocked state until it is notified that more data has been placed into the buffer.  If there …
+- vTaskSetTimeOutState :: void vTaskSetTimeOutState(TimeOut_t * const pxTimeOut) ; This function is intended for advanced users only. A task can enter the Blocked state to wait for an event.  Typically, the task will not wait in the
+- vTaskSetTimeOutState :: void vTaskSetTimeOutState(TimeOut_t * const pxTimeOut) ; This function is intended for advanced users only. A task can enter the Blocked state to wait for an event.  Typically, the task will not wait in the
+
+Official documentation (full):
+Title: vTaskSetTimeOutState
+Signature: void vTaskSetTimeOutState(TimeOut_t * const pxTimeOut) ;
+Summary:
+This function is intended for advanced users only.
+A task can enter the Blocked state to wait for an event.  Typically, the task will not wait in the
+Blocked state indefinitely, but instead a timeout period will be specified.  The task will be
+removed from the Blocked state if the timeout period expires before the event the task is
+waiting for occurs.
+If a task enters and exits the Blocked state more than once while it is waiting for the event to
+occur then the timeout used each time the task enters the Blocked state must be adjusted to
+ensure the total of all the time spent in the Blocked state does not exceed the originally
+specified timeout period.  xTaskCheckForTimeOut() performs the adjustment, taking into
+account occasional occurrences such as tick count overflows, which would otherwise make a
+manual adjustment prone to error.
+vTaskSetTimeOutState() is used with xTaskCheckForTimeOut().  vTaskSetTimeOutState() is
+called to set the initial condition, after which xTaskCheckForTimeOut() can be called to check
+for a timeout condition, and adjust the remaining block time if a timeout has not occurred.
+Parameters:
+- pxTimeOut: TimeOut_t * const — A pointer to a structure that will be initialized to hold information necessary to  determine if a timeout has occurred.
+Return values:
+- void: This function returns no value.
+Example:
+/* Driver library function used to receive uxWantedBytes from an Rx buffer that is filled
+by a UART interrupt.  If there are not enough bytes in the Rx buffer then the task enters
+the Blocked state until it is notified that more data has been placed into the buffer.  If
+there is still not enough data then the task re -enters the Blocked state, and
+xTaskCheckForTimeOut () is used to re -calculate the Block time to ensure the total amount
+of time spent in the Blocked state does not exceed MAX_TIME_TO_WAIT . This continues until
+either the buffer contains at least uxWantedBytes bytes, or the total amount of time spent
+in the Blocked state reaches MAX_TIME_TO_WAIT – at which point the task reads however many
+bytes are available up to a maximum of uxWantedBytes. */
+size_t xUART_Receive(  uint8_t *pucBuffer, size_t uxWantedBytes )
+{
+size_t uxReceived = 0;
+TickType_t xTicksToWait = MAX_TIME_TO_WAIT;
+TimeOut_t xTimeOut;
+/* Initialize xTimeOut.  This records the time at which this function was entered. */
+vTaskSetTimeOutState( &xTimeOut );
+/* Loop until the buffer contains the wanted number of bytes, or a timeout occurs. */
+while( UART_bytes_in_rx_buffer( pxUARTInstance ) < uxWantedBytes )
+{
+/* The buffer didn’t contain enough data so this task is going to enter the Blocked
+state.  A djusting xTicksToWait to account for any time that has been spent in the
+Blocked state within this function so far to ensure the total amount of time spent
+in the Blocked state does not exceed MAX_TIME_TO_WAIT. */
+if( xTaskCheckForTimeOut( &xTimeOut, &xTicksToWait ) != pdFALSE )
+{
+/* Timed out  before the wanted number of bytes were available, exit the loop . */
+break;
+}
+/* Wait for a maximum of xTicksToWait ticks to be notified that the receive
+interrupt has placed more data into the buffer. */
+ulTaskNotifyTake( pdTRUE, xTicksToWait );
+}
+/* Attempt to read uxWantedBytes from the receive buffer into pucBuffer.  The actual
+number of bytes read (which might be less than uxWantedBytes) is returned. */
+uxReceived = UART_read_from_receive_buffer( pxUARTInstance, pucBuffer, uxWantedBytes );
+return uxReceived;
+}
+
+### Function vAssertCalled
+Signature: void(void)
+Location: main.c:58-72
+Cyclomatic: -1 Lines: -1
+Includes: none
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0)(macro), vPortEnterCritical(function), <operator>.equals(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0)(macro), vPortExitCritical(function)
+Incoming callers count: 141
+
+### Function vPortEnterCritical
+Signature: void(void)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/port.c:913-937
+Cyclomatic: -1 Lines: -1
+Includes: FreeRTOS.h, task.h, mpu_syscall_numbers.h
+Outgoing calls summary: /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/portmacro.h:portDISABLE_INTERRUPTS:ANY(0)(macro), vPortRaiseBASEPRI(function), <operator>.postIncrement(operator)
+Incoming callers count: 47
+Full source code:
+void vPortEnterCritical( void )
+{
+    #if ( configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS == 1 )
+        if( portIS_PRIVILEGED() == pdFALSE )
+        {
+            portRAISE_PRIVILEGE();
+            portMEMORY_BARRIER();
+
+            portDISABLE_INTERRUPTS();
+            uxCriticalNesting++;
+            portMEMORY_BARRIER();
+
+            portRESET_PRIVILEGE();
+            portMEMORY_BARRIER();
+        }
+        else
+        {
+            portDISABLE_INTERRUPTS();
+            uxCriticalNesting++;
+        }
+    #else /* if ( configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS == 1 ) */
+        portDISABLE_INTERRUPTS();
+        uxCriticalNesting++;
+    #endif /* if ( configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS == 1 ) */
+}
+
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

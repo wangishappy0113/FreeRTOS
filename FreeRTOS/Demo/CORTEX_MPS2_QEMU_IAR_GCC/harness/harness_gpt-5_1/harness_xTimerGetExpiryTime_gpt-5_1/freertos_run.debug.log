@@ -1,0 +1,1103 @@
+FUZZ_INPUT @ 0x2000007c
+main address = 0x358c
+Breakpoint address = 0x366a
+[2025-12-22T08:21:38Z INFO  libafl::events::launcher] spawning on cores: Cores { cmdline: "1", ids: [CoreId(1)] }
+[2025-12-22T08:21:38Z INFO  libafl::events::launcher] child spawned with id 1 and bound to core CoreId(1)
+[2025-12-22T08:21:38Z INFO  libafl::events::launcher] I am broker!!.
+[2025-12-22T08:21:38Z INFO  libafl::events::launcher] 1274681 PostFork
+[2025-12-22T08:21:38Z INFO  libafl_bolts::llmp] Successfully setup signal handlers
+[2025-12-22T08:21:38Z INFO  libafl_bolts::llmp] Connected to port 1337
+[2025-12-22T08:21:38Z INFO  libafl_bolts::llmp] New connection: 127.0.0.1:51842/127.0.0.1:51842
+[2025-12-22T08:21:38Z INFO  libafl::events::llmp::restarting] Setting core affinity to CoreId(1)
+[2025-12-22T08:21:38Z INFO  libafl::events::llmp::restarting] Spawning next client (id 0)
+[2025-12-22T08:21:38Z INFO  libafl::events::llmp::restarting] First run. Let's set it all up
+qemu_baremetal: warning: nic lan9118.0 has no peer
+Devices = ["timer", "cpu_common", "cpu", "armv7m_nvic", "armv7m_systick", "armv7m", "or-irq", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-timer", "cmsdk-apb-timer", "cmsdk-apb-dualtimer", "cmsdk-apb-watchdog", "led", "led", "led", "led", "led", "led", "led", "led", "mps2-scc", "led", "led", "mps2-fpgaio", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "i2c_bus", "i2c_bus", "i2c_bus", "i2c_bus", "lan9118-phy", "lan9118"]
+qemu_baremetal: warning: icount sleep disabled and no active timers
+[2025-12-22T08:21:38Z INFO  libafl_qemu::command::lqemu] Fuzzing starts @ PC 358c
+[2025-12-22T08:21:38Z INFO  libafl::state] Loading file /home/zwz/Libafl/fuzzers/full_system/qemu_baremetal/corpus/golden_seed ...
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 0, objectives: 0, executions: 1, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 0, objectives: 0, executions: 1, exec/sec: 0.000, edges: 449/449 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000, edges: 449/449 (100%)
+We imported 1 inputs from disk.
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966527
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966848
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in p[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 1, objectives: 0, executions: 5, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 1, objectives: 0, executions: 5, exec/sec: 0.000, edges: 449/449 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 2, objectives: 0, executions: 5, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 2, objectives: 0, executions: 5, exec/sec: 0.000, edges: 449/449 (100%)
+ast: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967041
+[WARN] Timer expiry far in past: pastDelta=4294966317
+[WARN] Timer expiry far in past: pastDelta=4294966898
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966878
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 2, objectives: 0, executions: 8, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 2, objectives: 0, executions: 8, exec/sec: 0.000, edges: 449/449 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 3, objectives: 0, executions: 8, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 3, objectives: 0, executions: 8, exec/sec: 0.000, edges: 449/449 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967196
+[WARN] Timer expiry far in past: pastDelta=4294967204
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 3, objectives: 0, executions: 9, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 3, objectives: 0, executions: 9, exec/sec: 0.000, edges: 452/452 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 4, objectives: 0, executions: 9, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 4, objectives: 0, executions: 9, exec/sec: 0.000, edges: 452/452 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 4, objectives: 0, executions: 11, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 4, objectives: 0, executions: 11, exec/sec: 0.000, edges: 452/452 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 5, objectives: 0, executions: 11, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 0, executions: 11, exec/sec: 0.000, edges: 452/452 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 5, objectives: 0, executions: 12, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 0, executions: 12, exec/sec: 0.000, edges: 453/453 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 6, objectives: 0, executions: 12, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 6, objectives: 0, executions: 12, exec/sec: 0.000, edges: 453/453 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294966395
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966887
+[WARN] Timer expiry far in past: pastDelta=4294967189
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 6, objectives: 0, executions: 18, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 6, objectives: 0, executions: 18, exec/sec: 0.000, edges: 453/453 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 7, objectives: 0, executions: 18, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 7, objectives: 0, executions: 18, exec/sec: 0.000, edges: 453/453 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294967124
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966815
+[WARN] Timer expiry far in past: pastDelta=4294966887
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966964
+[WARN] Timer expiry far in past: pastDelta=4294966825
+[WARN] Timer expiry far in past: pastDelta=4294966823
+[WARN] Timer expiry far in past: pastDelta=4294967165
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 7, objectives: 0, executions: 21, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 7, objectives: 0, executions: 21, exec/sec: 0.000, edges: 453/453 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 8, objectives: 0, executions: 21, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 8, objectives: 0, executions: 21, exec/sec: 0.000, edges: 453/453 (100%)
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967149
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 8, objectives: 0, executions: 22, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 8, objectives: 0, executions: 22, exec/sec: 0.000, edges: 458/458 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 9, objectives: 0, executions: 22, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 9, objectives: 0, executions: 22, exec/sec: 0.000, edges: 458/458 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294966955
+[WARN] Timer expiry far in past: pastDelta=4294966529
+[WARN] Timer expiry far in past: pastDelta=4294966751
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966640
+[WARN] Timer expiry far in past: pastDelta=4294967012
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 9, objectives: 0, executions: 25, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 9, objectives: 0, executions: 25, exec/sec: 0.000, edges: 460/460 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 10, objectives: 0, executions: 25, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 10, objectives: 0, executions: 25, exec/sec: 0.000, edges: 460/460 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294966888
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967205
+[WARN] Timer expiry far in past: pastDelta=4294966921
+[WARN] Timer expiry far in past: pastDelta=4294966967
+[WARN] Timer expiry far in past: pastDelta=4294966936
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294967236
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 10, objectives: 0, executions: 27, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 10, objectives: 0, executions: 27, exec/sec: 0.000, edges: 462/462 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 11, objectives: 0, executions: 27, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 11, objectives: 0, executions: 27, exec/sec: 0.000, edges: 462/462 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966886
+[WARN] Timer expiry far in past: pastDelta=4294966727
+[WARN] Timer expiry far in past: pastDelta=4294966903
+[WARN] Timer expiry far in past: pastDelta=4294967096
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966884
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967019
+[WARN] Timer expiry far in past: pastDelta=4294966832
+[WARN] Timer expiry far in past: pastDelta=4294966781
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967041
+[WARN] Timer expiry far in past: pastDelta=4294967040
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 11, objectives: 0, executions: 33, exec/sec: 0.000, edges: 100.000%
+=                  (CLIENT) corpus: 11, objectives: 0, executions: 33, exec/sec: 0.000, edges: 463/463 (100%)
+4294967295
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 12, objectives: 0, executions: 33, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 12, objectives: 0, executions: 33, exec/sec: 0.000, edges: 463/463 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 12, objectives: 0, executions: 34, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 12, objectives: 0, executions: 34, exec/sec: 0.000, edges: 465/465 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 13, objectives: 0, executions: 34, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 13, objectives: 0, executions: 34, exec/sec: 0.000, edges: 465/465 (100%)
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966419
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966860
+[WARN] Timer expiry far in past: pastDelta=4294966862
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] [UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 13, objectives: 0, executions: 37, exec/sec: 0.000, edges: 100.000%
+Ti                  (CLIENT) corpus: 13, objectives: 0, executions: 37, exec/sec: 0.000, edges: 466/466 (100%)
+mer expiry far in past: pastDelta=429496[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 14, objectives: 0, executions: 37, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 14, objectives: 0, executions: 37, exec/sec: 0.000, edges: 466/466 (100%)
+7295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967223
+[WARN] Timer expiry far in past: pastDelta=4294967199
+[WARN] Timer expiry far in past: pastDelta=4294967087
+[WARN] Timer expiry far in past: pastDelta=4294966746
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967027
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966898
+[WARN] Timer expiry far in past: pastDelta=4294967135
+[WARN] Timer expiry far in past: pastDelta=4294967108
+[WARN] Timer expiry far in past: pastDelta=4294967209
+[WARN] Timer expiry far in past: pastDelta=4294966836
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966742
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry [UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 14, objectives: 0, executions: 44, exec/sec: 0.000, edges: 100.000%
+far                  (CLIENT) corpus: 14, objectives: 0, executions: 44, exec/sec: 0.000, edges: 466/466 (100%)
+ in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 15, objectives: 0, executions: 44, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 15, objectives: 0, executions: 44, exec/sec: 0.000, edges: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967073
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967261
+[WARN] Timer expiry far in past: pastDelta=4294967262
+[WARN] Timer expiry far in past: pastDelta=4294967203
+[WARN] Timer expiry far in past: pastDelta=4294967236
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966879
+[WARN] Timer expiry far in past: pastDelta=4294966961
+[WARN] Timer expiry far in past: pastDelta=4294967135
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966933
+[WARN] Timer expiry far in past: pastDelta=4294966885
+[WARN] Timer expiry far in past: pastDelta=4294967032
+[WARN] Timer expiry far in past: pastDelta=4294966900
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967164
+[WARN] Timer expiry far in past: pastDelta=4294967095
+[WARN] Timer expiry far in past: pastDelta=4294967165
+[WARN] Timer expiry far in past: pastDelta=4294967161
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 15, objectives: 0, executions: 54, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 15, objectives: 0, executions: 54, exec/sec: 0.000, edges: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 16, objectives: 0, executions: 54, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 16, objectives: 0, executions: 54, exec/sec: 0.000, edges: 466/466 (100%)
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967099
+[WARN] Timer expiry far in past: pastDelta=4294966907
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967082
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966417
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967184
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966860
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294967004
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966988
+[WARN] Timer expiry far in past: pastDelta=4294967073
+[WARN] Timer expiry far in past: pastDelta=4294967074
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966910
+[WARN] Timer expiry far in past: pastDelta=4294966888
+[WARN] Timer expiry far in past: pastDelta=4294966967
+[WARN] Timer expiry far in past: pastDelta=4294966753
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967087
+[WARN] Timer expiry far in past: pastDelta=4294967223
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 16, objectives: 0, executions: 64, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 16, objectives: 0, executions: 64, exec/sec: 0.000, edges: 466/466 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 17, objectives: 0, executions: 64, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 17, objectives: 0, executions: 64, exec/sec: 0.000, edges: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967126
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294967002
+[WARN] Timer expiry far in past: pastDelta=4294966995
+[WARN] Timer expiry far in past: pastDelta=4294966527
+[WARN] Timer expiry far in past: pastDelta=4294966900
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966991
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966560
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 17, objectives: 0, executions: 74, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+[                  (CLIENT) corpus: 17, objectives: 0, executions: 74, exec/sec: 0.000, edges: 466/466 (100%), stability: 466/466 (100%)
+WARN] Timer expiry far in past: pastDelta=4294967088
+[WARN] Timer expiry far in past: pastDelta=4294967125
+[WARN] Timer expiry far in past: pastDelta=4294966992
+[WARN] Timer expiry far in past: pastDelta=4294967168
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 17, objectives: 0, executions: 75, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 17, objectives: 0, executions: 75, exec/sec: 0.000, edges: 468/468 (100%), stability: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 18, objectives: 0, executions: 75, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 18, objectives: 0, executions: 75, exec/sec: 0.000, edges: 468/468 (100%), stability: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294966878
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967196
+[WARN] Timer expiry far in past: pastDelta=4294967204
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966816
+[WARN] Timer expiry far in past: pastDelta=4294966816
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 18, objectives: 0, executions: 77, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+74                  (CLIENT) corpus: 18, objectives: 0, executions: 77, exec/sec: 0.000, edges: 470/470 (100%), stability: 466/466 (100%)
+0
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 19, objectives: 0, executions: 77, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 19, objectives: 0, executions: 77, exec/sec: 0.000, edges: 470/470 (100%), stability: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294967247
+[WARN] Timer expiry far in past: pastDelta=4294967241
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 19, objectives: 0, executions: 79, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 19, objectives: 0, executions: 79, exec/sec: 0.000, edges: 470/470 (100%), stability: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 20, objectives: 0, executions: 79, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 20, objectives: 0, executions: 79, exec/sec: 0.000, edges: 470/470 (100%), stability: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294966878
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967196
+[WARN] Timer expiry far in past: pastDelta=4294966892
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967088
+[WARN] Timer expiry far in past: pastDelta=4294966821
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967140
+[WARN] Timer expiry far in past: pastDelta=4294966641
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967107
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966729
+[WARN] Timer expiry far in past: pastDelta=4294967220
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967168
+[WARN] Timer expiry far in past: pastDelta=4294966552
+[WARN] Timer expiry far in past: pastDelta=4294966867
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966903
+[WARN] Timer expiry far in past: pastDelta=4294966491
+[WARN] Timer expiry far in past: pastDelta=4294967090
+[WARN] Timer expiry far in past: pastDelta=4294966903
+[WARN] Timer expiry far in past: pastDelta=4294966949
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 20, objectives: 0, executions: 88, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+!
+                  (CLIENT) corpus: 20, objectives: 0, executions: 88, exec/sec: 0.000, edges: 470/470 (100%), stability: 466/466 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 21, objectives: 0, executions: 88, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 21, objectives: 0, executions: 88, exec/sec: 0.000, edges: 470/470 (100%), stability: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967215
+[WARN] Timer expiry far in past: pastDelta=4294966832
+[WARN] Timer expiry far in past: pastDelta=4294967125
+[WARN] Timer expiry far in past: pastDelta=4294966868
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966840
+[WARN] Timer expiry far in past: pastDelta=4294967044
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294966745
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966878
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967077
+[WARN] Timer expiry far in past: pastDelta=4294967181
+[WARN] Timer expiry far in past: pastDelta=4294967204
+[WARN] Timer expiry far in past: pastDelta=4294966943
+[WARN] Timer expiry far in past: pastDelta=4294967173
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 21, objectives: 0, executions: 96, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 21, objectives: 0, executions: 96, exec/sec: 0.000, edges: 470/470 (100%), stability: 466/466 (100%)
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967043
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967090
+[WARN] Timer expiry far in past: pastDelta=4294966488
+[WARN] Timer expiry far in past: pastDelta=4294967147
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 22, objectives: 0, executions: 96, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 22, objectives: 0, executions: 96, exec/sec: 0.000, edges: 470/470 (100%), stability: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967042
+[WARN] Timer expiry far in past: pastDelta=4294966878
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 22, objectives: 0, executions: 98, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 22, objectives: 0, executions: 98, exec/sec: 0.000, edges: 470/470 (100%), stability: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 23, objectives: 0, executions: 98, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 23, objectives: 0, executions: 98, exec/sec: 0.000, edges: 470/470 (100%), stability: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966740
+[WARN] Timer expiry far in past: pastDelta=4294966415
+[WARN] Timer expiry far in past: pastDelta=4294967285
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966878
+[WARN] Timer expiry far in past: pastDelta=4294967031
+[WARN] Timer expiry far in past: pastDelta=4294967196
+[WARN] Timer expiry far in past: pastDelta=4294967204
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967150
+[WARN] Timer expiry far in past: pastDelta=4294966875
+[WARN] Timer expiry far in past: pastDelta=4294966487
+[WARN] Timer expiry far in past: pastDelta=4294967295
+[WARN] Timer expiry far in past: pastDelta=4294966868
+[WARN] Timer expiry far in past: pastDelta=4294967089
+[WARN] Timer expiry far in past: pastDelta=4294966973
+[WARN] Timer expiry far in past: pastDelta=4294967167
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 23, objectives: 0, executions: 103, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 23, objectives: 0, executions: 103, exec/sec: 0.000, edges: 470/470 (100%), stability: 466/466 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 24, objectives: 0, executions: 103, exec/sec: 0.000, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 0, executions: 103, exec/sec: 0.000, edges: 470/470 (100%), stability: 466/466 (100%)
+[WARN] Timer expiry far in past: pastDelta=4294967124
+[WARN] Timer expiry far in past: pastDelta=4294967013
+[WARN] Timer expiry far in past: pastDelta=4294967011
+[WARN] Timer expiry far in past: pastDelta=4294967049
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[WARN] Timer expiry far in past: pastDelta=4294967207
+ASSERT! Line 1038, file ./../../../../Source/timers.c
+[Objective   #1]  (GLOBAL) run time: 3s, clients: 1, corpus: 24, objectives: 1, executions: 105, exec/sec: 28.34, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 1, executions: 105, exec/sec: 28.34, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 6s, clients: 1, corpus: 24, objectives: 2, executions: 106, exec/sec: 15.81, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 2, executions: 106, exec/sec: 15.81, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 9s, clients: 1, corpus: 24, objectives: 3, executions: 107, exec/sec: 11.02, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 3, executions: 107, exec/sec: 11.02, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 12s, clients: 1, corpus: 24, objectives: 4, executions: 108, exec/sec: 8.494, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 4, executions: 108, exec/sec: 8.494, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 15s, clients: 1, corpus: 24, objectives: 5, executions: 109, exec/sec: 6.934, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 5, executions: 109, exec/sec: 6.934, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 18s, clients: 1, corpus: 24, objectives: 6, executions: 110, exec/sec: 5.876, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 6, executions: 110, exec/sec: 5.876, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 21s, clients: 1, corpus: 24, objectives: 7, executions: 111, exec/sec: 5.109, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 7, executions: 111, exec/sec: 5.109, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 24s, clients: 1, corpus: 24, objectives: 8, executions: 112, exec/sec: 4.530, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 8, executions: 112, exec/sec: 4.530, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 27s, clients: 1, corpus: 24, objectives: 9, executions: 113, exec/sec: 4.076, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 9, executions: 113, exec/sec: 4.076, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 30s, clients: 1, corpus: 24, objectives: 10, executions: 114, exec/sec: 3.710, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 10, executions: 114, exec/sec: 3.710, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 33s, clients: 1, corpus: 24, objectives: 11, executions: 115, exec/sec: 3.410, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 11, executions: 115, exec/sec: 3.410, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 36s, clients: 1, corpus: 24, objectives: 12, executions: 116, exec/sec: 3.159, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 12, executions: 116, exec/sec: 3.159, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 39s, clients: 1, corpus: 24, objectives: 13, executions: 117, exec/sec: 2.945, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 13, executions: 117, exec/sec: 2.945, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 42s, clients: 1, corpus: 24, objectives: 14, executions: 118, exec/sec: 2.761, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 14, executions: 118, exec/sec: 2.761, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 45s, clients: 1, corpus: 24, objectives: 15, executions: 119, exec/sec: 2.602, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 15, executions: 119, exec/sec: 2.602, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 48s, clients: 1, corpus: 24, objectives: 16, executions: 120, exec/sec: 2.462, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 16, executions: 120, exec/sec: 2.462, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 51s, clients: 1, corpus: 24, objectives: 17, executions: 121, exec/sec: 2.339, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 17, executions: 121, exec/sec: 2.339, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 54s, clients: 1, corpus: 24, objectives: 18, executions: 122, exec/sec: 2.229, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 18, executions: 122, exec/sec: 2.229, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 57s, clients: 1, corpus: 24, objectives: 19, executions: 123, exec/sec: 2.131, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 19, executions: 123, exec/sec: 2.131, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-0s, clients: 1, corpus: 24, objectives: 20, executions: 124, exec/sec: 2.042, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 20, executions: 124, exec/sec: 2.042, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-3s, clients: 1, corpus: 24, objectives: 21, executions: 125, exec/sec: 1.961, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 21, executions: 125, exec/sec: 1.961, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-6s, clients: 1, corpus: 24, objectives: 22, executions: 126, exec/sec: 1.888, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 22, executions: 126, exec/sec: 1.888, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-9s, clients: 1, corpus: 24, objectives: 23, executions: 127, exec/sec: 1.821, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 23, executions: 127, exec/sec: 1.821, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-12s, clients: 1, corpus: 24, objectives: 24, executions: 128, exec/sec: 1.760, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 24, executions: 128, exec/sec: 1.760, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-15s, clients: 1, corpus: 24, objectives: 25, executions: 129, exec/sec: 1.703, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 25, executions: 129, exec/sec: 1.703, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-18s, clients: 1, corpus: 24, objectives: 26, executions: 130, exec/sec: 1.651, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 26, executions: 130, exec/sec: 1.651, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-21s, clients: 1, corpus: 24, objectives: 27, executions: 131, exec/sec: 1.603, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 27, executions: 131, exec/sec: 1.603, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-24s, clients: 1, corpus: 24, objectives: 28, executions: 132, exec/sec: 1.558, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 28, executions: 132, exec/sec: 1.558, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-27s, clients: 1, corpus: 24, objectives: 29, executions: 133, exec/sec: 1.516, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 29, executions: 133, exec/sec: 1.516, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-30s, clients: 1, corpus: 24, objectives: 30, executions: 134, exec/sec: 1.477, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 30, executions: 134, exec/sec: 1.477, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-33s, clients: 1, corpus: 24, objectives: 31, executions: 135, exec/sec: 1.440, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 31, executions: 135, exec/sec: 1.440, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-36s, clients: 1, corpus: 24, objectives: 32, executions: 136, exec/sec: 1.406, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 32, executions: 136, exec/sec: 1.406, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-39s, clients: 1, corpus: 24, objectives: 33, executions: 137, exec/sec: 1.374, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 33, executions: 137, exec/sec: 1.374, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-42s, clients: 1, corpus: 24, objectives: 34, executions: 138, exec/sec: 1.343, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 34, executions: 138, exec/sec: 1.343, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-45s, clients: 1, corpus: 24, objectives: 35, executions: 139, exec/sec: 1.314, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 35, executions: 139, exec/sec: 1.314, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-48s, clients: 1, corpus: 24, objectives: 36, executions: 140, exec/sec: 1.287, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 36, executions: 140, exec/sec: 1.287, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-51s, clients: 1, corpus: 24, objectives: 37, executions: 141, exec/sec: 1.262, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 37, executions: 141, exec/sec: 1.262, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-54s, clients: 1, corpus: 24, objectives: 38, executions: 142, exec/sec: 1.237, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 38, executions: 142, exec/sec: 1.237, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-57s, clients: 1, corpus: 24, objectives: 39, executions: 143, exec/sec: 1.214, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 39, executions: 143, exec/sec: 1.214, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-0s, clients: 1, corpus: 24, objectives: 40, executions: 144, exec/sec: 1.193, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 40, executions: 144, exec/sec: 1.193, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-3s, clients: 1, corpus: 24, objectives: 41, executions: 145, exec/sec: 1.172, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 41, executions: 145, exec/sec: 1.172, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-6s, clients: 1, corpus: 24, objectives: 42, executions: 146, exec/sec: 1.152, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 42, executions: 146, exec/sec: 1.152, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-9s, clients: 1, corpus: 24, objectives: 43, executions: 147, exec/sec: 1.133, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 43, executions: 147, exec/sec: 1.133, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-12s, clients: 1, corpus: 24, objectives: 44, executions: 148, exec/sec: 1.115, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 44, executions: 148, exec/sec: 1.115, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-15s, clients: 1, corpus: 24, objectives: 45, executions: 149, exec/sec: 1.098, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 45, executions: 149, exec/sec: 1.098, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-18s, clients: 1, corpus: 24, objectives: 46, executions: 150, exec/sec: 1.081, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 46, executions: 150, exec/sec: 1.081, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-21s, clients: 1, corpus: 24, objectives: 47, executions: 151, exec/sec: 1.065, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 47, executions: 151, exec/sec: 1.065, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-24s, clients: 1, corpus: 24, objectives: 48, executions: 152, exec/sec: 1.050, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 48, executions: 152, exec/sec: 1.050, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-27s, clients: 1, corpus: 24, objectives: 49, executions: 153, exec/sec: 1.035, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 49, executions: 153, exec/sec: 1.035, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-30s, clients: 1, corpus: 24, objectives: 50, executions: 154, exec/sec: 1.021, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 50, executions: 154, exec/sec: 1.021, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-33s, clients: 1, corpus: 24, objectives: 51, executions: 155, exec/sec: 1.008, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 51, executions: 155, exec/sec: 1.008, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-36s, clients: 1, corpus: 24, objectives: 52, executions: 156, exec/sec: 0.995, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 52, executions: 156, exec/sec: 0.995, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-39s, clients: 1, corpus: 24, objectives: 53, executions: 157, exec/sec: 0.983, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 53, executions: 157, exec/sec: 0.983, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-42s, clients: 1, corpus: 24, objectives: 54, executions: 158, exec/sec: 0.971, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 54, executions: 158, exec/sec: 0.971, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-45s, clients: 1, corpus: 24, objectives: 55, executions: 159, exec/sec: 0.959, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 55, executions: 159, exec/sec: 0.959, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-48s, clients: 1, corpus: 24, objectives: 56, executions: 160, exec/sec: 0.948, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 56, executions: 160, exec/sec: 0.948, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-51s, clients: 1, corpus: 24, objectives: 57, executions: 161, exec/sec: 0.937, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 57, executions: 161, exec/sec: 0.937, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-54s, clients: 1, corpus: 24, objectives: 58, executions: 162, exec/sec: 0.927, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 58, executions: 162, exec/sec: 0.927, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-57s, clients: 1, corpus: 24, objectives: 59, executions: 163, exec/sec: 0.917, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 59, executions: 163, exec/sec: 0.917, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-0s, clients: 1, corpus: 24, objectives: 60, executions: 164, exec/sec: 0.907, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 60, executions: 164, exec/sec: 0.907, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-3s, clients: 1, corpus: 24, objectives: 61, executions: 165, exec/sec: 0.898, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 61, executions: 165, exec/sec: 0.898, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-6s, clients: 1, corpus: 24, objectives: 62, executions: 166, exec/sec: 0.889, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 62, executions: 166, exec/sec: 0.889, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-9s, clients: 1, corpus: 24, objectives: 63, executions: 167, exec/sec: 0.880, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 63, executions: 167, exec/sec: 0.880, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-12s, clients: 1, corpus: 24, objectives: 64, executions: 168, exec/sec: 0.871, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 64, executions: 168, exec/sec: 0.871, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-15s, clients: 1, corpus: 24, objectives: 65, executions: 169, exec/sec: 0.863, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 65, executions: 169, exec/sec: 0.863, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-18s, clients: 1, corpus: 24, objectives: 66, executions: 170, exec/sec: 0.855, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 66, executions: 170, exec/sec: 0.855, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-21s, clients: 1, corpus: 24, objectives: 67, executions: 171, exec/sec: 0.847, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 67, executions: 171, exec/sec: 0.847, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-24s, clients: 1, corpus: 24, objectives: 68, executions: 172, exec/sec: 0.840, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 68, executions: 172, exec/sec: 0.840, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-27s, clients: 1, corpus: 24, objectives: 69, executions: 173, exec/sec: 0.833, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 69, executions: 173, exec/sec: 0.833, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-30s, clients: 1, corpus: 24, objectives: 70, executions: 174, exec/sec: 0.825, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 70, executions: 174, exec/sec: 0.825, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-33s, clients: 1, corpus: 24, objectives: 71, executions: 175, exec/sec: 0.819, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 71, executions: 175, exec/sec: 0.819, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-36s, clients: 1, corpus: 24, objectives: 72, executions: 176, exec/sec: 0.812, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 72, executions: 176, exec/sec: 0.812, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-39s, clients: 1, corpus: 24, objectives: 73, executions: 177, exec/sec: 0.805, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 73, executions: 177, exec/sec: 0.805, edges: 470/470 (100%), stability: 466/466 (100%)
+[Client Heartbeat #1]  (GLOBAL) run time: 3m-57s, clients: 1, corpus: 24, objectives: 73, executions: 183, exec/sec: 0.770, stability: 100.000%, edges: 100.000%
+                       (CLIENT) corpus: 24, objectives: 73, executions: 183, exec/sec: 0.770, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-0s, clients: 1, corpus: 24, objectives: 74, executions: 184, exec/sec: 0.764, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 74, executions: 184, exec/sec: 0.764, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-3s, clients: 1, corpus: 24, objectives: 75, executions: 185, exec/sec: 0.759, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 75, executions: 185, exec/sec: 0.759, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-6s, clients: 1, corpus: 24, objectives: 76, executions: 186, exec/sec: 0.754, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 76, executions: 186, exec/sec: 0.754, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-9s, clients: 1, corpus: 24, objectives: 77, executions: 187, exec/sec: 0.749, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 77, executions: 187, exec/sec: 0.749, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-12s, clients: 1, corpus: 24, objectives: 78, executions: 188, exec/sec: 0.744, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 78, executions: 188, exec/sec: 0.744, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-15s, clients: 1, corpus: 24, objectives: 79, executions: 189, exec/sec: 0.739, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 79, executions: 189, exec/sec: 0.739, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-18s, clients: 1, corpus: 24, objectives: 80, executions: 190, exec/sec: 0.734, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 80, executions: 190, exec/sec: 0.734, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-21s, clients: 1, corpus: 24, objectives: 81, executions: 191, exec/sec: 0.730, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 81, executions: 191, exec/sec: 0.730, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-24s, clients: 1, corpus: 24, objectives: 82, executions: 192, exec/sec: 0.725, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 82, executions: 192, exec/sec: 0.725, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-27s, clients: 1, corpus: 24, objectives: 83, executions: 193, exec/sec: 0.721, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 83, executions: 193, exec/sec: 0.721, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-30s, clients: 1, corpus: 24, objectives: 84, executions: 194, exec/sec: 0.716, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 84, executions: 194, exec/sec: 0.716, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-33s, clients: 1, corpus: 24, objectives: 85, executions: 195, exec/sec: 0.712, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 85, executions: 195, exec/sec: 0.712, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-36s, clients: 1, corpus: 24, objectives: 86, executions: 196, exec/sec: 0.708, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 86, executions: 196, exec/sec: 0.708, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-39s, clients: 1, corpus: 24, objectives: 87, executions: 197, exec/sec: 0.704, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 87, executions: 197, exec/sec: 0.704, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-42s, clients: 1, corpus: 24, objectives: 88, executions: 198, exec/sec: 0.700, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 88, executions: 198, exec/sec: 0.700, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-45s, clients: 1, corpus: 24, objectives: 89, executions: 199, exec/sec: 0.696, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 89, executions: 199, exec/sec: 0.696, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-48s, clients: 1, corpus: 24, objectives: 90, executions: 200, exec/sec: 0.692, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 90, executions: 200, exec/sec: 0.692, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-51s, clients: 1, corpus: 24, objectives: 91, executions: 201, exec/sec: 0.689, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 91, executions: 201, exec/sec: 0.689, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-54s, clients: 1, corpus: 24, objectives: 92, executions: 202, exec/sec: 0.685, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 92, executions: 202, exec/sec: 0.685, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-57s, clients: 1, corpus: 24, objectives: 93, executions: 203, exec/sec: 0.682, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 93, executions: 203, exec/sec: 0.682, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 5m-0s, clients: 1, corpus: 24, objectives: 94, executions: 204, exec/sec: 0.678, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 94, executions: 204, exec/sec: 0.678, edges: 470/470 (100%), stability: 466/466 (100%)
+[Objective   #1]  (GLOBAL) run time: 5m-3s, clients: 1, corpus: 24, objectives: 95, executions: 205, exec/sec: 0.675, stability: 100.000%, edges: 100.000%
+                  (CLIENT) corpus: 24, objectives: 95, executions: 205, exec/sec: 0.675, edges: 470/470 (100%), stability: 466/466 (100%)

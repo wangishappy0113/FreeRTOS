@@ -1,0 +1,16 @@
+[COMMAND]
+qemu-system-arm -machine mps2-an385 -monitor null -semihosting --semihosting-config enable=on,target=native -kernel /home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC/build/gcc/output/RTOSDemo.out -serial stdio -nographic
+[CWD]
+/home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC
+[TIMEOUT]
+True
+[RETURN_CODE]
+-9
+
+[STDOUT]
+Hello from FreeRTOS fuzz demo!
+ASSERT! Line 2809, file ./../../../../Source/tasks.c
+
+
+[STDERR]
+
