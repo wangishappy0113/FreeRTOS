@@ -1,0 +1,452 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: uxTaskGetNumberOfTasks, MPU_uxTaskGetNumberOfTasksImpl, xQueueGenericSendFromISR, xQueueGiveFromISR
+
+### Function uxTaskGetNumberOfTasks
+Signature: UBaseType_t(void)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4214-4223
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: none
+Incoming callers count: 4
+Full source code:
+UBaseType_t uxTaskGetNumberOfTasks( void )
+{
+    traceENTER_uxTaskGetNumberOfTasks();
+
+    /* A critical section is not required because the variables are of type
+     * BaseType_t. */
+    traceRETURN_uxTaskGetNumberOfTasks( uxCurrentNumberOfTasks );
+
+    return uxCurrentNumberOfTasks;
+}
+
+Official docs (summary):
+Return values:
+- UBaseType_t: The value returned is the total number of tasks that are under the control of the FreeRTOS
+kernel  at the time uxTaskGetNumberOfTasks() is called .  This is the number of S uspended
+state tasks, plus the number of B locked state tasks, plus the number of R eady state tasks,
+plus the idle task, plus the Running state task.
+Related configs: none
+Related APIs: none
+Reference snippets:
+- Outgoing of MPU_uxTaskGetNumberOfTasksImpl (rel:out:MPU_uxTaskGetNumberOfTasksImpl#c0) :: outgoing: <operator>.assignment, uxTaskGetNumberOfTasks
+- Incoming of prvListTasksWithinSingleList (rel:in:prvListTasksWithinSingleList#c0) :: incoming: uxTaskGetSystemState
+- Call MPU_uxTaskGetNumberOfTasksImpl -> uxTaskGetNumberOfTasks (edge:MPU_uxTaskGetNumberOfTasksImpl->uxTaskGetNumberOfTasks:/home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c:765#c0) :: Call: MPU_uxTaskGetNumberOfTasksImpl -> uxTaskGetNumberOfTasks at /home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c:765 callee_kind=function resolved=/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4214-4223
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c:mpuMULTIPLY_UINT32_WILL_OVERFLOW:ANY(2) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c:mpuMULTIPLY_UINT32_WILL_OVERFLOW:ANY(2)#c0) :: incoming: MPU_uxTaskGetSystemStateImpl
+- Incoming of uxTaskGetSystemState (rel:in:uxTaskGetSystemState#c0) :: incoming: MPU_uxTaskGetSystemStateImpl
+- Incoming of uxEventGroupGetNumber (rel:in:uxEventGroupGetNumber#c0) :: incoming: MPU_uxEventGroupGetNumberImpl
+- uxTaskGetNumberOfTasks :: UBaseType_t uxTaskGetNumberOfTasks(void) ; Returns the total number of tasks that exist at the time uxTaskGetNumberOfTasks() is called.
+
+Official documentation (full):
+Title: uxTaskGetNumberOfTasks
+Signature: UBaseType_t uxTaskGetNumberOfTasks(void) ;
+Summary:
+Returns the total number of tasks that exist at the time uxTaskGetNumberOfTasks() is called.
+Return values:
+- UBaseType_t: The value returned is the total number of tasks that are under the control of the FreeRTOS
+kernel  at the time uxTaskGetNumberOfTasks() is called .  This is the number of S uspended
+state tasks, plus the number of B locked state tasks, plus the number of R eady state tasks,
+plus the idle task, plus the Running state task.
+
+### Function MPU_uxTaskGetNumberOfTasksImpl
+Signature: UBaseType_t(void)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c:761-768
+Cyclomatic: -1 Lines: -1
+Includes: FreeRTOS.h, task.h, queue.h, timers.h, event_groups.h, stream_buffer.h, mpu_prototypes.h, mpu_syscall_numbers.h, application_defined_privileged_functions.h
+Outgoing calls summary: <operator>.assignment(operator), uxTaskGetNumberOfTasks(function)
+Incoming callers count: 0
+Full source code:
+    UBaseType_t MPU_uxTaskGetNumberOfTasksImpl( void ) /* PRIVILEGED_FUNCTION */
+    {
+        UBaseType_t uxReturn;
+
+        uxReturn = uxTaskGetNumberOfTasks();
+
+        return uxReturn;
+    }
+
+
+### Function xQueueGenericSendFromISR
+Signature: BaseType_t(QueueHandle_t,void*,BaseType_t*,BaseType_t)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:1167-1336
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, queue.h, croutine.h
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), vAssertCalled(function), <operator>.logicalNot(operator), <operator>.logicalAnd(operator), <operator>.notEquals(operator), <operator>.indirectFieldAccess(operator)
+Incoming callers count: 3
+Full source code:
+BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue,
+                                     const void * const pvItemToQueue,
+                                     BaseType_t * const pxHigherPriorityTaskWoken,
+                                     const BaseType_t xCopyPosition )
+{
+    BaseType_t xReturn;
+    UBaseType_t uxSavedInterruptStatus;
+    Queue_t * const pxQueue = xQueue;
+
+    traceENTER_xQueueGenericSendFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken, xCopyPosition );
+
+    configASSERT( pxQueue );
+    configASSERT( !( ( pvItemToQueue == NULL ) && ( pxQueue->uxItemSize != ( UBaseType_t ) 0U ) ) );
+    configASSERT( !( ( xCopyPosition == queueOVERWRITE ) && ( pxQueue->uxLength != 1 ) ) );
+
+    /* RTOS ports that support interrupt nesting have the concept of a maximum
+     * system call (or maximum API call) interrupt priority.  Interrupts that are
+     * above the maximum system call priority are kept permanently enabled, even
+     * when the RTOS kernel is in a critical section, but cannot make any calls to
+     * FreeRTOS API functions.  If configASSERT() is defined in FreeRTOSConfig.h
+     * then portASSERT_IF_INTERRUPT_PRIORITY_INVALID() will result in an assertion
+     * failure if a FreeRTOS API function is called from an interrupt that has been
+     * assigned a priority above the configured maximum system call priority.
+     * Only FreeRTOS functions that end in FromISR can be called from interrupts
+     * that have been assigned a priority at or (logically) below the maximum
+     * system call interrupt priority.  FreeRTOS maintains a separate interrupt
+     * safe API to ensure interrupt entry is as fast and as simple as possible.
+     * More information (albeit Cortex-M specific) is provided on the following
+     * link: https://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html */
+    portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
+
+    /* Similar to xQueueGenericSend, except without blocking if there is no room
+     * in the queue.  Also don't directly wake a task that was blocked on a queue
+     * read, instead return a flag to say whether a context switch is required or
+     * not (i.e. has a task with a higher priority than us been woken by this
+     * post). */
+    /* MISRA Ref 4.7.1 [Return value shall be checked] */
+    /* More details at: https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/main/MISRA.md#dir-47 */
+    /* coverity[misra_c_2012_directive_4_7_violation] */
+    uxSavedInterruptStatus = ( UBaseType_t ) taskENTER_CRITICAL_FROM_ISR();
+    {
+        if( ( pxQueue->uxMessagesWaiting < pxQueue->uxLength ) || ( xCopyPosition == queueOVERWRITE ) )
+        {
+            const int8_t cTxLock = pxQueue->cTxLock;
+            const UBaseType_t uxPreviousMessagesWaiting = pxQueue->uxMessagesWaiting;
+
+            traceQUEUE_SEND_FROM_ISR( pxQueue );
+
+            /* Semaphores use xQueueGiveFromISR(), so pxQueue will not be a
+             *  semaphore or mutex.  That means prvCopyDataToQueue() cannot result
+             *  in a task disinheriting a priority and prvCopyDataToQueue() can be
+             *  called here even though the disinherit function does not check if
+             *  the scheduler is suspended before accessing the ready lists. */
+            ( void ) prvCopyDataToQueue( pxQueue, pvItemToQueue, xCopyPosition );
+
+            /* The event list is not altered if the queue is locked.  This will
+             * be done when the queue is unlocked later. */
+            if( cTxLock == queueUNLOCKED )
+            {
+                #if ( configUSE_QUEUE_SETS == 1 )
+                {
+                    if( pxQueue->pxQueueSetContainer != NULL )
+                    {
+                        if( ( xCopyPosition == queueOVERWRITE ) && ( uxPreviousMessagesWaiting != ( UBaseType_t ) 0 ) )
+                        {
+                            /* Do not notify the queue set as an existing item
+                             * was overwritten in the queue so the number of items
+                             * in the queue has not changed. */
+                            mtCOVERAGE_TEST_MARKER();
+                        }
+                        else if( prvNotifyQueueSetContainer( pxQueue ) != pdFALSE )
+                        {
+                            /* The queue is a member of a queue set, and posting
+                             * to the queue set caused a higher priority task to
+                             * unblock.  A context switch is required. */
+                            if( pxHigherPriorityTaskWoken != NULL )
+                            {
+                                *pxHigherPriorityTaskWoken = pdTRUE;
+                            }
+                            else
+                            {
+                                mtCOVERAGE_TEST_MARKER();
+                            }
+                        }
+                        else
+                        {
+                            mtCOVERAGE_TEST_MARKER();
+                        }
+                    }
+                    else
+                    {
+                        if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
+                        {
+                            if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
+                            {
+                                /* The task waiting has a higher priority so
+                                 *  record that a context switch is required. */
+                                if( pxHigherPriorityTaskWoken != NULL )
+                                {
+                                    *pxHigherPriorityTaskWoken = pdTRUE;
+                                }
+                                else
+                                {
+                                    mtCOVERAGE_TEST_MARKER();
+                                }
+                            }
+                            else
+                            {
+                                mtCOVERAGE_TEST_MARKER();
+                            }
+                        }
+                        else
+                        {
+                            mtCOVERAGE_TEST_MARKER();
+                        }
+                    }
+                }
+                #else /* configUSE_QUEUE_SETS */
+                {
+                    if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
+                    {
+                        if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
+                        {
+                            /* The task waiting has a higher priority so record that a
+                             * context switch is required. */
+                            if( pxHigherPriorityTaskWoken != NULL )
+                            {
+                                *pxHigherPriorityTaskWoken = pdTRUE;
+                            }
+                            else
+                            {
+                                mtCOVERAGE_TEST_MARKER();
+                            }
+                        }
+                        else
+                        {
+                            mtCOVERAGE_TEST_MARKER();
+                        }
+                    }
+                    else
+                    {
+                        mtCOVERAGE_TEST_MARKER();
+                    }
+
+                    /* Not used in this path. */
+                    ( void ) uxPreviousMessagesWaiting;
+                }
+                #endif /* configUSE_QUEUE_SETS */
+            }
+            else
+            {
+                /* Increment the lock count so the task that unlocks the queue
+                 * knows that data was posted while it was locked. */
+                prvIncrementQueueTxLock( pxQueue, cTxLock );
+            }
+
+            xReturn = pdPASS;
+        }
+        else
+        {
+            traceQUEUE_SEND_FROM_ISR_FAILED( pxQueue );
+            xReturn = errQUEUE_FULL;
+        }
+    }
+    taskEXIT_CRITICAL_FROM_ISR( uxSavedInterruptStatus );
+
+    traceRETURN_xQueueGenericSendFromISR( xReturn );
+
+    return xReturn;
+}
+
+
+### Function xQueueGiveFromISR
+Signature: BaseType_t(QueueHandle_t,BaseType_t*)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:1339-1509
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, queue.h, croutine.h
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), vAssertCalled(function), <operator>.indirectFieldAccess(operator), <operator>.logicalNot(operator), <operator>.logicalAnd(operator), <operator>.notEquals(operator)
+Incoming callers count: 1
+Full source code:
+BaseType_t xQueueGiveFromISR( QueueHandle_t xQueue,
+                              BaseType_t * const pxHigherPriorityTaskWoken )
+{
+    BaseType_t xReturn;
+    UBaseType_t uxSavedInterruptStatus;
+    Queue_t * const pxQueue = xQueue;
+
+    traceENTER_xQueueGiveFromISR( xQueue, pxHigherPriorityTaskWoken );
+
+    /* Similar to xQueueGenericSendFromISR() but used with semaphores where the
+     * item size is 0.  Don't directly wake a task that was blocked on a queue
+     * read, instead return a flag to say whether a context switch is required or
+     * not (i.e. has a task with a higher priority than us been woken by this
+     * post). */
+
+    configASSERT( pxQueue );
+
+    /* xQueueGenericSendFromISR() should be used instead of xQueueGiveFromISR()
+     * if the item size is not 0. */
+    configASSERT( pxQueue->uxItemSize == 0 );
+
+    /* Normally a mutex would not be given from an interrupt, especially if
+     * there is a mutex holder, as priority inheritance makes no sense for an
+     * interrupts, only tasks. */
+    configASSERT( !( ( pxQueue->uxQueueType == queueQUEUE_IS_MUTEX ) && ( pxQueue->u.xSemaphore.xMutexHolder != NULL ) ) );
+
+    /* RTOS ports that support interrupt nesting have the concept of a maximum
+     * system call (or maximum API call) interrupt priority.  Interrupts that are
+     * above the maximum system call priority are kept permanently enabled, even
+     * when the RTOS kernel is in a critical section, but cannot make any calls to
+     * FreeRTOS API functions.  If configASSERT() is defined in FreeRTOSConfig.h
+     * then portASSERT_IF_INTERRUPT_PRIORITY_INVALID() will result in an assertion
+     * failure if a FreeRTOS API function is called from an interrupt that has been
+     * assigned a priority above the configured maximum system call priority.
+     * Only FreeRTOS functions that end in FromISR can be called from interrupts
+     * that have been assigned a priority at or (logically) below the maximum
+     * system call interrupt priority.  FreeRTOS maintains a separate interrupt
+     * safe API to ensure interrupt entry is as fast and as simple as possible.
+     * More information (albeit Cortex-M specific) is provided on the following
+     * link: https://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html */
+    portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
+
+    /* MISRA Ref 4.7.1 [Return value shall be checked] */
+    /* More details at: https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/main/MISRA.md#dir-47 */
+    /* coverity[misra_c_2012_directive_4_7_violation] */
+    uxSavedInterruptStatus = ( UBaseType_t ) taskENTER_CRITICAL_FROM_ISR();
+    {
+        const UBaseType_t uxMessagesWaiting = pxQueue->uxMessagesWaiting;
+
+        /* When the queue is used to implement a semaphore no data is ever
+         * moved through the queue but it is still valid to see if the queue 'has
+         * space'. */
+        if( uxMessagesWaiting < pxQueue->uxLength )
+        {
+            const int8_t cTxLock = pxQueue->cTxLock;
+
+            traceQUEUE_SEND_FROM_ISR( pxQueue );
+
+            /* A task can only have an inherited priority if it is a mutex
+             * holder - and if there is a mutex holder then the mutex cannot be
+             * given from an ISR.  As this is the ISR version of the function it
+             * can be assumed there is no mutex holder and no need to determine if
+             * priority disinheritance is needed.  Simply increase the count of
+             * messages (semaphores) available. */
+            pxQueue->uxMessagesWaiting = ( UBaseType_t ) ( uxMessagesWaiting + ( UBaseType_t ) 1 );
+
+            /* The event list is not altered if the queue is locked.  This will
+             * be done when the queue is unlocked later. */
+            if( cTxLock == queueUNLOCKED )
+            {
+                #if ( configUSE_QUEUE_SETS == 1 )
+                {
+                    if( pxQueue->pxQueueSetContainer != NULL )
+                    {
+                        if( prvNotifyQueueSetContainer( pxQueue ) != pdFALSE )
+                        {
+                            /* The semaphore is a member of a queue set, and
+                             * posting to the queue set caused a higher priority
+                             * task to unblock.  A context switch is required. */
+                            if( pxHigherPriorityTaskWoken != NULL )
+                            {
+                                *pxHigherPriorityTaskWoken = pdTRUE;
+                            }
+                            else
+                            {
+                                mtCOVERAGE_TEST_MARKER();
+                            }
+                        }
+                        else
+                        {
+                            mtCOVERAGE_TEST_MARKER();
+                        }
+                    }
+                    else
+                    {
+                        if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
+                        {
+                            if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
+                            {
+                                /* The task waiting has a higher priority so
+                                 *  record that a context switch is required. */
+                                if( pxHigherPriorityTaskWoken != NULL )
+                                {
+                                    *pxHigherPriorityTaskWoken = pdTRUE;
+                                }
+                                else
+                                {
+                                    mtCOVERAGE_TEST_MARKER();
+                                }
+                            }
+                            else
+                            {
+                                mtCOVERAGE_TEST_MARKER();
+                            }
+                        }
+                        else
+                        {
+                            mtCOVERAGE_TEST_MARKER();
+                        }
+                    }
+                }
+                #else /* configUSE_QUEUE_SETS */
+                {
+                    if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
+                    {
+                        if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != pdFALSE )
+                        {
+                            /* The task waiting has a higher priority so record that a
+                             * context switch is required. */
+                            if( pxHigherPriorityTaskWoken != NULL )
+                            {
+                                *pxHigherPriorityTaskWoken = pdTRUE;
+                            }
+                            else
+                            {
+                                mtCOVERAGE_TEST_MARKER();
+                            }
+                        }
+                        else
+                        {
+                            mtCOVERAGE_TEST_MARKER();
+                        }
+                    }
+                    else
+                    {
+                        mtCOVERAGE_TEST_MARKER();
+                    }
+                }
+                #endif /* configUSE_QUEUE_SETS */
+            }
+            else
+            {
+                /* Increment the lock count so the task that unlocks the queue
+                 * knows that data was posted while it was locked. */
+                prvIncrementQueueTxLock( pxQueue, cTxLock );
+            }
+
+            xReturn = pdPASS;
+        }
+        else
+        {
+            traceQUEUE_SEND_FROM_ISR_FAILED( pxQueue );
+            xReturn = errQUEUE_FULL;
+        }
+    }
+    taskEXIT_CRITICAL_FROM_ISR( uxSavedInterruptStatus );
+
+    traceRETURN_xQueueGiveFromISR( xReturn );
+
+    return xReturn;
+}
+
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

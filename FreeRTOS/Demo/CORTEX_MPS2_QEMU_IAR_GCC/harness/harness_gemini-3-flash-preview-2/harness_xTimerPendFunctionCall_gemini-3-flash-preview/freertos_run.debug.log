@@ -1,0 +1,885 @@
+FUZZ_INPUT @ 0x20000064
+main address = 0x33b0
+Breakpoint address = 0x34b4
+[2025-12-29T10:59:18Z INFO  libafl::events::launcher] spawning on cores: Cores { cmdline: "1", ids: [CoreId(1)] }
+[2025-12-29T10:59:18Z INFO  libafl::events::launcher] child spawned with id 1 and bound to core CoreId(1)
+[2025-12-29T10:59:18Z INFO  libafl::events::launcher] I am broker!!.
+[2025-12-29T10:59:18Z INFO  libafl_bolts::llmp] Successfully setup signal handlers
+[2025-12-29T10:59:18Z INFO  libafl::events::launcher] 4050856 PostFork
+[2025-12-29T10:59:18Z INFO  libafl_bolts::llmp] Connected to port 1337
+[2025-12-29T10:59:18Z INFO  libafl_bolts::llmp] New connection: 127.0.0.1:37530/127.0.0.1:37530
+[2025-12-29T10:59:18Z INFO  libafl::events::llmp::restarting] Setting core affinity to CoreId(1)
+[2025-12-29T10:59:18Z INFO  libafl::events::llmp::restarting] Spawning next client (id 0)
+[2025-12-29T10:59:18Z INFO  libafl::events::llmp::restarting] First run. Let's set it all up
+qemu_baremetal: warning: nic lan9118.0 has no peer
+Devices = ["timer", "cpu_common", "cpu", "armv7m_nvic", "armv7m_systick", "armv7m", "or-irq", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-timer", "cmsdk-apb-timer", "cmsdk-apb-dualtimer", "cmsdk-apb-watchdog", "led", "led", "led", "led", "led", "led", "led", "led", "mps2-scc", "led", "led", "mps2-fpgaio", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "i2c_bus", "i2c_bus", "i2c_bus", "i2c_bus", "lan9118-phy", "lan9118"]
+qemu_baremetal: warning: icount sleep disabled and no active timers
+[2025-12-29T10:59:19Z INFO  libafl_qemu::command::lqemu] Fuzzing starts @ PC 33b0
+[2025-12-29T10:59:19Z INFO  libafl::state] Loading file /home/zwz/Libafl/fuzzers/full_system/qemu_baremetal/corpus/golden_seed ...
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 0, objectives: 0, executions: 1, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 0, objectives: 0, executions: 1, exec/sec: 0.000, edges: 359/359 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000, edges: 359/359 (100%)
+We imported 1 inputs from disk.
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 1, objectives: 0, executions: 8, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 1, objectives: 0, executions: 8, exec/sec: 0.000, edges: 360/360 (100%)
+[TEST_CASE_COMPLETED]
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 2, objectives: 0, executions: 8, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 2, objectives: 0, executions: 8, exec/sec: 0.000, edges: 360/360 (100%)
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 2, objectives: 0, executions: 14, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 2, objectives: 0, executions: 14, exec/sec: 0.000, edges: 360/360 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 3, objectives: 0, executions: 14, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 3, objectives: 0, executions: 14, exec/sec: 0.000, edges: 360/360 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+H[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 3, objectives: 0, executions: 81, exec/sec: 0.000, edges: 100.000%, stability: 100.000%
+ello                  (CLIENT) corpus: 3, objectives: 0, executions: 81, exec/sec: 0.000, stability: 360/360 (100%), edges: 360/360 (100%)
+ from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+ASSERT! Line 136, file ./../../../../Demo/CORTEX_MPS2_QEMU_IAR_GCC/fuzz_harness.c
+[Objective   #1]  (GLOBAL) run time: 3s, clients: 1, corpus: 3, objectives: 1, executions: 324, exec/sec: 97.01, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 1, executions: 324, exec/sec: 97.01, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 6s, clients: 1, corpus: 3, objectives: 2, executions: 325, exec/sec: 51.29, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 2, executions: 325, exec/sec: 51.29, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 9s, clients: 1, corpus: 3, objectives: 3, executions: 326, exec/sec: 34.90, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 3, executions: 326, exec/sec: 34.90, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 12s, clients: 1, corpus: 3, objectives: 4, executions: 327, exec/sec: 26.50, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 4, executions: 327, exec/sec: 26.50, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 15s, clients: 1, corpus: 3, objectives: 5, executions: 328, exec/sec: 21.38, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 5, executions: 328, exec/sec: 21.38, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 18s, clients: 1, corpus: 3, objectives: 6, executions: 329, exec/sec: 17.94, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 6, executions: 329, exec/sec: 17.94, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 21s, clients: 1, corpus: 3, objectives: 7, executions: 330, exec/sec: 15.46, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 7, executions: 330, exec/sec: 15.46, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 24s, clients: 1, corpus: 3, objectives: 8, executions: 331, exec/sec: 13.60, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 8, executions: 331, exec/sec: 13.60, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 27s, clients: 1, corpus: 3, objectives: 9, executions: 332, exec/sec: 12.14, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 9, executions: 332, exec/sec: 12.14, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 30s, clients: 1, corpus: 3, objectives: 10, executions: 333, exec/sec: 10.97, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 10, executions: 333, exec/sec: 10.97, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 33s, clients: 1, corpus: 3, objectives: 11, executions: 334, exec/sec: 10.02, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 11, executions: 334, exec/sec: 10.02, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 36s, clients: 1, corpus: 3, objectives: 12, executions: 335, exec/sec: 9.217, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 12, executions: 335, exec/sec: 9.217, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 39s, clients: 1, corpus: 3, objectives: 13, executions: 336, exec/sec: 8.540, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 13, executions: 336, exec/sec: 8.540, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 42s, clients: 1, corpus: 3, objectives: 14, executions: 337, exec/sec: 7.958, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 14, executions: 337, exec/sec: 7.958, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 45s, clients: 1, corpus: 3, objectives: 15, executions: 338, exec/sec: 7.453, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 15, executions: 338, exec/sec: 7.453, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 48s, clients: 1, corpus: 3, objectives: 16, executions: 339, exec/sec: 7.012, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 16, executions: 339, exec/sec: 7.012, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 51s, clients: 1, corpus: 3, objectives: 17, executions: 340, exec/sec: 6.621, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 17, executions: 340, exec/sec: 6.621, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 54s, clients: 1, corpus: 3, objectives: 18, executions: 341, exec/sec: 6.274, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 18, executions: 341, exec/sec: 6.274, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 57s, clients: 1, corpus: 3, objectives: 19, executions: 342, exec/sec: 5.963, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 19, executions: 342, exec/sec: 5.963, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-0s, clients: 1, corpus: 3, objectives: 20, executions: 343, exec/sec: 5.684, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 20, executions: 343, exec/sec: 5.684, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-3s, clients: 1, corpus: 3, objectives: 21, executions: 344, exec/sec: 5.430, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 21, executions: 344, exec/sec: 5.430, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-6s, clients: 1, corpus: 3, objectives: 22, executions: 345, exec/sec: 5.200, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 22, executions: 345, exec/sec: 5.200, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-9s, clients: 1, corpus: 3, objectives: 23, executions: 346, exec/sec: 4.989, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 23, executions: 346, exec/sec: 4.989, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-12s, clients: 1, corpus: 3, objectives: 24, executions: 347, exec/sec: 4.796, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 24, executions: 347, exec/sec: 4.796, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-15s, clients: 1, corpus: 3, objectives: 25, executions: 348, exec/sec: 4.618, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 25, executions: 348, exec/sec: 4.618, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-18s, clients: 1, corpus: 3, objectives: 26, executions: 349, exec/sec: 4.454, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 26, executions: 349, exec/sec: 4.454, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-21s, clients: 1, corpus: 3, objectives: 27, executions: 350, exec/sec: 4.302, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 27, executions: 350, exec/sec: 4.302, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-24s, clients: 1, corpus: 3, objectives: 28, executions: 351, exec/sec: 4.161, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 28, executions: 351, exec/sec: 4.161, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-27s, clients: 1, corpus: 3, objectives: 29, executions: 352, exec/sec: 4.030, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 29, executions: 352, exec/sec: 4.030, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-30s, clients: 1, corpus: 3, objectives: 30, executions: 353, exec/sec: 3.907, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 30, executions: 353, exec/sec: 3.907, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-33s, clients: 1, corpus: 3, objectives: 31, executions: 354, exec/sec: 3.792, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 31, executions: 354, exec/sec: 3.792, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-36s, clients: 1, corpus: 3, objectives: 32, executions: 355, exec/sec: 3.684, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 32, executions: 355, exec/sec: 3.684, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-39s, clients: 1, corpus: 3, objectives: 33, executions: 356, exec/sec: 3.583, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 33, executions: 356, exec/sec: 3.583, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-42s, clients: 1, corpus: 3, objectives: 34, executions: 357, exec/sec: 3.488, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 34, executions: 357, exec/sec: 3.488, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-45s, clients: 1, corpus: 3, objectives: 35, executions: 358, exec/sec: 3.398, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 35, executions: 358, exec/sec: 3.398, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-48s, clients: 1, corpus: 3, objectives: 36, executions: 359, exec/sec: 3.313, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 36, executions: 359, exec/sec: 3.313, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-51s, clients: 1, corpus: 3, objectives: 37, executions: 360, exec/sec: 3.233, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 37, executions: 360, exec/sec: 3.233, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-54s, clients: 1, corpus: 3, objectives: 38, executions: 361, exec/sec: 3.157, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 38, executions: 361, exec/sec: 3.157, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-57s, clients: 1, corpus: 3, objectives: 39, executions: 362, exec/sec: 3.084, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 39, executions: 362, exec/sec: 3.084, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-0s, clients: 1, corpus: 3, objectives: 40, executions: 363, exec/sec: 3.016, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 40, executions: 363, exec/sec: 3.016, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-3s, clients: 1, corpus: 3, objectives: 41, executions: 364, exec/sec: 2.951, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 41, executions: 364, exec/sec: 2.951, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-6s, clients: 1, corpus: 3, objectives: 42, executions: 365, exec/sec: 2.889, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 42, executions: 365, exec/sec: 2.889, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-9s, clients: 1, corpus: 3, objectives: 43, executions: 366, exec/sec: 2.829, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 43, executions: 366, exec/sec: 2.829, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-12s, clients: 1, corpus: 3, objectives: 44, executions: 367, exec/sec: 2.773, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 44, executions: 367, exec/sec: 2.773, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-15s, clients: 1, corpus: 3, objectives: 45, executions: 368, exec/sec: 2.719, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 45, executions: 368, exec/sec: 2.719, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-18s, clients: 1, corpus: 3, objectives: 46, executions: 369, exec/sec: 2.667, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 46, executions: 369, exec/sec: 2.667, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-21s, clients: 1, corpus: 3, objectives: 47, executions: 370, exec/sec: 2.617, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 47, executions: 370, exec/sec: 2.617, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-24s, clients: 1, corpus: 3, objectives: 48, executions: 371, exec/sec: 2.570, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 48, executions: 371, exec/sec: 2.570, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-27s, clients: 1, corpus: 3, objectives: 49, executions: 372, exec/sec: 2.524, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 49, executions: 372, exec/sec: 2.524, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-30s, clients: 1, corpus: 3, objectives: 50, executions: 373, exec/sec: 2.481, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 50, executions: 373, exec/sec: 2.481, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-33s, clients: 1, corpus: 3, objectives: 51, executions: 374, exec/sec: 2.439, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 51, executions: 374, exec/sec: 2.439, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-36s, clients: 1, corpus: 3, objectives: 52, executions: 375, exec/sec: 2.398, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 52, executions: 375, exec/sec: 2.398, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-39s, clients: 1, corpus: 3, objectives: 53, executions: 376, exec/sec: 2.359, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 53, executions: 376, exec/sec: 2.359, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-42s, clients: 1, corpus: 3, objectives: 54, executions: 377, exec/sec: 2.322, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 54, executions: 377, exec/sec: 2.322, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-45s, clients: 1, corpus: 3, objectives: 55, executions: 378, exec/sec: 2.286, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 55, executions: 378, exec/sec: 2.286, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-48s, clients: 1, corpus: 3, objectives: 56, executions: 379, exec/sec: 2.251, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 56, executions: 379, exec/sec: 2.251, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-51s, clients: 1, corpus: 3, objectives: 57, executions: 380, exec/sec: 2.217, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 57, executions: 380, exec/sec: 2.217, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-54s, clients: 1, corpus: 3, objectives: 58, executions: 381, exec/sec: 2.185, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 58, executions: 381, exec/sec: 2.185, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-57s, clients: 1, corpus: 3, objectives: 59, executions: 382, exec/sec: 2.154, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 59, executions: 382, exec/sec: 2.154, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-0s, clients: 1, corpus: 3, objectives: 60, executions: 383, exec/sec: 2.123, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 60, executions: 383, exec/sec: 2.123, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-3s, clients: 1, corpus: 3, objectives: 61, executions: 384, exec/sec: 2.094, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 61, executions: 384, exec/sec: 2.094, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-6s, clients: 1, corpus: 3, objectives: 62, executions: 385, exec/sec: 2.066, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 62, executions: 385, exec/sec: 2.066, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-9s, clients: 1, corpus: 3, objectives: 63, executions: 386, exec/sec: 2.038, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 63, executions: 386, exec/sec: 2.038, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-12s, clients: 1, corpus: 3, objectives: 64, executions: 387, exec/sec: 2.012, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 64, executions: 387, exec/sec: 2.012, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-15s, clients: 1, corpus: 3, objectives: 65, executions: 388, exec/sec: 1.986, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 65, executions: 388, exec/sec: 1.986, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-18s, clients: 1, corpus: 3, objectives: 66, executions: 389, exec/sec: 1.961, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 66, executions: 389, exec/sec: 1.961, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-21s, clients: 1, corpus: 3, objectives: 67, executions: 390, exec/sec: 1.937, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 67, executions: 390, exec/sec: 1.937, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-24s, clients: 1, corpus: 3, objectives: 68, executions: 391, exec/sec: 1.913, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 68, executions: 391, exec/sec: 1.913, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-27s, clients: 1, corpus: 3, objectives: 69, executions: 392, exec/sec: 1.890, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 69, executions: 392, exec/sec: 1.890, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-30s, clients: 1, corpus: 3, objectives: 70, executions: 393, exec/sec: 1.868, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 70, executions: 393, exec/sec: 1.868, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-33s, clients: 1, corpus: 3, objectives: 71, executions: 394, exec/sec: 1.846, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 71, executions: 394, exec/sec: 1.846, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-36s, clients: 1, corpus: 3, objectives: 72, executions: 395, exec/sec: 1.826, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 72, executions: 395, exec/sec: 1.826, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-39s, clients: 1, corpus: 3, objectives: 73, executions: 396, exec/sec: 1.805, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 73, executions: 396, exec/sec: 1.805, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-42s, clients: 1, corpus: 3, objectives: 74, executions: 397, exec/sec: 1.785, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 74, executions: 397, exec/sec: 1.785, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-45s, clients: 1, corpus: 3, objectives: 75, executions: 398, exec/sec: 1.766, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 75, executions: 398, exec/sec: 1.766, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-48s, clients: 1, corpus: 3, objectives: 76, executions: 399, exec/sec: 1.747, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 76, executions: 399, exec/sec: 1.747, stability: 360/360 (100%), edges: 360/360 (100%)
+[Client Heartbeat #1]  (GLOBAL) run time: 3m-48s, clients: 1, corpus: 3, objectives: 76, executions: 399, exec/sec: 1.747, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 3, objectives: 76, executions: 399, exec/sec: 1.747, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-51s, clients: 1, corpus: 3, objectives: 77, executions: 400, exec/sec: 1.729, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 77, executions: 400, exec/sec: 1.729, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-54s, clients: 1, corpus: 3, objectives: 78, executions: 401, exec/sec: 1.711, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 78, executions: 401, exec/sec: 1.711, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-57s, clients: 1, corpus: 3, objectives: 79, executions: 402, exec/sec: 1.693, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 79, executions: 402, exec/sec: 1.693, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-0s, clients: 1, corpus: 3, objectives: 80, executions: 403, exec/sec: 1.676, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 80, executions: 403, exec/sec: 1.676, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-3s, clients: 1, corpus: 3, objectives: 81, executions: 404, exec/sec: 1.660, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 81, executions: 404, exec/sec: 1.660, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-6s, clients: 1, corpus: 3, objectives: 82, executions: 405, exec/sec: 1.644, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 82, executions: 405, exec/sec: 1.644, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-9s, clients: 1, corpus: 3, objectives: 83, executions: 406, exec/sec: 1.628, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 83, executions: 406, exec/sec: 1.628, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-12s, clients: 1, corpus: 3, objectives: 84, executions: 407, exec/sec: 1.613, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 84, executions: 407, exec/sec: 1.613, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-15s, clients: 1, corpus: 3, objectives: 85, executions: 408, exec/sec: 1.598, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 85, executions: 408, exec/sec: 1.598, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-18s, clients: 1, corpus: 3, objectives: 86, executions: 409, exec/sec: 1.583, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 86, executions: 409, exec/sec: 1.583, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-21s, clients: 1, corpus: 3, objectives: 87, executions: 410, exec/sec: 1.569, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 87, executions: 410, exec/sec: 1.569, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-24s, clients: 1, corpus: 3, objectives: 88, executions: 411, exec/sec: 1.555, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 88, executions: 411, exec/sec: 1.555, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-27s, clients: 1, corpus: 3, objectives: 89, executions: 412, exec/sec: 1.541, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 89, executions: 412, exec/sec: 1.541, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-30s, clients: 1, corpus: 3, objectives: 90, executions: 413, exec/sec: 1.527, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 90, executions: 413, exec/sec: 1.527, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-33s, clients: 1, corpus: 3, objectives: 91, executions: 414, exec/sec: 1.514, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 91, executions: 414, exec/sec: 1.514, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-36s, clients: 1, corpus: 3, objectives: 92, executions: 415, exec/sec: 1.501, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 92, executions: 415, exec/sec: 1.501, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-39s, clients: 1, corpus: 3, objectives: 93, executions: 416, exec/sec: 1.489, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 93, executions: 416, exec/sec: 1.489, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-42s, clients: 1, corpus: 3, objectives: 94, executions: 417, exec/sec: 1.477, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 94, executions: 417, exec/sec: 1.477, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-45s, clients: 1, corpus: 3, objectives: 95, executions: 418, exec/sec: 1.465, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 95, executions: 418, exec/sec: 1.465, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-48s, clients: 1, corpus: 3, objectives: 96, executions: 419, exec/sec: 1.453, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 96, executions: 419, exec/sec: 1.453, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-51s, clients: 1, corpus: 3, objectives: 97, executions: 420, exec/sec: 1.441, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 97, executions: 420, exec/sec: 1.441, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-54s, clients: 1, corpus: 3, objectives: 98, executions: 421, exec/sec: 1.430, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 98, executions: 421, exec/sec: 1.430, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-57s, clients: 1, corpus: 3, objectives: 99, executions: 422, exec/sec: 1.419, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 99, executions: 422, exec/sec: 1.419, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 5m-0s, clients: 1, corpus: 3, objectives: 100, executions: 423, exec/sec: 1.408, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 100, executions: 423, exec/sec: 1.408, stability: 360/360 (100%), edges: 360/360 (100%)
+[Objective   #1]  (GLOBAL) run time: 5m-3s, clients: 1, corpus: 3, objectives: 101, executions: 424, exec/sec: 1.397, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 3, objectives: 101, executions: 424, exec/sec: 1.397, stability: 360/360 (100%), edges: 360/360 (100%)
