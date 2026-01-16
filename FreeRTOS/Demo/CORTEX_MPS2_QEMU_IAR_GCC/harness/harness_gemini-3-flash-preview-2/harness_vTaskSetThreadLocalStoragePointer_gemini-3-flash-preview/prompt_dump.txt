@@ -1,0 +1,105 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: vTaskSetThreadLocalStoragePointer
+
+### Function vTaskSetThreadLocalStoragePointer
+Signature: void vTaskSetThreadLocalStoragePointer( TaskHandle_t xTaskToSet,
+                                            BaseType_t xIndex,
+                                            void * pvValue )
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:None-None
+Cyclomatic: None Lines: None
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: none
+Incoming callers count: 0
+Full source code:
+void vTaskSetThreadLocalStoragePointer( TaskHandle_t xTaskToSet,
+                                            BaseType_t xIndex,
+                                            void * pvValue )
+{
+        TCB_t * pxTCB;
+
+        traceENTER_vTaskSetThreadLocalStoragePointer( xTaskToSet, xIndex, pvValue );
+
+        if( ( xIndex >= 0 ) &&
+            ( xIndex < ( BaseType_t ) configNUM_THREAD_LOCAL_STORAGE_POINTERS ) )
+        {
+            pxTCB = prvGetTCBFromHandle( xTaskToSet );
+            configASSERT( pxTCB != NULL );
+            pxTCB->pvThreadLocalStoragePointers[ xIndex ] = pvValue;
+        }
+
+        traceRETURN_vTaskSetThreadLocalStoragePointer();
+    }
+Official docs (summary):
+Parameters:
+- xIndex: BaseType_t — The index into the thread local storage array to which data is being written.
+- pvValue: void — The value to write into the into the index specified by xIndex.
+- xTaskToSet: TaskHandle_t — No description available.
+Return values:
+- void: This function returns no value.
+Related configs: configNUM_THREAD_LOCAL_STORAGE_POINTERS
+Related APIs: vTaskSetThreadLocalStoragePointer
+Reference snippets:
+- API vTaskSetThreadLocalStoragePointer Overview (api:vTaskSetThreadLocalStoragePointer:overview#c0) :: API: vTaskSetThreadLocalStoragePointer Signature: void vTaskSetThreadLocalStoragePointer(TaskHandle_t xTaskToSet, BaseType_t xIndex, void *pvValue); Headers: task.h, FreeRTOS.h Summary: Thread local storage (or TLS) allows the application writer to store values inside a task's control block, making the value specific t…
+- API vTaskSetThreadLocalStoragePointer Related (api:vTaskSetThreadLocalStoragePointer:related#c0) :: API: vTaskSetThreadLocalStoragePointer Section: related related: vTaskSetThreadLocalStoragePointer
+- API vTaskSetThreadLocalStoragePointer Returns (api:vTaskSetThreadLocalStoragePointer:returns#c0) :: API: vTaskSetThreadLocalStoragePointer Section: returns returns void: This function returns no value.
+- API vTaskSetThreadLocalStoragePointer Example (api:vTaskSetThreadLocalStoragePointer:example#c0) :: API: vTaskSetThreadLocalStoragePointer Section: example uint32_t ulVariable; /* Write the 32 -bit 0x12345678 value directly into index 1 of the thread local storage array.  Passing NULL as the task handle has the effect of writing to the calling task's thread local storage array. */ vTaskSetThreadLocalStoragePointer( N…
+- API pvTaskGetThreadLocalStoragePointer Overview (api:pvTaskGetThreadLocalStoragePointer:overview#c0) :: API: pvTaskGetThreadLocalStoragePointer Signature: void *pvTaskGetThreadLocalStoragePointer(TaskHandle_t xTaskToQuery, BaseType_t xIndex); Headers: task.h, FreeRTOS.h Summary: Thread local storage (or TLS) allows the application writer to store values inside a task's control block, making the value specific to (local t…
+- API vTaskSetThreadLocalStoragePointer Parameters (api:vTaskSetThreadLocalStoragePointer:parameters#c0) :: API: vTaskSetThreadLocalStoragePointer Section: parameters param xIndex: BaseType_t The index into the thread local storage array to which data is being written. param pvValue: void The value to write into the into the index specified by xIndex. param xTaskToSet: TaskHandle_t No description available.
+- vTaskSetThreadLocalStoragePointer :: void vTaskSetThreadLocalStoragePointer(TaskHandle_t xTaskToSet, BaseType_t xIndex, void *pvValue); Thread local storage (or TLS) allows the application writer to store values inside a task's control block, making the value specific to (local to) the task itself, and allowing each task to
+
+Official documentation (full):
+Title: vTaskSetThreadLocalStoragePointer
+Signature: void vTaskSetThreadLocalStoragePointer(TaskHandle_t xTaskToSet, BaseType_t xIndex, void *pvValue);
+Summary:
+Thread local storage (or TLS) allows the application writer to store values inside a task's
+control block, making the value specific to (local to) the task itself, and allowing each task to
+have its own unique value.
+Each task has its own array of pointers that can be used as thread local storage.  The number
+of indexes in the array is set by the configNUM_THREAD_LOCAL_STORAGE_POINTERS
+compile time configuration constant in FreeRTOSConfig.h.
+vTaskSetThreadLocalStoragePointer() sets the value of an index in the array , effectively
+storing a thread local value .
+Parameters:
+- xIndex: BaseType_t — The index into the thread local storage array to which data is being written.
+- pvValue: void — The value to write into the into the index specified by xIndex.
+- xTaskToSet: TaskHandle_t — No description available.
+Return values:
+- void: This function returns no value.
+Example:
+uint32_t ulVariable;
+/* Write the 32 -bit 0x12345678 value directly into index 1 of the thread local
+storage array.  Passing NULL as the task handle has the effect of writing to the
+calling task's thread local storage array. */
+vTaskSetThreadLocalStoragePointer( NULL,   /* Task handle. */
+1,     /* Index into the array. */
+( void * ) 0x12345678 );
+/* Store the value of the 32 -bit variable ulVariable to index 0 of the calling
+task's thread local storage array. */
+ulVariable = ERROR_CODE;
+vTaskSetThreadLocalStoragePointer( NULL,   /* Task handle. */
+0,     /* Index into the array. */
+( void * ) &ulVariable );
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

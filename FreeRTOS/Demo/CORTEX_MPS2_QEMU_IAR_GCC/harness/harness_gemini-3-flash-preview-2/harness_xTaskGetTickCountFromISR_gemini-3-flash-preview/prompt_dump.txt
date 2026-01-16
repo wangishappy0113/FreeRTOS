@@ -1,0 +1,190 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xTaskGetTickCountFromISR, vPortValidateInterruptPriority
+
+### Function xTaskGetTickCountFromISR
+Signature: TickType_t(void)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4179-4211
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/portmacro.h:portASSERT_IF_INTERRUPT_PRIORITY_INVALID:ANY(0)(macro), vPortValidateInterruptPriority(function), <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOS.h:portTICK_TYPE_SET_INTERRUPT_MASK_FROM_ISR:int(0)(function), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOS.h:portTICK_TYPE_CLEAR_INTERRUPT_MASK_FROM_ISR:ANY(1)(macro), <operator>.cast(operator)
+Incoming callers count: 0
+Full source code:
+TickType_t xTaskGetTickCountFromISR( void )
+{
+    TickType_t xReturn;
+    UBaseType_t uxSavedInterruptStatus;
+
+    traceENTER_xTaskGetTickCountFromISR();
+
+    /* RTOS ports that support interrupt nesting have the concept of a maximum
+     * system call (or maximum API call) interrupt priority.  Interrupts that are
+     * above the maximum system call priority are kept permanently enabled, even
+     * when the RTOS kernel is in a critical section, but cannot make any calls to
+     * FreeRTOS API functions.  If configASSERT() is defined in FreeRTOSConfig.h
+     * then portASSERT_IF_INTERRUPT_PRIORITY_INVALID() will result in an assertion
+     * failure if a FreeRTOS API function is called from an interrupt that has been
+     * assigned a priority above the configured maximum system call priority.
+     * Only FreeRTOS functions that end in FromISR can be called from interrupts
+     * that have been assigned a priority at or (logically) below the maximum
+     * system call  interrupt priority.  FreeRTOS maintains a separate interrupt
+     * safe API to ensure interrupt entry is as fast and as simple as possible.
+     * More information (albeit Cortex-M specific) is provided on the following
+     * link: https://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html */
+    portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
+
+    uxSavedInterruptStatus = portTICK_TYPE_SET_INTERRUPT_MASK_FROM_ISR();
+    {
+        xReturn = xTickCount;
+    }
+    portTICK_TYPE_CLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
+
+    traceRETURN_xTaskGetTickCountFromISR( xReturn );
+
+    return xReturn;
+}
+
+Official docs (summary):
+Return values:
+- TickType_t: xTaskGetTickCount FromISR () always returns the  tick count value at the time
+xTaskGetTickCountFromISR() is called .
+Related configs: configTICK_RATE_HZ, configUSE_16_BIT_TICKS
+Related APIs: pdMS_TO_TICKS, xTaskGetTickCount
+Reference snippets:
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOS.h:portTICK_TYPE_SET_INTERRUPT_MASK_FROM_ISR:int(0) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOS.h:portTICK_TYPE_SET_INTERRUPT_MASK_FROM_ISR:int(0)#c0) :: incoming: xTaskGetTickCountFromISR
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOS.h:portTICK_TYPE_CLEAR_INTERRUPT_MASK_FROM_ISR:ANY(1) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOS.h:portTICK_TYPE_CLEAR_INTERRUPT_MASK_FROM_ISR:ANY(1)#c0) :: incoming: xTaskGetTickCountFromISR
+- API xTaskGetTickCountFromISR Overview (api:xTaskGetTickCountFromISR:overview#c0) :: API: xTaskGetTickCountFromISR Signature: TickType_t xTaskGetTickCountFromISR(void); Headers: task.h, FreeRTOS.h Summary: A version of xTaskGetTickCount() that can be called from an ISR. The tick count is the total number of tick interrupts that have occurred since the scheduler was started.
+- Function xTaskGetTickCountFromISR (func:xTaskGetTickCountFromISR:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c0) :: FUNC xTaskGetTickCountFromISR TickType_t(void) file /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4179-4211 TickType_t xTaskGetTickCountFromISR( void ) {     TickType_t xReturn;     UBaseType_t uxSavedInterruptStatus;      traceENTER_xTaskGetTickCountFromISR();      /* RTOS ports that support interrupt nesting have the co…
+- API xTaskGetTickCountFromISR Returns (api:xTaskGetTickCountFromISR:returns#c0) :: API: xTaskGetTickCountFromISR Section: returns returns TickType_t: xTaskGetTickCount FromISR () always returns the  tick count value at the time xTaskGetTickCountFromISR() is called .
+- Type xTaskGetTickCountFromISR (type:xTaskGetTickCountFromISR#c0) :: TYPE type xTaskGetTickCountFromISR /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c
+- xTaskGetTickCountFromISR :: TickType_t xTaskGetTickCountFromISR(void); A version of xTaskGetTickCount() that can be called from an ISR. The tick count is the total number of tick interrupts that have occurred since the scheduler was
+
+Official documentation (full):
+Title: xTaskGetTickCountFromISR
+Signature: TickType_t xTaskGetTickCountFromISR(void);
+Summary:
+A version of xTaskGetTickCount() that can be called from an ISR.
+The tick count is the total number of tick interrupts that have occurred since the scheduler was
+started.
+Return values:
+- TickType_t: xTaskGetTickCount FromISR () always returns the  tick count value at the time
+xTaskGetTickCountFromISR() is called .
+Notes:
+The actual time one tick period represents depends on the value assigned to
+configTICK_RATE_HZ within FreeRTOSConfig.h .  The pdMS_TO_TICKS()  macro  can be
+used to convert a time in milliseconds to a time in ‘ticks’.
+The tick count will eventually overflow  and return to zero .  This will not affect  the internal
+operation of the kernel – for example, tasks will always block for the specified period even if
+the tick count overflows while the task is in the Blocked state.  Overflows must however be
+considered by host applications if the application makes direct use of the tick count value.
+The frequency at which the tick count overflows depends on both the tick frequency and the
+data type used to hold the count value.  If configUSE_16_BIT_TICKS is set to 1, then the tick
+count will be held in a 16 -bit variable.  If configUSE_16_BIT_TICKS is set to 0, then the tick
+count will be held in a 32 -bit variable.
+Example:
+void vAnISR( void )
+{
+static TickType_t  xTimeISRLastExecuted = 0;
+TickType_t  xTimeNow, xTimeBetweenInterrupts;
+/* Store the time at which this interrupt was entered. */
+xTimeNow  = xTaskGetTickCount FromISR();
+/* Perform some operation. */
+/* How many ticks occurred between this and the previous interrupt? */
+xTimeBetweenInterrupts  = xTimeISRLastExecuted – xTimeNow;
+/* If more than 200 ticks occurred between this and the previous interrupt then
+do something. */
+if( xTimeBetweenInterrupts > 200 )
+{
+/* Take appropriate action here. */
+}
+/* Remember the time at which this interrupt was entered. */
+xTimeISRLastExecuted = xTimeNow;
+}
+
+### Function vPortValidateInterruptPriority
+Signature: void(void)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/port.c:1423-1477
+Cyclomatic: -1 Lines: -1
+Includes: FreeRTOS.h, task.h, mpu_syscall_numbers.h
+Outgoing calls summary: <operator>.greaterEqualsThan(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/port.c:portFIRST_USER_INTERRUPT_NUMBER:ANY(0)(macro), <operator>.assignment(operator), <operator>.indirectIndexAccess(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), vAssertCalled(function), <operator>.lessEqualsThan(operator)
+Incoming callers count: 10
+Full source code:
+    void vPortValidateInterruptPriority( void )
+    {
+        uint32_t ulCurrentInterrupt;
+        uint8_t ucCurrentPriority;
+
+        /* Obtain the number of the currently executing interrupt. */
+        __asm volatile ( "mrs %0, ipsr" : "=r" ( ulCurrentInterrupt )::"memory" );
+
+        /* Is the interrupt number a user defined interrupt? */
+        if( ulCurrentInterrupt >= portFIRST_USER_INTERRUPT_NUMBER )
+        {
+            /* Look up the interrupt's priority. */
+            ucCurrentPriority = pcInterruptPriorityRegisters[ ulCurrentInterrupt ];
+
+            /* The following assertion will fail if a service routine (ISR) for
+             * an interrupt that has been assigned a priority above
+             * configMAX_SYSCALL_INTERRUPT_PRIORITY calls an ISR safe FreeRTOS API
+             * function.  ISR safe FreeRTOS API functions must *only* be called
+             * from interrupts that have been assigned a priority at or below
+             * configMAX_SYSCALL_INTERRUPT_PRIORITY.
+             *
+             * Numerically low interrupt priority numbers represent logically high
+             * interrupt priorities, therefore the priority of the interrupt must
+             * be set to a value equal to or numerically *higher* than
+             * configMAX_SYSCALL_INTERRUPT_PRIORITY.
+             *
+             * Interrupts that  use the FreeRTOS API must not be left at their
+             * default priority of  zero as that is the highest possible priority,
+             * which is guaranteed to be above configMAX_SYSCALL_INTERRUPT_PRIORITY,
+             * and  therefore also guaranteed to be invalid.
+             *
+             * FreeRTOS maintains separate thread and ISR API functions to ensure
+             * interrupt entry is as fast and simple as possible.
+             *
+             * The following links provide detailed information:
+             * https://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html
+             * https://www.freertos.org/Why-FreeRTOS/FAQs */
+            configASSERT( ucCurrentPriority >= ucMaxSysCallPriority );
+        }
+
+        /* Priority grouping:  The interrupt controller (NVIC) allows the bits
+         * that define each interrupt's priority to be split between bits that
+         * define the interrupt's pre-emption priority bits and bits that define
+         * the interrupt's sub-priority.  For simplicity all bits must be defined
+         * to be pre-emption priority bits.  The following assertion will fail if
+         * this is not the case (if some bits represent a sub-priority).
+         *
+         * If the application only uses CMSIS libraries for interrupt
+         * configuration then the correct setting can be achieved on all Cortex-M
+         * devices by calling NVIC_SetPriorityGrouping( 0 ); before starting the
+         * scheduler.  Note however that some vendor specific peripheral libraries
+         * assume a non-zero priority group setting, in which cases using a value
+         * of zero will result in unpredictable behaviour. */
+        configASSERT( ( portAIRCR_REG & portPRIORITY_GROUP_MASK ) <= ulMaxPRIGROUPValue );
+    }
+
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

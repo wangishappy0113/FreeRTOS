@@ -1,0 +1,92 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test logic inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xMessageBufferCreateStatic
+
+### Function xMessageBufferCreateStatic
+Signature: MessageBufferHandle_t xMessageBufferCreateStatic(size_t xBufferSizeBytes, uint8_t *pucMessageBufferStorageArea, StaticMessageBuffer_t *pxStaticMessageBuffer);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- xBufferSizeBytes: size_t — The size, in bytes, of the buffer pointed to by the
+- pucMessageBufferStorageArea: uint8_t — parameter. When a  message is written to the message buffer an additional  sizeof( size_t ) bytes are also written to store the message's  length. sizeof( size_t ) is typically 4 bytes on a 32 -bit  architecture, so on most 32 -bit architecture a 10 byte  message will take up 14 bytes of message buffer space. The  maximum number of bytes that can be stored in the  message buffer is actually (xBufferSizeBytes - 1).
+- pucMessageBufferStorageArea: uint8_t — Must point to a uint8_t array that is at least xBufferSizeBytes  + 1 big. This is the array to which messages are copied  when they are written to the message buffer.
+- pxStaticMessageBuffer: StaticMessageBuffer_t — Must point to a uint8_t array that is at least xBufferSizeBytes  + 1 big. This is the array to which messages are copied  when they are written to the message buffer.  reference the created message buffer in other message buffer API calls. */  /* Other code that uses the message buffer can go here. */  }
+Return values:
+- MessageBufferHandle_t: If the message buffer is created successfully then a handle to the created message buffer is
+returned. If either pucMessageBufferStorageArea or pxStaticMessageBuffer are NULL then
+NULL is returned.
+Related configs: configSUPPORT_STATIC_ALLOCATION
+Related APIs: xMessageBufferCreate
+Reference snippets:
+- API xMessageBufferCreateStatic Related (api:xMessageBufferCreateStatic:related#c0) :: API: xMessageBufferCreateStatic Section: related related: xMessageBufferCreate
+- API xMessageBufferCreate Related (api:xMessageBufferCreate:related#c0) :: API: xMessageBufferCreate Section: related related: xMessageBufferCreateStatic
+- API xMessageBufferCreateStatic Overview (api:xMessageBufferCreateStatic:overview#c0) :: API: xMessageBufferCreateStatic Signature: MessageBufferHandle_t xMessageBufferCreateStatic(size_t xBufferSizeBytes, uint8_t *pucMessageBufferStorageArea, StaticMessageBuffer_t *pxStaticMessageBuffer); Headers: message_buffer.h, FreeRTOS.h Summary: Creates a new message buffer using statically allocated memory. See xMe…
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/include/stream_buffer.h:sbTYPE_MESSAGE_BUFFER:ANY(0) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/include/stream_buffer.h:sbTYPE_MESSAGE_BUFFER:ANY(0)#c0) :: incoming: xStreamBufferGenericCreate, xStreamBufferGenericCreateStatic
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/include/stream_buffer.h:sbTYPE_STREAM_BATCHING_BUFFER:ANY(0) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/include/stream_buffer.h:sbTYPE_STREAM_BATCHING_BUFFER:ANY(0)#c0) :: incoming: xStreamBufferGenericCreate, xStreamBufferGenericCreateStatic
+- API xMessageBufferCreateStatic Parameters (api:xMessageBufferCreateStatic:parameters#c0) :: API: xMessageBufferCreateStatic Section: parameters param xBufferSizeBytes: size_t The size, in bytes, of the buffer pointed to by the param pucMessageBufferStorageArea: uint8_t parameter. When a  message is written to the message buffer an additional  sizeof( size_t ) bytes are also written to store the message's  len…
+- xMessageBufferCreateStatic :: MessageBufferHandle_t xMessageBufferCreateStatic(size_t xBufferSizeBytes, uint8_t *pucMessageBufferStorageArea, StaticMessageBuffer_t *pxStaticMessageBuffer); Creates a new message buffer using statically allocated memory. See xMessageBufferCreate()  for a version that uses dynamically allocated memory.
+- xMessageBufferCreateStatic :: MessageBufferHandle_t xMessageBufferCreateStatic(size_t xBufferSizeBytes, uint8_t *pucMessageBufferStorageArea, StaticMessageBuffer_t *pxStaticMessageBuffer); Creates a new message buffer using statically allocated memory. See xMessageBufferCreate()  for a version that uses dynamically allocated memory.
+
+Official documentation (full):
+Title: xMessageBufferCreateStatic
+Signature: MessageBufferHandle_t xMessageBufferCreateStatic(size_t xBufferSizeBytes, uint8_t *pucMessageBufferStorageArea, StaticMessageBuffer_t *pxStaticMessageBuffer);
+Summary:
+Creates a new message buffer using statically allocated memory. See
+xMessageBufferCreate()  for a version that uses dynamically allocated memory.
+configSUPPORT_STATIC_ALLOCATION  must be set to 1 in FreeRTOSConfig.h for
+xMessageBufferCreateStatic() to be available.
+Message buffer functionality is enabled by including the FreeRTOS/source/stream_buffer.c
+source file in the build (as message buffers use stream buffers).
+Parameters:
+- xBufferSizeBytes: size_t — The size, in bytes, of the buffer pointed to by the
+- pucMessageBufferStorageArea: uint8_t — parameter. When a  message is written to the message buffer an additional  sizeof( size_t ) bytes are also written to store the message's  length. sizeof( size_t ) is typically 4 bytes on a 32 -bit  architecture, so on most 32 -bit architecture a 10 byte  message will take up 14 bytes of message buffer space. The  maximum number of bytes that can be stored in the  message buffer is actually (xBufferSizeBytes - 1).
+- pucMessageBufferStorageArea: uint8_t — Must point to a uint8_t array that is at least xBufferSizeBytes  + 1 big. This is the array to which messages are copied  when they are written to the message buffer.
+- pxStaticMessageBuffer: StaticMessageBuffer_t — Must point to a uint8_t array that is at least xBufferSizeBytes  + 1 big. This is the array to which messages are copied  when they are written to the message buffer.  reference the created message buffer in other message buffer API calls. */  /* Other code that uses the message buffer can go here. */  }
+Return values:
+- MessageBufferHandle_t: If the message buffer is created successfully then a handle to the created message buffer is
+returned. If either pucMessageBufferStorageArea or pxStaticMessageBuffer are NULL then
+NULL is returned.
+Example:
+/* Used to dimension the array used to hold the messages.  The available space
+will actually be one less than this, so 999. */
+#define STORAGE_SIZE_BYTES 1000
+/* Defines the memory that will actually hold the messages within the message
+buffer.  Should be one more than the value passed in the xBufferSizeBytes
+parameter. */
+static uint8_t ucStorageBuffer[ STORAGE_SIZE_BYTES ];
+/* The variable used to hold the message buffer structure. */
+StaticMessageBuffer_t xMessageBufferStruct;
+void MyFunction( void )
+{
+MessageBufferHandle_t xMessageBuffer;
+xMessageBuffer = xMessageBufferCreateStatic( sizeof( ucStoragegBuffer ),
+ucBufferStorage,
+&xMessageBufferStruct );
+/* As neither the pucMessageBufferStorageArea or pxStaticMessageBuffer
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

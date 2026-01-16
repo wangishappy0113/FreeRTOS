@@ -1,69 +1,39 @@
 /*
  * RTOS模糊测试 - 单个测试用例
- * 文件: vTaskDelay_Static_Fuzz
- * 生成时间: 2025-12-24 19:36:02
- * 目标RTOS: FreeRTOS
- * 项目路径: /home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC
- * API类别: task_management
+ * 文件: xTaskCatchUpTicks_TaskUnblock_Fuzz_Fixed
+ * 修复说明: 使用 xTaskCreate 替代 xTaskCreateStatic 以修复循环中的 Use-After-Free/TCB Corruption
  */
-
-/*
- * 测试用例详细信息:
- * 名称: vTaskDelay_Static_Fuzz
- * 描述: Fuzzes vTaskDelay with varying tick counts, task priorities, and scheduler states. Uses a static worker task to ensure scheduler interaction and verifies tick count progression.
- * 
- * 生成上下文:
- * 检测到的API函数: SCB_SCR_SEVONPEND_Msk              , configTIMER_TASK_PRIORITY                , CoreDebug_DHCSR_S_RETIRE_ST_Msk    , CMSDK_DUALTIMER_2_BASE  , ARM_MPU_REGION_SIZE_2GB      , __TZ_get_PRIMASK_NS, CMSDK_PL230_DMA_STATUS_CHNLS_MINUS1_Msk    , TPI_BASE            , MPS2_AAIC_I2C           , defined
- * 主要文件: /home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC/main.c, /home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC/main_full.c, /home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC/main.c, /home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC/main_test.c, /home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC/main_blinky.c
- */
-
-/*
- * LLM生成信息 (用于调试和追踪):
- * 
- * System Prompt:
- * 未记录
- * 
- * User Prompt:
- * 未记录
- * 
- * LLM Response:
- * 未记录
- * 
- * 生成时间: 未记录
- */
-
 
 #include "FreeRTOS.h"
-
 #include "task.h"
-
 #include "queue.h"
-
 #include "semphr.h"
-
 #include "timers.h"
 
-
 #include <stdio.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stddef.h>
+#include <string.h>
 
-
-// LibAFL集成必需的全局变量和函数
+// ====================================================================
+// LibAFL集成 - Crash Input 植入
+// ====================================================================
 #define MAX_FUZZ_INPUT_SIZE 1024
 __attribute__((used, visibility("default"))) unsigned char FUZZ_INPUT[MAX_FUZZ_INPUT_SIZE] = {
-    // 默认种子：在修复阶段提供确定性输入，Fuzzer 运行时会覆盖此缓冲区
-    0x46, 0x55, 0x5a, 0x5a, 0x01, 0x23, 0x45, 0x67,
-    0x89, 0xab, 0xcd, 0xef, 0x11, 0x22, 0x33, 0x44,
-    0x55, 0x66, 0x77, 0x88, 0x99, 0xaa, 0xbb, 0xcc,
-    0xdd, 0xee, 0xff, 0x00, 0x13, 0x37, 0x42, 0x24,
-    0x5a, 0xa5, 0xc3, 0x3c, 0xde, 0xed, 0xbe, 0xef,
-    0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80,
-    0x90, 0xa0, 0xb0, 0xc0, 0xd0, 0xe0, 0xf0, 0x0f,
-    0x1f, 0x2f, 0x3f, 0x4f, 0x5f, 0x6f, 0x7f, 0x8f
+    // 植入的 Crash 样本 (来自 Hexdump)
+    0x64, 0xff, 0xff, 0x0e, 0x0e, 0xff, 0x77, 0x88, 0x30, 0x55, 0x55, 0x55, 0x55, 0x6e, 0x6e, 0x00,
+    0x1a, 0x00, 0xfe, 0x75, 0x80, 0x00, 0x4c, 0x4c, 0x4c, 0x4c, 0x4c, 0x4c, 0x95, 0x95, 0x95, 0x95,
+    0x95, 0x0c, 0xf7, 0x0d, 0x0d, 0x0d, 0x01, 0x40, 0x0e, 0x94, 0x46, 0x55, 0x5a, 0xba, 0xf7, 0xfb,
+    0x7f, 0xf0, 0x30, 0x00, 0x67, 0x89, 0xab, 0x1e, 0x1e, 0x28, 0x1e, 0x1e, 0x1e, 0x1e, 0xfe, 0x22,
+    0x00, 0x46, 0xab, 0x5a, 0xba, 0xa2, 0xff, 0xa2, 0xc3, 0xa2, 0xa2, 0xa2, 0xa2, 0xff, 0x00, 0x00,
+    0x00, 0x00, 0x01, 0x23, 0x55, 0x55, 0x55, 0xfe, 0x55, 0xff, 0xff, 0xff, 0x01, 0x55, 0x55, 0x55,
+    0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x11, 0x22, 0x46, 0xab, 0x5a, 0xba, 0x00, 0x00,
+    // 剩余填充 0
+    0x00
 };
 
 // LibAFL断点函数
-// 语义约定：一旦进入该函数，视为当前 harness 已经完成本轮测试，
-// 不再返回调用者，而是在一个可控的自旋循环中停住，由 QEMU/LibAFL 捕获。
 int __attribute__((noinline, used, visibility("default"))) BREAKPOINT(void)
 {
     for (;;) {
@@ -71,34 +41,24 @@ int __attribute__((noinline, used, visibility("default"))) BREAKPOINT(void)
     }
 }
 
-
 #define FUZZ_TASK_STACK_DEPTH (configMINIMAL_STACK_SIZE * 4)
 static StackType_t xFuzzTaskStack[FUZZ_TASK_STACK_DEPTH];
 static StaticTask_t xFuzzTaskTCB;
 #ifdef portPRIVILEGE_BIT
-/* FreeRTOS-MPU 端口：使用特权任务，以便访问受保护区域。 */
 #define FUZZ_TASK_PRIORITY ((tskIDLE_PRIORITY + 1) | portPRIVILEGE_BIT)
 #else
-/* 非 MPU 端口（如 CORTEX_MPS2_QEMU_IAR_GCC）：没有特权位，直接使用普通优先级。 */
 #define FUZZ_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
 #endif
-
 
 // ====================================================================
 // 测试用例辅助函数和全局变量（统一前缀 FR_*）
 // ====================================================================
-// 统一内置 Fuzz Reader，避免命名冲突。请只调用 FR_* API，不要重复实现。
-#include <stdint.h>
-#include <stddef.h>
-#include <string.h>
 typedef struct {
     const unsigned char* data;
     size_t size;
     size_t off;
 } FR_Reader;
-// 可变参数宏：支持 FR_init(buf) 或 FR_init(buf, len)
-// ⚠️ 单参数版本仅适用于 FUZZ_INPUT（其大小固定为 MAX_FUZZ_INPUT_SIZE）。
-//    其他缓冲区务必显式传入长度以避免越界。
+
 #define FR_init_SELECT(_1,_2,NAME,...) NAME
 #define FR_init(...) FR_init_SELECT(__VA_ARGS__, FR_init_2, FR_init_1)(__VA_ARGS__)
 static inline FR_Reader FR_init_1(const unsigned char* buf) { FR_Reader r = { buf, MAX_FUZZ_INPUT_SIZE, 0 }; return r; }
@@ -127,135 +87,110 @@ static inline uint32_t FR_next_range(FR_Reader* r, uint32_t min_v, uint32_t max_
 static inline size_t FR_next_bytes(FR_Reader* r, unsigned char* out, size_t n) {
     size_t rem = FR_remaining(r); if (n > rem) n = rem; if (n) { memcpy(out, r->data + r->off, n); r->off += n; } return n;
 }
-static inline size_t FR_next_string(FR_Reader* r, char* out, size_t max_len) {
-    if (!out || max_len == 0) {
-        return 0;
-    }
-    out[0] = '\0';
-    if (max_len == 1) {
-        return 0;
-    }
-    size_t max_copy = max_len - 1;
-    size_t rem = FR_remaining(r);
-    if (rem == 0 || max_copy == 0) {
-        return 0;
-    }
-    size_t span = rem < max_copy ? rem : max_copy;
-    size_t len = span ? (FR_next_u16(r) % (span + 1)) : 0;
-    if (len == 0) {
-        return 0;
-    }
-    size_t got = FR_next_bytes(r, (unsigned char*)out, len);
-    out[got] = '\0';
-    return got;
-}
 
-// LLM可在此添加非冲突的辅助函数（不得使用 FR_ 前缀），例如静态缓冲、校验函数等：
-static StaticTask_t xWorkerBuffer;
-static StackType_t uxWorkerStack[configMINIMAL_STACK_SIZE];
-static TaskHandle_t xWorkerHandle = NULL;
-static volatile uint32_t ulWorkerCounter = 0;
+// --------------------------------------------------------
+// [FIX] 移除了全局静态 worker buffer，改用动态分配
+// --------------------------------------------------------
+static StaticSemaphore_t xSemBuffer;
+static SemaphoreHandle_t xDoneSem;
+static FR_Reader fr_inst;
+static bool fr_is_init = false;
 
 static void vWorkerTask(void *pvParameters) {
-    (void)pvParameters;
-    for (;;) {
-        ulWorkerCounter++;
-        /* Use a small delay to prevent starvation while still being active */
-        vTaskDelay(1);
+    TickType_t xDelay = (TickType_t)(uintptr_t)pvParameters;
+    if (xDelay > 0) {
+        vTaskDelay(xDelay);
     }
+    xSemaphoreGive(xDoneSem);
+    
+    // Worker 任务自我删除
+    // 注意：vTaskDelete(NULL) 会将内存释放任务交给 Idle Task
+    vTaskDelete(NULL); 
 }
 
 // ====================================================================
-// 主测试函数（固定骨架 + 有界迭代）
+// 主测试函数
 // ====================================================================
-void __attribute__((used, visibility("default"))) test_task(void)
+void __attribute__((used, visibility("default"))) test_task(void *pvParameters)
 {
-    // 测试用例: vTaskDelay_Static_Fuzz
-    // API类别: task_management
-    // 描述: Fuzzes vTaskDelay with varying tick counts, task priorities, and scheduler states. Uses a static worker task to ensure scheduler interaction and verifies tick count progression.
-
-    // 统一使用 FUZZ_INPUT 构造 Reader，确保输入来源与大小一致。
+    (void)pvParameters;
     FR_Reader fr = FR_init(FUZZ_INPUT, MAX_FUZZ_INPUT_SIZE);
 
-    // 预留少量基线缓冲，降低栈抖动和未初始化使用的风险。
+    // 预留缓冲
     unsigned char fr_baseline[16] = {0};
     (void)FR_next_bytes(&fr, fr_baseline, sizeof(fr_baseline));
 
-    // 统一的有界迭代次数，避免无限循环和长时间阻塞。
-    // 约定：所有测试逻辑在 iterations 次迭代内完成当前输入下的探索。
     unsigned int iterations = (unsigned int)FR_next_range(&fr, 0, 10);
 
-
-    // 防御性检查：确保调度器已运行，避免在错误上下文中调用阻塞 API。
     if (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING) {
-        printf("[ERROR] Scheduler not running - aborting test_task\n");
-        fflush(stdout);
-        // 在 Demo 场景下直接返回，避免进一步触发 HardFault/Lockup。
+        printf("[ERROR] Scheduler not running\n");
         return;
     }
 
-
-    // ================= 有界迭代骨架 =================
-    // LLM 生成的 test_logic 将被放置在该 for 循环内部，
-    // 每次迭代可执行少量 API 调用或状态变换。禁止在 test_logic 中
-    // 再引入无限循环或长时间阻塞。
+    // ================= 有界迭代 =================
     for (unsigned int i = 0; i < iterations; ++i) {
-        if (xWorkerHandle == NULL) {
-            xWorkerHandle = xTaskCreateStatic(vWorkerTask, "Worker", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, uxWorkerStack, &xWorkerBuffer);
-            configASSERT(xWorkerHandle != NULL);
+        if (!fr_is_init) {
+            fr_inst = FR_init(FUZZ_INPUT, MAX_FUZZ_INPUT_SIZE);
+            xDoneSem = xSemaphoreCreateBinaryStatic(&xSemBuffer);
+            fr_is_init = true;
         }
 
-        if (FR_remaining(&fr) < 12) {
-            break;
+        if (FR_remaining(&fr_inst) < 12) {
+            return;
         }
 
-        /* Derive parameters from fuzz input */
-        uint32_t xTicksToDelay = FR_next_u32(&fr) % 16;
-        uint8_t uxMyNewPriority = FR_next_range(&fr, tskIDLE_PRIORITY + 1, configMAX_PRIORITIES - 1);
-        uint8_t uxWorkerNewPriority = FR_next_range(&fr, tskIDLE_PRIORITY + 1, configMAX_PRIORITIES - 1);
-        uint8_t ucPreStep = FR_next_u8(&fr);
+        TickType_t xCatchUpTicks = (TickType_t)FR_next_u32(&fr_inst) % 128;
+        TickType_t xBlockTime = (TickType_t)FR_next_u32(&fr_inst) % 128;
+        UBaseType_t uxWorkerPriority = (UBaseType_t)FR_next_range(&fr_inst, tskIDLE_PRIORITY + 1, configMAX_PRIORITIES - 1);
 
-        /* Dynamically adjust priorities to test scheduler interaction */
-        vTaskPrioritySet(NULL, (UBaseType_t)uxMyNewPriority | portPRIVILEGE_BIT);
-        vTaskPrioritySet(xWorkerHandle, (UBaseType_t)uxWorkerNewPriority | portPRIVILEGE_BIT);
+        // [FIX] 这里的关键修改：使用 xTaskCreate 而不是 xTaskCreateStatic
+        // 这确保每次迭代都有独立的内存，不会干扰正在等待 Idle Task 清理的旧任务 TCB
+        TaskHandle_t xWorkerHandle = NULL;
+        BaseType_t xRet = xTaskCreate(
+            vWorkerTask,
+            "Worker",
+            configMINIMAL_STACK_SIZE,
+            (void *)(uintptr_t)xBlockTime,
+            uxWorkerPriority | portPRIVILEGE_BIT,
+            &xWorkerHandle // 句柄传出
+        );
 
-        /* Randomly exercise scheduler suspension or yielding before delay */
-        if (ucPreStep % 4 == 0) {
-            taskYIELD();
-        } else if (ucPreStep % 4 == 1) {
-            vTaskSuspendAll();
-            /* vTaskDelay should not be called while scheduler is suspended, so we resume first */
-            xTaskResumeAll();
+        if (xRet == pdPASS && xWorkerHandle != NULL) {
+            /* Ensure the semaphore is empty before starting. */
+            xSemaphoreTake(xDoneSem, 0);
+
+            /* Give the worker task a short window to run and enter the blocked state. */
+            vTaskDelay(2);
+
+            /* Call the target API. */
+            BaseType_t xYieldOccurred = xTaskCatchUpTicks(xCatchUpTicks);
+            (void)xYieldOccurred;
+
+            /* Check if the worker task finished within a reasonable time. */
+            if (xSemaphoreTake(xDoneSem, 10) == pdFALSE) {
+                /* If the task is still active, clean it up. */
+                vTaskDelete(xWorkerHandle);
+                
+                // 给 Idle Task 一点时间来回收内存，防止堆耗尽（虽然在短循环中很少见）
+                vTaskDelay(2);
+            } else {
+                // 任务已自行结束 (vWorkerTask 中调用了 vTaskDelete)
+                // 同样给 Idle Task 一点时间回收
+                vTaskDelay(1);
+            }
         }
-
-        TickType_t xTimeBefore = xTaskGetTickCount();
-
-        /* Target API Call */
-        vTaskDelay((TickType_t)xTicksToDelay);
-
-        TickType_t xTimeAfter = xTaskGetTickCount();
-
-        /* Verification: Tick count must have advanced by at least the requested amount */
-        /* Note: Unsigned subtraction handles tick overflow correctly */
-        configASSERT((TickType_t)(xTimeAfter - xTimeBefore) >= (TickType_t)xTicksToDelay);
     }
 
-    // =============================================
-    // 关键完工标记：用于生成/修复阶段判断“本次测试逻辑已正常走完”。
-    // 在 fuzzing 阶段，这行输出也不会影响 LibAFL 的行为。
-    // =============================================
     printf("[TEST_CASE_COMPLETED]\n");
     fflush(stdout);
 
-    // 调用 BREAKPOINT 函数结束本次 fuzzing；在 fuzz 阶段由 QEMU+LibAFL 进行捕获。
     BREAKPOINT();
 }
-
 
 // FreeRTOS任务包装器
 void fuzz_task(void)
 {
-    // 创建模糊测试任务
+    // Fuzz Task 本身只创建一次，可以使用 Static 以节省堆内存
     TaskHandle_t xHandle = xTaskCreateStatic(
         test_task,
         "FuzzTask",
@@ -270,14 +205,10 @@ void fuzz_task(void)
         printf("FuzzTask creation failed\n"); 
         fflush(stdout);
         configASSERT(0);
-        for (;;) {
-        }
+        for (;;) {}
     }
 
     vTaskStartScheduler();
 
-    for (;;) {
-    }
+    for (;;) {}
 }
-
-

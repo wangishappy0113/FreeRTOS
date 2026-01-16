@@ -1,0 +1,230 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test logic inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xEventGroupSetBits
+
+### Function xEventGroupSetBits
+Signature: EventBits_t(EventGroupHandle_t,EventBits_t)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c:547-647
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, FreeRTOS.h, task.h, timers.h, event_groups.h
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:pdFALSE:ANY(0)(macro), <operator>.cast(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), vAssertCalled(function), <operator>.and(operator), <operator>.addressOf(operator)
+Incoming callers count: 3
+Full source code:
+    EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup,
+                                    const EventBits_t uxBitsToSet )
+    {
+        ListItem_t * pxListItem;
+        ListItem_t * pxNext;
+        ListItem_t const * pxListEnd;
+        List_t const * pxList;
+        EventBits_t uxBitsToClear = 0, uxBitsWaitedFor, uxControlBits, uxReturnBits;
+        EventGroup_t * pxEventBits = xEventGroup;
+        BaseType_t xMatchFound = pdFALSE;
+
+        traceENTER_xEventGroupSetBits( xEventGroup, uxBitsToSet );
+
+        /* Check the user is not attempting to set the bits used by the kernel
+         * itself. */
+        configASSERT( xEventGroup );
+        configASSERT( ( uxBitsToSet & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
+
+        pxList = &( pxEventBits->xTasksWaitingForBits );
+        pxListEnd = listGET_END_MARKER( pxList );
+        vTaskSuspendAll();
+        {
+            traceEVENT_GROUP_SET_BITS( xEventGroup, uxBitsToSet );
+
+            pxListItem = listGET_HEAD_ENTRY( pxList );
+
+            /* Set the bits. */
+            pxEventBits->uxEventBits |= uxBitsToSet;
+
+            /* See if the new bit value should unblock any tasks. */
+            while( pxListItem != pxListEnd )
+            {
+                pxNext = listGET_NEXT( pxListItem );
+                uxBitsWaitedFor = listGET_LIST_ITEM_VALUE( pxListItem );
+                xMatchFound = pdFALSE;
+
+                /* Split the bits waited for from the control bits. */
+                uxControlBits = uxBitsWaitedFor & eventEVENT_BITS_CONTROL_BYTES;
+                uxBitsWaitedFor &= ~eventEVENT_BITS_CONTROL_BYTES;
+
+                if( ( uxControlBits & eventWAIT_FOR_ALL_BITS ) == ( EventBits_t ) 0 )
+                {
+                    /* Just looking for single bit being set. */
+                    if( ( uxBitsWaitedFor & pxEventBits->uxEventBits ) != ( EventBits_t ) 0 )
+                    {
+                        xMatchFound = pdTRUE;
+                    }
+                    else
+                    {
+                        mtCOVERAGE_TEST_MARKER();
+                    }
+                }
+                else if( ( uxBitsWaitedFor & pxEventBits->uxEventBits ) == uxBitsWaitedFor )
+                {
+                    /* All bits are set. */
+                    xMatchFound = pdTRUE;
+                }
+                else
+                {
+                    /* Need all bits to be set, but not all the bits were set. */
+                }
+
+                if( xMatchFound != pdFALSE )
+                {
+                    /* The bits match.  Should the bits be cleared on exit? */
+                    if( ( uxControlBits & eventCLEAR_EVENTS_ON_EXIT_BIT ) != ( EventBits_t ) 0 )
+                    {
+                        uxBitsToClear |= uxBitsWaitedFor;
+                    }
+                    else
+                    {
+                        mtCOVERAGE_TEST_MARKER();
+                    }
+
+                    /* Store the actual event flag value in the task's event list
+                     * item before removing the task from the event list.  The
+                     * eventUNBLOCKED_DUE_TO_BIT_SET bit is set so the task knows
+                     * that is was unblocked due to its required bits matching, rather
+                     * than because it timed out. */
+                    vTaskRemoveFromUnorderedEventList( pxListItem, pxEventBits->uxEventBits | eventUNBLOCKED_DUE_TO_BIT_SET );
+                }
+
+                /* Move onto the next list item.  Note pxListItem->pxNext is not
+                 * used here as the list item may have been removed from the event list
+                 * and inserted into the ready/pending reading list. */
+                pxListItem = pxNext;
+            }
+
+            /* Clear any bits that matched when the eventCLEAR_EVENTS_ON_EXIT_BIT
+             * bit was set in the control word. */
+            pxEventBits->uxEventBits &= ~uxBitsToClear;
+
+            /* Snapshot resulting bits. */
+            uxReturnBits = pxEventBits->uxEventBits;
+        }
+        ( void ) xTaskResumeAll();
+
+        traceRETURN_xEventGroupSetBits( uxReturnBits );
+
+        return uxReturnBits;
+    }
+
+Official docs (summary):
+Parameters:
+- xEventGroup: EventGroupHandle_t — The event group in which the bits are to be set. The event group must have  previously been created using a call to xEventGroupCreate().  uxBitsTo Set A bitwise value that indicates the bit or bits to set in the event group. For
+- uxBitsToSet: const EventBits_t — No description available.
+Return values:
+- EventBits_t: Any Value  The value of the bits in the event group at the time the call to
+xEventGroupSetBits() returned.
+There are two reasons why the returned value might have the bits specified
+by the uxBitsToSet parameter cleared:
+1. If setting a bit results in a task that was waiting for the bit leaving the
+blocked state then it is possible the bit will have been cleared
+automatically (see the xClearBit sOnExit parameter of
+xEventGroupWaitBits()).
+2. Any task that leaves the blocked state as a result of the bits being
+set (or otherwise any Ready state  task) that has a priority above that
+of the task that called xEventGroupSetBits() will execute and may
+change the event group value before the call to
+xEventGroupSetBits() returns.
+Related configs: xEventGroup
+Related APIs: xEventGroupSetBitsFromISR
+Reference snippets:
+- Outgoing of vEventGroupSetBitsCallback (rel:out:vEventGroupSetBitsCallback#c0) :: outgoing: <operator>.cast, xEventGroupSetBits
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/include/event_groups.h:eventCLEAR_EVENTS_ON_EXIT_BIT:ANY(0) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/include/event_groups.h:eventCLEAR_EVENTS_ON_EXIT_BIT:ANY(0)#c0) :: incoming: xEventGroupSetBits, xEventGroupSync, xEventGroupWaitBits
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/include/event_groups.h:eventWAIT_FOR_ALL_BITS:ANY(0) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/include/event_groups.h:eventWAIT_FOR_ALL_BITS:ANY(0)#c0) :: incoming: xEventGroupSetBits, xEventGroupSync, xEventGroupWaitBits
+- Incoming of prvTestWaitCondition (rel:in:prvTestWaitCondition#c0) :: incoming: xEventGroupWaitBits
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOS.h:traceEVENT_GROUP_WAIT_BITS_END:ANY(3) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOS.h:traceEVENT_GROUP_WAIT_BITS_END:ANY(3)#c0) :: incoming: xEventGroupWaitBits
+- Incoming of vTaskRemoveFromUnorderedEventList (rel:in:vTaskRemoveFromUnorderedEventList#c0) :: incoming: vEventGroupDelete, xEventGroupSetBits
+- xEventGroupSetBits :: EventBits_t xEventGroupSetBits(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet); Sets bits (flags) within an RTOS event group.  This function cannot be called from an interrupt. See xEventGroupSetBitsFromISR() for  a version that can be called from an interrupt.
+
+Official documentation (full):
+Title: xEventGroupSetBits
+Signature: EventBits_t xEventGroupSetBits(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet);
+Summary:
+Sets bits (flags) within an RTOS event group.  This function cannot be called from an interrupt.
+See xEventGroupSetBitsFromISR() for  a version that can be called from an interrupt.
+Setting bits in an event group will automatically unblock any tasks that were  blocked waiting
+for the bits  to be set .
+Parameters:
+- xEventGroup: EventGroupHandle_t — The event group in which the bits are to be set. The event group must have  previously been created using a call to xEventGroupCreate().  uxBitsTo Set A bitwise value that indicates the bit or bits to set in the event group. For
+- uxBitsToSet: const EventBits_t — No description available.
+Return values:
+- EventBits_t: Any Value  The value of the bits in the event group at the time the call to
+xEventGroupSetBits() returned.
+There are two reasons why the returned value might have the bits specified
+by the uxBitsToSet parameter cleared:
+1. If setting a bit results in a task that was waiting for the bit leaving the
+blocked state then it is possible the bit will have been cleared
+automatically (see the xClearBit sOnExit parameter of
+xEventGroupWaitBits()).
+2. Any task that leaves the blocked state as a result of the bits being
+set (or otherwise any Ready state  task) that has a priority above that
+of the task that called xEventGroupSetBits() will execute and may
+change the event group value before the call to
+xEventGroupSetBits() returns.
+Notes:
+The RTOS source file FreeRTOS/source/event_groups.c must be included in the build for the
+xEventGroup SetBits() function to be available.
+Example:
+set bit 3 and bit 0.
+#define BIT_0  ( 1 << 0 )
+#define BIT_4  ( 1 << 4 )
+void aFunction( EventGroupHandle_t xEventGroup )
+{
+EventBits_t uxBits;
+/* Set bit 0 and bit 4 in xEventGroup. */
+uxBits = xEventGroupSetBits(
+xEventGroup,    /* The event group being updated. */
+BIT_0 | BIT_4 ); /* The bits being set. */
+if( ( uxBits & ( BIT_0 | BIT_4 ) ) == ( BIT_0 | BIT_4 ) )
+{
+/* Both bit 0 and bit 4 remained set when the function returned. */
+}
+else if( ( uxBits & BIT_0 ) != 0 )
+{
+/* Bit 0 remained set when the function returned, but bit 4 was
+cleared.  It might be that bit 4 was cleared automatically as a
+task that was waiting for bit 4 was removed from the Blocked
+state. */
+}
+else if( ( uxBits & BIT_4 ) != 0 )
+{
+/* Bit 4 remained set when the function returned, but bit 0 was
+cleared.  It might be that bit 0 was cleared automatically as a
+task that was waiting for bit 0 was removed from the Blocked
+state. */
+}
+else
+{
+/* Neither bit 0 nor bit 4 remained set.  It might be that a task
+was waiting for both of the bits to be set, and the bits were cleared
+as the task left the Blocked state. */
+}
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

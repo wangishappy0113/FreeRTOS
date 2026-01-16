@@ -1,0 +1,139 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test logic inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: vTaskSetApplicationTaskTag
+
+### Function vTaskSetApplicationTaskTag
+Signature: void vTaskSetApplicationTaskTag( TaskHandle_t xTask,
+                                     TaskHookFunction_t pxHookFunction )
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:None-None
+Cyclomatic: None Lines: None
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: none
+Incoming callers count: 0
+Full source code:
+void vTaskSetApplicationTaskTag( TaskHandle_t xTask,
+                                     TaskHookFunction_t pxHookFunction )
+{
+        TCB_t * xTCB;
+
+        traceENTER_vTaskSetApplicationTaskTag( xTask, pxHookFunction );
+
+        /* If xTask is NULL then it is the task hook of the calling task that is
+         * getting set. */
+        if( xTask == NULL )
+        {
+            xTCB = ( TCB_t * ) pxCurrentTCB;
+        }
+        else
+        {
+            xTCB = xTask;
+        }
+
+        /* Save the hook function in the TCB.  A critical section is required as
+         * the value can be accessed from an interrupt. */
+        taskENTER_CRITICAL();
+        {
+            xTCB->pxTaskTag = pxHookFunction;
+        }
+        taskEXIT_CRITICAL();
+
+        traceRETURN_vTaskSetApplicationTaskTag();
+    }
+Official docs (summary):
+Parameters:
+- xTask: TaskHandle_t — The handle of the task to which a tag value is being assigned. This is the  subject task.  A task can assign a tag value to itself by either using its own task handle or by  using NULL in place of a valid task handle.
+- pxTagValue: TaskHookFunction_t — The value being assigned as the tag value of the subject task . This is of type  TaskHookFunction_t to permit a function pointer to be assigned to the tag,  although, indirectly by casting, tag values can be of any type.
+Return values:
+- void: This function returns no value.
+Related configs: configUSE_APPLICATION_TASK_TAG
+Related APIs: traceTASK_SWITCHED_IN, vTaskSetApplicationTaskTag, xTaskCallApplicationTaskHook
+Reference snippets:
+- Call vTaskSetTaskNumber -> <operator>.indirectFieldAccess (edge:vTaskSetTaskNumber-><operator>.indirectFieldAccess:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:5706#c0) :: Call: vTaskSetTaskNumber -> <operator>.indirectFieldAccess at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:5706 callee_kind=operator
+- Call vTaskSetTaskNumber -> <operator>.assignment (edge:vTaskSetTaskNumber-><operator>.assignment:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:5706#c0) :: Call: vTaskSetTaskNumber -> <operator>.assignment at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:5706 callee_kind=operator
+- Call prvInitialiseNewTask -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listSET_LIST_ITEM_VALUE:ANY(2) (edge:prvInitialiseNewTask->/home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listSET_LIST_ITEM_VALUE:ANY(2):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1940#c0) :: Call: prvInitialiseNewTask -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listSET_LIST_ITEM_VALUE:ANY(2) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1940 callee_kind=macro
+- Call prvInitialiseNewTask -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listSET_LIST_ITEM_OWNER:ANY(2) (edge:prvInitialiseNewTask->/home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listSET_LIST_ITEM_OWNER:ANY(2):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1941#c0) :: Call: prvInitialiseNewTask -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listSET_LIST_ITEM_OWNER:ANY(2) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1941 callee_kind=macro
+- Call prvInitialiseNewTask -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listSET_LIST_ITEM_OWNER:ANY(2) (edge:prvInitialiseNewTask->/home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listSET_LIST_ITEM_OWNER:ANY(2):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1937#c0) :: Call: prvInitialiseNewTask -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listSET_LIST_ITEM_OWNER:ANY(2) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1937 callee_kind=macro
+- Call vTaskPrioritySet -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) (edge:vTaskPrioritySet->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:3001#c0) :: Call: vTaskPrioritySet -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:3001 callee_kind=macro
+- vTaskSetApplicationTaskTag :: void vTaskSetApplicationTaskTag(TaskHandle_t xTask, TaskHookFunction_t pxTagValue) ; This function is intended for advanced users only. The vTaskSetApplicationTaskTag()  API function can be used to assign a ‘tag’ value to a task.
+- vTaskSetApplicationTaskTag :: void vTaskSetApplicationTaskTag(TaskHandle_t xTask, TaskHookFunction_t pxTagValue) ; This function is intended for advanced users only. The vTaskSetApplicationTaskTag()  API function can be used to assign a ‘tag’ value to a task.
+
+Official documentation (full):
+Title: vTaskSetApplicationTaskTag
+Signature: void vTaskSetApplicationTaskTag(TaskHandle_t xTask, TaskHookFunction_t pxTagValue) ;
+Summary:
+This function is intended for advanced users only.
+The vTaskSetApplicationTaskTag()  API function can be used to assign a ‘tag’ value to a task.
+The meaning and use of the tag value is defined by the application writer.  The kernel itself will
+not normally access the tag value.
+Parameters:
+- xTask: TaskHandle_t — The handle of the task to which a tag value is being assigned. This is the  subject task.  A task can assign a tag value to itself by either using its own task handle or by  using NULL in place of a valid task handle.
+- pxTagValue: TaskHookFunction_t — The value being assigned as the tag value of the subject task . This is of type  TaskHookFunction_t to permit a function pointer to be assigned to the tag,  although, indirectly by casting, tag values can be of any type.
+Return values:
+- void: This function returns no value.
+Notes:
+The tag value can be used to hold a function pointer .  When this is done the function assigned
+to the tag value can be called using the xTaskCallApplicationTaskHook() API function .  This
+technique is in effect assigning a callback function to the task.  It is common for such a
+callback to be used in combination with the traceTASK_SWITCHED_IN () macro to implement
+an execution trace feature.
+configUSE_APPLICATION_TASK_TAG must be set to 1 in FreeRTOSConfig.h for
+vTaskSetApplicationTaskTag()  to be available.
+Example:
+/* In this example , an integer is set as the task tag value. */
+void vATask( void *pvParameters )
+{
+/* Assign a tag value of 1 to the currently executing task. The (void *) cast
+is used to prevent compiler warnings. */
+vTaskSetApplicationTaskTag( NULL, ( void * ) 1 );
+for( ;; )
+{
+/* Rest of task code goes here. */
+}
+}
+/* In this example a callback function is assigned as the task tag.  First define the
+callback function - this must have type TaskHookFunction_t , as per this example. */
+static BaseType_t  prvExampleTaskHook( void * pvParameter )
+{
+/* Perform some action - this could be anything from logging a value, updating
+the task state, outputting a value, etc. */
+return 0;
+}
+/* Now define the task that sets prvExampleTaskHook () as its hook/tag value.  This is
+in effect registering the task callback  function . */
+void vAnotherTask( void *pvParameters )
+{
+/* Register a callback function for the currently running (calling) task. */
+vTaskSetApplicationTaskTag( NULL, prvExampleTaskHook );
+for( ;; )
+{
+/* Rest of task code goes here. */
+}
+}
+/* [As an example use of the hook (callback)] Define the traceTASK_SWITCHED_OUT()
+macro to call the hook function.  The kernel will then automatically call the task
+hook each time the task is switched out.  This technique can be used to generate
+an execution trace.  pxCurrentTCB references the currently executing task. */
+#define traceTASK_SWITCHED_OUT() xTaskCallApplicationTaskHook( pxCurrentTCB, 0 )
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

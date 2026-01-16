@@ -1,0 +1,244 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: ulTaskNotifyTake, section
+
+### Function ulTaskNotifyTake
+Signature: uint32_t ulTaskNotifyTake(BaseType_t xClearCountOnExit, TickType_t xTicksToWait);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- xClearCountOnExit: BaseType_t — If xClearCountOnExit is set to pdFALSE then the task's notification value  is decremented before ulTaskNotifyTake() exits. This is equivalent to the  value of a counting semaphore being decremented by a successful call  to xSemaphoreTake().  If xClearCountOnExit is set to pdTRUE then the task's notification value  is reset to 0 before ulTaskNotifyTake() exits. This is equivalent to the  value of a binary semaphore being left at zero (or empty, or 'not  available') after a successful call to xSemaphoreTake().
+- xTicksToWait: TickType_t — The maximum time to wait in the Blocked state for a notification to be  received if a notification is not already pending when ulTaskNotifyTake()  is called.  The RTOS task does not consume any CPU time when it is in the  Blocked state.  The time is specified in RTOS tick periods. The pdMS_TO_TICKS()  macro can be used to convert a time specified in milliseconds into a time  specified in ticks.
+Return values:
+- uint32_t: The value of the task's notification value before it is decremented or cleared (see the
+description of xClearCountOnExit).
+is being used as a binary semaphore, so the notification value is cleared
+to zero on exit.  NOTE!  Real applications should not block indefinitely,
+but instead time out occasionally in order to handle error conditions
+that may prevent the interrupt from sending any more notifications. */
+ulTaskNotifyTake( pdTRUE,         /* Clear the notification value on exit. */
+portMAX_DELAY ); /* Block indefinitely. */
+/* The RTOS task notification is used as a binary (as opposed to a  counting)
+semaphore, so only go back to wait for further notifications when all events
+pending in the peripheral have been processed. */
+do
+{
+xEvent = xQueryPeripheral();
+if( xEvent != NO_MORE_EVENTS )
+{
+vProcessPeripheralEvent( xEvent );
+}
+} while( xEvent != NO_MORE_EVENTS );
+}
+}
+Related configs: configUSE_TASK_NOTIFICATIONS, eAction
+Related APIs: eIncrement, xSemaphoreTake, xTaskNotify, xTaskNotifyGive, xTaskNotifyWait
+Reference snippets:
+- Call ulTaskGenericNotifyTake -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskWAITING_NOTIFICATION:ANY(0) (edge:ulTaskGenericNotifyTake->/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskWAITING_NOTIFICATION:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7720#c0) :: Call: ulTaskGenericNotifyTake -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskWAITING_NOTIFICATION:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7720 callee_kind=macro
+- Call ulTaskGenericNotifyTake -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) (edge:ulTaskGenericNotifyTake->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7781#c0) :: Call: ulTaskGenericNotifyTake -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7781 callee_kind=macro
+- Call ulTaskGenericNotifyTake -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) (edge:ulTaskGenericNotifyTake->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7730#c0) :: Call: ulTaskGenericNotifyTake -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7730 callee_kind=macro
+- Call ulTaskGenericNotifyTake -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOT_WAITING_NOTIFICATION:ANY(0) (edge:ulTaskGenericNotifyTake->/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOT_WAITING_NOTIFICATION:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7779#c0) :: Call: ulTaskGenericNotifyTake -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOT_WAITING_NOTIFICATION:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7779 callee_kind=macro
+- Call ulTaskGenericNotifyTake -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0) (edge:ulTaskGenericNotifyTake->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7758#c0) :: Call: ulTaskGenericNotifyTake -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7758 callee_kind=macro
+- Call ulTaskGenericNotifyTake -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskYIELD_WITHIN_API:ANY(0) (edge:ulTaskGenericNotifyTake->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskYIELD_WITHIN_API:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7750#c0) :: Call: ulTaskGenericNotifyTake -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskYIELD_WITHIN_API:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7750 callee_kind=macro
+- ulTaskNotifyTake :: uint32_t ulTaskNotifyTake(BaseType_t xClearCountOnExit, TickType_t xTicksToWait); Each task has a 32 -bit notification value that is initialized  to zero when the task is created.  A task notification is an event sent directly to a task that can unblock the receiving task, and
+
+Official documentation (full):
+Title: ulTaskNotifyTake
+Signature: uint32_t ulTaskNotifyTake(BaseType_t xClearCountOnExit, TickType_t xTicksToWait);
+Summary:
+Each task has a 32 -bit notification value that is initialized  to zero when the task is created.  A
+task notification is an event sent directly to a task that can unblock the receiving task, and
+optio nally update the receiving task’ s notification value.
+ulTaskNotifyTake() is intended for use when a task notification is used as a faster and lighter
+weight alternative to a binary semaphore or a counting semaphore.  FreeRTOS semaphores
+are taken using the xSemaphoreTake() API function, ulTaskNotifyTake() is the equivalent that
+uses a task notification value instead of a separate  semaphore  object .
+Where as xTaskNotifyWait() will return when a notification is pending, ulTaskNotifyTake() will
+return when the task's notification value is not zero, decrementing the task's notification value
+before it returns.
+A task  can use ulTaskNotifyTake() to optionally  block to wait for a the task's notification value
+to be non -zero.  The task does not consume any CPU time while it is in the Blocked state.
+ulTaskNotifyTake() can either clear the task's notification value to zero on exit, in which case
+the notification value acts like a binary semaphore, or decrement the task's notification value
+on exit, in which case the notification value acts more like a counting semaphore.
+Parameters:
+- xClearCountOnExit: BaseType_t — If xClearCountOnExit is set to pdFALSE then the task's notification value  is decremented before ulTaskNotifyTake() exits. This is equivalent to the  value of a counting semaphore being decremented by a successful call  to xSemaphoreTake().  If xClearCountOnExit is set to pdTRUE then the task's notification value  is reset to 0 before ulTaskNotifyTake() exits. This is equivalent to the  value of a binary semaphore being left at zero (or empty, or 'not  available') after a successful call to xSemaphoreTake().
+- xTicksToWait: TickType_t — The maximum time to wait in the Blocked state for a notification to be  received if a notification is not already pending when ulTaskNotifyTake()  is called.  The RTOS task does not consume any CPU time when it is in the  Blocked state.  The time is specified in RTOS tick periods. The pdMS_TO_TICKS()  macro can be used to convert a time specified in milliseconds into a time  specified in ticks.
+Return values:
+- uint32_t: The value of the task's notification value before it is decremented or cleared (see the
+description of xClearCountOnExit).
+is being used as a binary semaphore, so the notification value is cleared
+to zero on exit.  NOTE!  Real applications should not block indefinitely,
+but instead time out occasionally in order to handle error conditions
+that may prevent the interrupt from sending any more notifications. */
+ulTaskNotifyTake( pdTRUE,         /* Clear the notification value on exit. */
+portMAX_DELAY ); /* Block indefinitely. */
+/* The RTOS task notification is used as a binary (as opposed to a  counting)
+semaphore, so only go back to wait for further notifications when all events
+pending in the peripheral have been processed. */
+do
+{
+xEvent = xQueryPeripheral();
+if( xEvent != NO_MORE_EVENTS )
+{
+vProcessPeripheralEvent( xEvent );
+}
+} while( xEvent != NO_MORE_EVENTS );
+}
+}
+Notes:
+When a task is using its notification value as a binary or counting semaphore other tasks and
+interrupts should send notifications to it using either the xTaskNotifyGive() macro, or the
+xTaskNotify() function with the function's eAction parameter set to eIncrement (the two are
+equivalent).
+RTOS task notification functionality is enabled by default, and can be excluded from a build
+(saving 8 bytes per task) by setting configUSE_TASK_NOTIFICATIONS to 0 in
+FreeRTOSConfig.h.
+Example:
+/* An interrupt handler that unblocks a high priority task in which the event that
+generated the  interrupt is processed.  If the priority of the task is high enough
+then the  interrupt will return directly to the task (so it will interrupt one task
+then return to a different task), so the processing will occur contiguously in time -
+just as if all the processing had been done in the interrupt handler itself. */
+void vANInterruptHandler( void )
+{
+BaseType_t xHigherPriorityTaskWoken  = pdFALSE ;
+/* Clear the interrupt. */
+prvClearInterruptSource();
+/* Unblock the handling task so the task can perform any processing necessitated
+by the interrupt.  xHandlingTask is the task's handle, which was obtained
+when the task was created. */
+vTaskNotifyGiveFromISR( xHandlingTask, &xHigherPriorityTaskWoken );
+/* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
+The macro used to do this is dependent on the port and may be called
+portEND_SWITCHING_ISR (). */
+portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
+}
+/*----------------------------------------------------------- */
+/* Task that blocks waiting to be notified that the peripheral needs servicing . */
+void vHandlingTask( void *pvParameters )
+{
+BaseType_t xEvent;
+for( ;; )
+{
+/* Block indefinitely (without a timeout, so no need to check the function's
+
+### Function section
+Signature: SVC is raised from the system call section (i.e. application is
+         *    not raising SVC directly).
+         * 2. pxMpuSettings->xSystemCallStackInfo.pulTaskStack must be NULL as
+         *    it is non-NULL only during the execution of a system call (i.e.
+         *    between system call enter and exit).
+         * 3. System call is not for a kernel API disabled by the configuration
+         *    in FreeRTOSConfig.h.
+         * 4. We do not need to check that ucSystemCallNumber is within range
+         *    because the assembly SVC handler checks that before calling
+         *    this function.
+         */
+        if( ( ulSystemCallLocation >= ( uint32_t ) __syscalls_flash_start__ ) &&
+            ( ulSystemCallLocation <= ( uint32_t ) __syscalls_flash_end__ ) &&
+            ( pxMpuSettings->xSystemCallStackInfo.pulTaskStack == NULL ) &&
+            ( uxSystemCallImplementations[ ucSystemCallNumber ] != ( UBaseType_t ) 0 ) )
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/port.c:None-None
+Cyclomatic: None Lines: None
+Includes: FreeRTOS.h, task.h, mpu_syscall_numbers.h
+Outgoing calls summary: none
+Incoming callers count: 0
+Full source code:
+SVC is raised from the system call section (i.e. application is
+         *    not raising SVC directly).
+         * 2. pxMpuSettings->xSystemCallStackInfo.pulTaskStack must be NULL as
+         *    it is non-NULL only during the execution of a system call (i.e.
+         *    between system call enter and exit).
+         * 3. System call is not for a kernel API disabled by the configuration
+         *    in FreeRTOSConfig.h.
+         * 4. We do not need to check that ucSystemCallNumber is within range
+         *    because the assembly SVC handler checks that before calling
+         *    this function.
+         */
+        if( ( ulSystemCallLocation >= ( uint32_t ) __syscalls_flash_start__ ) &&
+            ( ulSystemCallLocation <= ( uint32_t ) __syscalls_flash_end__ ) &&
+            ( pxMpuSettings->xSystemCallStackInfo.pulTaskStack == NULL ) &&
+            ( uxSystemCallImplementations[ ucSystemCallNumber ] != ( UBaseType_t ) 0 ) )
+{
+            pulSystemCallStack = pxMpuSettings->xSystemCallStackInfo.pulSystemCallStack;
+
+            /* Make space on the system call stack for the stack frame. */
+            pulSystemCallStack = pulSystemCallStack - ulStackFrameSize;
+
+            /* Copy the stack frame. */
+            for( i = 0; i < ulStackFrameSize; i++ )
+            {
+                pulSystemCallStack[ i ] = pulTaskStack[ i ];
+            }
+
+            /* Use the pulSystemCallStack in thread mode. */
+            __asm volatile ( "msr psp, %0" : : "r" ( pulSystemCallStack ) );
+
+            /* Raise the privilege for the duration of the system call. */
+            __asm volatile (
+                " mrs r1, control     \n" /* Obtain current control value. */
+                " bic r1, #1          \n" /* Clear nPRIV bit. */
+                " msr control, r1     \n" /* Write back new control value. */
+                ::: "r1", "memory"
+                );
+
+            /* Remember the location where we should copy the stack frame when we exit from
+             * the system call. */
+            pxMpuSettings->xSystemCallStackInfo.pulTaskStack = pulTaskStack + ulStackFrameSize;
+
+            /* Store the value of the Link Register before the SVC was raised.
+             * It contains the address of the caller of the System Call entry
+             * point (i.e. the caller of the MPU_<API>). We need to restore it
+             * when we exit from the system call. */
+            pxMpuSettings->xSystemCallStackInfo.ulLinkRegisterAtSystemCallEntry = pulTaskStack[ portOFFSET_TO_LR ];
+
+            /* Start executing the system call upon returning from this handler. */
+            pulSystemCallStack[ portOFFSET_TO_PC ] = uxSystemCallImplementations[ ucSystemCallNumber ];
+            /* Raise a request to exit from the system call upon finishing the
+             * system call. */
+            pulSystemCallStack[ portOFFSET_TO_LR ] = ( uint32_t ) vRequestSystemCallExit;
+
+            /* Record if the hardware used padding to force the stack pointer
+             * to be double word aligned. */
+            if( ( pulTaskStack[ portOFFSET_TO_PSR ] & portPSR_STACK_PADDING_MASK ) == portPSR_STACK_PADDING_MASK )
+            {
+                pxMpuSettings->ulTaskFlags |= portSTACK_FRAME_HAS_PADDING_FLAG;
+            }
+            else
+            {
+                pxMpuSettings->ulTaskFlags &= ( ~portSTACK_FRAME_HAS_PADDING_FLAG );
+            }
+
+            /* We ensure in pxPortInitialiseStack that the system call stack is
+             * double word aligned and therefore, there is no need of padding.
+             * Clear the bit[9] of stacked xPSR. */
+            pulSystemCallStack[ portOFFSET_TO_PSR ] &= ( ~portPSR_STACK_PADDING_MASK );
+        }
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

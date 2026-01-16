@@ -1,0 +1,12 @@
+
+🎉 函数级 Harness 已生成: /home/zwz/rtos_fuzz_agent/src/generated_tests/CORTEX_MPS2_QEMU_IAR_GCC/20251226_204552_xTimerGetTimerDaemonTaskHandle_gemini-3-flash-preview
+👉 提示已写入: prompt_dump.txt 便于审计与对比
+
+📜 多轮执行详情：
+  - round: compile=PASS(attempts=1), run=FAIL(TIMEOUT)
+
+🔧 最终编译验证: PASS（尝试 1 次）。日志见 /home/zwz/rtos_fuzz_agent/src/generated_tests/CORTEX_MPS2_QEMU_IAR_GCC/20251226_204552_xTimerGetTimerDaemonTaskHandle_gemini-3-flash-preview/compile.log
+⚠️ 最终运行结果: PASS（逻辑已完成，检测到 [TEST_CASE_COMPLETED]，但进程因调试用 BREAKPOINT/自旋在 >0s 后被超时终止）。日志见 /home/zwz/rtos_fuzz_agent/src/generated_tests/CORTEX_MPS2_QEMU_IAR_GCC/20251226_204552_xTimerGetTimerDaemonTaskHandle_gemini-3-flash-preview/run.log
+📈 多轮执行摘要: stage=run, status=FAIL (共 1 轮)
+
+⏱ 本次 generate-func 总耗时: 405.71 秒

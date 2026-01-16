@@ -1,0 +1,115 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xSemaphoreCreateCountingStatic
+
+### Function xSemaphoreCreateCountingStatic
+Signature: SemaphoreHandle_t xSemaphoreCreateCountingStatic(UBaseType_t uxMaxCount, UBaseType_t uxInitialCount, StaticSemaphore_t pxSempahoreBuffer);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- uxMaxCount: UBaseType_t — The maximum count value that can be reached. When the semaphore  reaches this v alue it can no longer be ‘given’.
+- uxInitialCount: UBaseType_t — The count value assigned to the semaphore when it is created.  pxSemaphoreBuffer Must point to a variable of type StaticSemaphore_t, which will be used  to hold the semaphore ’s state .
+- pxSempahoreBuffer: StaticSemaphore_t — No description available.
+Return values:
+- SemaphoreHandle_t: The semaphore could not be created because pxSemaphoreBuffer was
+NULL.
+Any other value  The semaphore was created successfully.  The returned value is a handle
+by which the created semaphore can be referenced .
+Related configs: configSUPPORT_STATIC_ALLOCATION
+Related APIs: xSemaphoreCreateCounting
+Reference snippets:
+- API xSemaphoreCreateCountingStatic Overview (api:xSemaphoreCreateCountingStatic:overview#c0) :: API: xSemaphoreCreateCountingStatic Signature: SemaphoreHandle_t xSemaphoreCreateCountingStatic(UBaseType_t uxMaxCount, UBaseType_t uxInitialCount, StaticSemaphore_t pxSempahoreBuffer); Headers: semphr.h, FreeRTOS.h Summary: Creates a counting semaphore, and returns a handle by which the semaphore can be referenced. Ea…
+- API xSemaphoreCreateCountingStatic Example (api:xSemaphoreCreateCountingStatic:example#c0) :: API: xSemaphoreCreateCountingStatic Section: example void vATask( void * pvParameters ) { SemaphoreHandle_t  xSemaphore Handle; StaticSemaphore_t xSemaphoreBuffer; /* Create a counting semaphore without using dynamic memory allocation.   The maximum value to which the semaphore can count in this example case is set to …
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:queueSEMAPHORE_QUEUE_ITEM_LENGTH:ANY(0) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:queueSEMAPHORE_QUEUE_ITEM_LENGTH:ANY(0)#c0) :: incoming: xQueueCreateCountingSemaphore, xQueueCreateCountingSemaphoreStatic
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/include/queue.h:queueQUEUE_TYPE_COUNTING_SEMAPHORE:ANY(0) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/include/queue.h:queueQUEUE_TYPE_COUNTING_SEMAPHORE:ANY(0)#c0) :: incoming: xQueueCreateCountingSemaphore, xQueueCreateCountingSemaphoreStatic
+- Incoming of xQueueCreateCountingSemaphoreStatic (rel:in:xQueueCreateCountingSemaphoreStatic#c0) :: incoming: MPU_xQueueCreateCountingSemaphoreStatic
+- API xSemaphoreCreateCountingStatic Parameters (api:xSemaphoreCreateCountingStatic:parameters#c0) :: API: xSemaphoreCreateCountingStatic Section: parameters param uxMaxCount: UBaseType_t The maximum count value that can be reached. When the semaphore  reaches this v alue it can no longer be ‘given’. param uxInitialCount: UBaseType_t The count value assigned to the semaphore when it is created.  pxSemaphoreBuffer Must …
+- xSemaphoreCreateCountingStatic :: SemaphoreHandle_t xSemaphoreCreateCountingStatic(UBaseType_t uxMaxCount, UBaseType_t uxInitialCount, StaticSemaphore_t pxSempahoreBuffer); Creates a counting semaphore, and returns a handle by which the semaphore can be referenced.
+- xSemaphoreCreateCountingStatic :: SemaphoreHandle_t xSemaphoreCreateCountingStatic(UBaseType_t uxMaxCount, UBaseType_t uxInitialCount, StaticSemaphore_t pxSempahoreBuffer); Creates a counting semaphore, and returns a handle by which the semaphore can be referenced.
+
+Official documentation (full):
+Title: xSemaphoreCreateCountingStatic
+Signature: SemaphoreHandle_t xSemaphoreCreateCountingStatic(UBaseType_t uxMaxCount, UBaseType_t uxInitialCount, StaticSemaphore_t pxSempahoreBuffer);
+Summary:
+Creates a counting semaphore, and returns a handle by which the semaphore can be
+referenced.
+Each counting semaphore require s a small amount of RAM that is used to hold the
+semaphore’s state.  If a counting semaphore is created using xSemaphoreCreateCounting()
+then the required RAM is automatically allocated from the FreeRTOS heap.  If a counting
+semaphore is created using xSemaphoreCreateCountingStatic() then the RAM is provided by
+the application writer, which requires an additional parameter, but allows the RAM to be
+statically allocated at compile time.
+Parameters:
+- uxMaxCount: UBaseType_t — The maximum count value that can be reached. When the semaphore  reaches this v alue it can no longer be ‘given’.
+- uxInitialCount: UBaseType_t — The count value assigned to the semaphore when it is created.  pxSemaphoreBuffer Must point to a variable of type StaticSemaphore_t, which will be used  to hold the semaphore ’s state .
+- pxSempahoreBuffer: StaticSemaphore_t — No description available.
+Return values:
+- SemaphoreHandle_t: The semaphore could not be created because pxSemaphoreBuffer was
+NULL.
+Any other value  The semaphore was created successfully.  The returned value is a handle
+by which the created semaphore can be referenced .
+Notes:
+Direct to task notifications normally provide a lighter weight and faster alternative to counting
+semaphores.
+Counting semaphores are typically used for two things:
+1. Counting events.
+In this usage scenario, an event handler will ‘give’ the  semaphore each time an event occurs ,
+and a handler task will ‘take’ the semaphore each time it processes an event.
+The semaphore’s count value will be incremented each time it is ‘given’ and decremented
+each time it is ‘taken’.  The count value is therefore the difference between the number of
+events that have occurred and the number of events that  have been processed.
+Semaphores created to count events should be created with an initial count value of zero,
+because no events will have been counted prior to the semaphore being created.
+2. Resource management.
+In this usage scenario , the count value of the semaphore represents the number of resources
+that are available.
+To obtain control of a resource, a task must first successfully ‘take’ the semaphore.  The action
+of ‘taking’ the semaphore will decrement the semaphore’s count value.  When the count value
+reaches zero, no more resources are available, and further attempts to ‘take’ the semaphore
+will fail.
+When a task finishes with a resource , it must ‘give’  the semaphore .  The action of ‘giving’ the
+semaphore will increment the semaphore’s count value, indicating that a resource is available,
+and allowing future attempts to ‘take’ the semaphore to be successful.
+Semaphores created to manage resources should be created with an initial count value equal
+to the number of resource that are available.
+configSUPPORT_STATIC_ALLOCATION must be set to 1 in FreeRTOSConfig.h for this
+function to be available.
+Example:
+void vATask( void * pvParameters )
+{
+SemaphoreHandle_t  xSemaphore Handle;
+StaticSemaphore_t xSemaphoreBuffer;
+/* Create a counting semaphore without using dynamic memory allocation.   The
+maximum value to which the semaphore can count in this example case is set to
+10, and the initial value assigned to the count is set to 0. */
+xSemaphore Handle = xSemaphoreCreateCounting Static( 10, 0, &xSemaphoreBuffer  );
+/* The pxSemaphoreBuffer parameter was not NULL, so the semaphore will have been
+created and is now ready for use.  */
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

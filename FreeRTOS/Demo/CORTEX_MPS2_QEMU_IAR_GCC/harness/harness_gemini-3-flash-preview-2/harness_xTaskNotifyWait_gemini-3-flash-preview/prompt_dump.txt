@@ -1,0 +1,147 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test logic inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xTaskNotifyWait
+
+### Function xTaskNotifyWait
+Signature: BaseType_t xTaskNotifyWait(uint32_t ulBitsToClearOnEntry, uint32_t ulBitsToClearOnExit, uint32_t *pulNotificationValue, TickType_t xTicksToWait);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- ulBitsToClearOnEntry: uint32_t — Any bits set in ulBitsToClearOnEntry will be cleared in the calling  task's notification value on entry to the xTaskNotifyWait() function  (before the task waits for a new notification) provided a notification is  not already pending when xTaskNotifyWait() is called.  For example, if ulBitsToClearOnEntry is 0x01, then bit 0 of the task's  notification value will be cleared on entry to the function.  Setting ulBitsToClearOnEntry to 0xffffffff (ULONG_MAX) will clear all  the bits in the task's notification value, effectively clearing the value to  0.
+- ulBitsToClearOnExit: uint32_t — Any bits set in ulBitsToClearOnExit will be cleared in the calling task's  notification value before xTaskNotifyWait() function exits if a  notification was received.  The bits are cleared after the task's notification value has been saved  in *pulNotificationValue (see the description of pulNotificationValue  below).  For example, if ulBitsToClearOnExit is 0x03, then bit 0 and bit 1 of the  task's notification value will be cleared before the function exits.  Setting ulBitsToClearOnExit to 0xffffffff (ULONG_MAX) will clear all  the bits in the task's notification value, effectively clearing the value to  0.
+- pulNotificationValue: uint32_t — Used to pass out the task's notification value. The value copied to  *pulNotificationValue is the task's notification value as it was before  any bits were cleared due to the ulBitsToClearOnExit setting.
+- pulNotificationValue: uint32_t — is an optional parameter and can be set to NULL  if it is not required.
+- xTicksToWait: TickType_t — The maximum time to wait in the Blocked state for a notification to be  received if a notification is not already pending when  xTaskNotifyWait() is called.  The task does not consume any CPU time when it is in the Blocked  state.  The time is specified in RTOS tick periods. The pdMS_TO_TICKS()  macro can be used to convert a time specified in milliseconds into a  time specified in ticks.
+Return values:
+- BaseType_t: pdTRUE is returned if a notification was received , or if a notification was already pending when
+xTaskNotifyWait() was called.
+pdFALSE is returned if the call to xTaskNotifyWait() timed out before a notification was
+received.
+Bits in this RTOS task's notification value are set by the notifying
+tasks and interrupts to indicate which events have occurred. */
+xTaskNotifyWait( 0x00,       /* Don't clear any notification bits on entry. */
+ULONG_MAX,  /* Reset the notification value to 0 on exit. */
+&ulNotifiedValue,  /* Notified value pass out in ulNotifiedValue. */
+portMAX_DELAY );   /* Block indefinitely. */
+/* Process any events that have been latched in the notified value. */
+if( ( ulNotifiedValue & 0x01 ) != 0 )
+{
+/* Bit 0 was set - process whichever event is represented by bit 0. */
+prvProcessBit0Event();
+}
+if( ( ulNotifiedValue & 0x02 ) != 0 )
+{
+/* Bit 1 was set - process whichever event is represented by bit 1. */
+prvProcessBit1Event();
+}
+if( ( ulNotifiedValue & 0x04 ) != 0 )
+{
+/* Bit 2 was set - process whichever event is represented by bit 2. */
+prvProcessBit2Event();
+}
+/* Etc. */
+}
+}
+Related configs: configUSE_TASK_NOTIFICATIONS
+Related APIs: ulTaskNotifyTake
+Reference snippets:
+- Call xTaskGenericNotifyWait -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskWAITING_NOTIFICATION:ANY(0) (edge:xTaskGenericNotifyWait->/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskWAITING_NOTIFICATION:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7827#c0) :: Call: xTaskGenericNotifyWait -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskWAITING_NOTIFICATION:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7827 callee_kind=macro
+- Call xTaskGenericNotifyWait -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) (edge:xTaskGenericNotifyWait->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7837#c0) :: Call: xTaskGenericNotifyWait -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7837 callee_kind=macro
+- Call xTaskGenericNotifyWait -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) (edge:xTaskGenericNotifyWait->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7895#c0) :: Call: xTaskGenericNotifyWait -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7895 callee_kind=macro
+- Call xTaskGenericNotifyWait -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0) (edge:xTaskGenericNotifyWait->/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7807#c0) :: Call: xTaskGenericNotifyWait -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7807 callee_kind=macro
+- Call xTaskGenericNotifyWait -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0) (edge:xTaskGenericNotifyWait->/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7819#c0) :: Call: xTaskGenericNotifyWait -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7819 callee_kind=macro
+- Call xTaskGenericNotifyWait -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0) (edge:xTaskGenericNotifyWait->/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7880#c0) :: Call: xTaskGenericNotifyWait -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:7880 callee_kind=macro
+- xTaskNotifyWait :: BaseType_t xTaskNotifyWait(uint32_t ulBitsToClearOnEntry, uint32_t ulBitsToClearOnExit, uint32_t *pulNotificationValue, TickType_t xTicksToWait); Each task has a 32 -bit notification value that is initialized  to zero when the task is created.  A task notification is an event sent directly to a task that can unblock the receiving task, and
+- xTaskNotifyWait :: BaseType_t xTaskNotifyWait(uint32_t ulBitsToClearOnEntry, uint32_t ulBitsToClearOnExit, uint32_t *pulNotificationValue, TickType_t xTicksToWait); Each task has a 32 -bit notification value that is initialized  to zero when the task is created.  A task notification is an event sent directly to a task that can unblock the receiving task, and
+
+Official documentation (full):
+Title: xTaskNotifyWait
+Signature: BaseType_t xTaskNotifyWait(uint32_t ulBitsToClearOnEntry, uint32_t ulBitsToClearOnExit, uint32_t *pulNotificationValue, TickType_t xTicksToWait);
+Summary:
+Each task has a 32 -bit notification value that is initialized  to zero when the task is created.  A
+task notification is an event sent directly to a task that can unblock the receiving task, and
+optionally update the receiving task ’s notification value in a number of different ways.  For
+Parameters:
+- ulBitsToClearOnEntry: uint32_t — Any bits set in ulBitsToClearOnEntry will be cleared in the calling  task's notification value on entry to the xTaskNotifyWait() function  (before the task waits for a new notification) provided a notification is  not already pending when xTaskNotifyWait() is called.  For example, if ulBitsToClearOnEntry is 0x01, then bit 0 of the task's  notification value will be cleared on entry to the function.  Setting ulBitsToClearOnEntry to 0xffffffff (ULONG_MAX) will clear all  the bits in the task's notification value, effectively clearing the value to  0.
+- ulBitsToClearOnExit: uint32_t — Any bits set in ulBitsToClearOnExit will be cleared in the calling task's  notification value before xTaskNotifyWait() function exits if a  notification was received.  The bits are cleared after the task's notification value has been saved  in *pulNotificationValue (see the description of pulNotificationValue  below).  For example, if ulBitsToClearOnExit is 0x03, then bit 0 and bit 1 of the  task's notification value will be cleared before the function exits.  Setting ulBitsToClearOnExit to 0xffffffff (ULONG_MAX) will clear all  the bits in the task's notification value, effectively clearing the value to  0.
+- pulNotificationValue: uint32_t — Used to pass out the task's notification value. The value copied to  *pulNotificationValue is the task's notification value as it was before  any bits were cleared due to the ulBitsToClearOnExit setting.
+- pulNotificationValue: uint32_t — is an optional parameter and can be set to NULL  if it is not required.
+- xTicksToWait: TickType_t — The maximum time to wait in the Blocked state for a notification to be  received if a notification is not already pending when  xTaskNotifyWait() is called.  The task does not consume any CPU time when it is in the Blocked  state.  The time is specified in RTOS tick periods. The pdMS_TO_TICKS()  macro can be used to convert a time specified in milliseconds into a  time specified in ticks.
+Return values:
+- BaseType_t: pdTRUE is returned if a notification was received , or if a notification was already pending when
+xTaskNotifyWait() was called.
+pdFALSE is returned if the call to xTaskNotifyWait() timed out before a notification was
+received.
+Bits in this RTOS task's notification value are set by the notifying
+tasks and interrupts to indicate which events have occurred. */
+xTaskNotifyWait( 0x00,       /* Don't clear any notification bits on entry. */
+ULONG_MAX,  /* Reset the notification value to 0 on exit. */
+&ulNotifiedValue,  /* Notified value pass out in ulNotifiedValue. */
+portMAX_DELAY );   /* Block indefinitely. */
+/* Process any events that have been latched in the notified value. */
+if( ( ulNotifiedValue & 0x01 ) != 0 )
+{
+/* Bit 0 was set - process whichever event is represented by bit 0. */
+prvProcessBit0Event();
+}
+if( ( ulNotifiedValue & 0x02 ) != 0 )
+{
+/* Bit 1 was set - process whichever event is represented by bit 1. */
+prvProcessBit1Event();
+}
+if( ( ulNotifiedValue & 0x04 ) != 0 )
+{
+/* Bit 2 was set - process whichever event is represented by bit 2. */
+prvProcessBit2Event();
+}
+/* Etc. */
+}
+}
+Notes:
+If you are using task notifications to implement binary or counting semaphore type behavior
+then use the simpler  ulTaskNotifyTake() API function instead of xTaskNotifyWait() .
+RTOS task notification functionality is enabled by default, and can be excluded from a build
+(saving 8 bytes per task) by setting configUSE_TASK_NOTIFICATIONS to 0 in
+FreeRTOSConfig.h.
+Example:
+more bits in the receiving task's notification value.  See the xTaskNotify() API documentation
+for examples.
+xTaskNotifyWait() waits, with an optional timeout, for the calling task to receive a notification.
+If the receiving task was already Blocked waiting for a notification when one arrives the
+receiving task will be removed from the Blocked state and the notification cleared.
+/* This task shows bits within the RTOS task notification value being used to pass  different
+events to the task in the same way that flags in an event group might  be used for the same
+purpose. */
+void vAnEventProcessingTask( void *pvParameters )
+{
+uint32_t ulNotifiedValue;
+for( ;; )
+{
+/* Block indefinitely (without a timeout, so no need to check the function's
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

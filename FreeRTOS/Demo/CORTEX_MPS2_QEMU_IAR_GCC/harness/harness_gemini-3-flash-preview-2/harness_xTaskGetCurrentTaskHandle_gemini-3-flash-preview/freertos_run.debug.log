@@ -1,0 +1,255 @@
+FUZZ_INPUT @ 0x20000064
+main address = 0x327c
+Breakpoint address = 0x3388
+[2025-12-26T08:57:31Z INFO  libafl::events::launcher] spawning on cores: Cores { cmdline: "1", ids: [CoreId(1)] }
+[2025-12-26T08:57:31Z INFO  libafl::events::launcher] child spawned with id 1 and bound to core CoreId(1)
+[2025-12-26T08:57:31Z INFO  libafl::events::launcher] I am broker!!.
+[2025-12-26T08:57:31Z INFO  libafl_bolts::llmp] Successfully setup signal handlers
+[2025-12-26T08:57:31Z INFO  libafl::events::launcher] 3285167 PostFork
+[2025-12-26T08:57:31Z INFO  libafl_bolts::llmp] Connected to port 1337
+[2025-12-26T08:57:31Z INFO  libafl_bolts::llmp] New connection: 127.0.0.1:35328/127.0.0.1:35328
+[2025-12-26T08:57:31Z INFO  libafl::events::llmp::restarting] Setting core affinity to CoreId(1)
+[2025-12-26T08:57:31Z INFO  libafl::events::llmp::restarting] Spawning next client (id 0)
+[2025-12-26T08:57:31Z INFO  libafl::events::llmp::restarting] First run. Let's set it all up
+qemu_baremetal: warning: nic lan9118.0 has no peer
+Devices = ["timer", "cpu_common", "cpu", "armv7m_nvic", "armv7m_systick", "armv7m", "or-irq", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-uart", "cmsdk-apb-timer", "cmsdk-apb-timer", "cmsdk-apb-dualtimer", "cmsdk-apb-watchdog", "led", "led", "led", "led", "led", "led", "led", "led", "mps2-scc", "led", "led", "mps2-fpgaio", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "or-irq", "pl022_ssp", "pl022_ssp", "i2c_bus", "i2c_bus", "i2c_bus", "i2c_bus", "lan9118-phy", "lan9118"]
+qemu_baremetal: warning: icount sleep disabled and no active timers
+[2025-12-26T08:57:31Z INFO  libafl_qemu::command::lqemu] Fuzzing starts @ PC 327c
+[2025-12-26T08:57:31Z INFO  libafl::state] Loading file /home/zwz/Libafl/fuzzers/full_system/qemu_baremetal/corpus/golden_seed ...
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 0, objectives: 0, executions: 1, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 0, objectives: 0, executions: 1, exec/sec: 0.000, edges: 403/403 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000, edges: 403/403 (100%)
+We imported 1 inputs from disk.
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 1, objectives: 0, executions: 2, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 1, objectives: 0, executions: 2, exec/sec: 0.000, edges: 403/403 (100%)
+Hello from FreeRTOS fuzz demo!
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 2, objectives: 0, executions: 2, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 2, objectives: 0, executions: 2, exec/sec: 0.000, edges: 403/403 (100%)
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 2, objectives: 0, executions: 3, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 2, objectives: 0, executions: 3, exec/sec: 0.000, edges: 405/405 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 3, objectives: 0, executions: 3, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 3, objectives: 0, executions: 3, exec/sec: 0.000, edges: 405/405 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 3, objectives: 0, executions: 7, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 3, objectives: 0, executions: 7, exec/sec: 0.000, edges: 407/407 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 4, objectives: 0, executions: 7, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 4, objectives: 0, executions: 7, exec/sec: 0.000, edges: 407/407 (100%)
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[TEST_CASE_COMPLETED]
+Hello from FreeRTOS fuzz demo!
+[UserStats   #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 4, objectives: 0, executions: 8, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 4, objectives: 0, executions: 8, exec/sec: 0.000, edges: 408/408 (100%)
+[Testcase    #1]  (GLOBAL) run time: 0s, clients: 1, corpus: 5, objectives: 0, executions: 8, exec/sec: 0.000, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 0, executions: 8, exec/sec: 0.000, edges: 408/408 (100%)
+ASSERT! Line 368, file ./../../../../Source/portable/MemMang/heap_4.c
+[Objective   #1]  (GLOBAL) run time: 3s, clients: 1, corpus: 5, objectives: 1, executions: 11, exec/sec: 3.510, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 1, executions: 11, exec/sec: 3.510, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 6s, clients: 1, corpus: 5, objectives: 2, executions: 12, exec/sec: 1.956, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 2, executions: 12, exec/sec: 1.956, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 9s, clients: 1, corpus: 5, objectives: 3, executions: 13, exec/sec: 1.423, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 3, executions: 13, exec/sec: 1.423, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 12s, clients: 1, corpus: 5, objectives: 4, executions: 14, exec/sec: 1.154, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 4, executions: 14, exec/sec: 1.154, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 15s, clients: 1, corpus: 5, objectives: 5, executions: 15, exec/sec: 0.991, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 5, executions: 15, exec/sec: 0.991, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 18s, clients: 1, corpus: 5, objectives: 6, executions: 16, exec/sec: 0.882, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 6, executions: 16, exec/sec: 0.882, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 21s, clients: 1, corpus: 5, objectives: 7, executions: 17, exec/sec: 0.804, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 7, executions: 17, exec/sec: 0.804, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 24s, clients: 1, corpus: 5, objectives: 8, executions: 18, exec/sec: 0.746, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 8, executions: 18, exec/sec: 0.746, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 27s, clients: 1, corpus: 5, objectives: 9, executions: 19, exec/sec: 0.700, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 9, executions: 19, exec/sec: 0.700, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 30s, clients: 1, corpus: 5, objectives: 10, executions: 20, exec/sec: 0.664, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 10, executions: 20, exec/sec: 0.664, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 33s, clients: 1, corpus: 5, objectives: 11, executions: 21, exec/sec: 0.634, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 11, executions: 21, exec/sec: 0.634, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 36s, clients: 1, corpus: 5, objectives: 12, executions: 22, exec/sec: 0.609, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 12, executions: 22, exec/sec: 0.609, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 39s, clients: 1, corpus: 5, objectives: 13, executions: 23, exec/sec: 0.588, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 13, executions: 23, exec/sec: 0.588, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 42s, clients: 1, corpus: 5, objectives: 14, executions: 24, exec/sec: 0.569, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 14, executions: 24, exec/sec: 0.569, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 45s, clients: 1, corpus: 5, objectives: 15, executions: 25, exec/sec: 0.554, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 15, executions: 25, exec/sec: 0.554, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 48s, clients: 1, corpus: 5, objectives: 16, executions: 26, exec/sec: 0.540, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 16, executions: 26, exec/sec: 0.540, edges: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 51s, clients: 1, corpus: 5, objectives: 17, executions: 27, exec/sec: 0.528, edges: 100.000%
+                  (CLIENT) corpus: 5, objectives: 17, executions: 27, exec/sec: 0.528, edges: 408/408 (100%)
+[UserStats   #1]  (GLOBAL) run time: 1m-9s, clients: 1, corpus: 5, objectives: 17, executions: 33, exec/sec: 0.477, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 17, executions: 33, exec/sec: 0.477, edges: 408/408 (100%), stability: 408/408 (100%)
+[Client Heartbeat #1]  (GLOBAL) run time: 1m-9s, clients: 1, corpus: 5, objectives: 17, executions: 33, exec/sec: 0.477, edges: 100.000%, stability: 100.000%
+                       (CLIENT) corpus: 5, objectives: 17, executions: 33, exec/sec: 0.477, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-12s, clients: 1, corpus: 5, objectives: 18, executions: 34, exec/sec: 0.471, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 18, executions: 34, exec/sec: 0.471, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-15s, clients: 1, corpus: 5, objectives: 19, executions: 35, exec/sec: 0.466, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 19, executions: 35, exec/sec: 0.466, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-18s, clients: 1, corpus: 5, objectives: 20, executions: 36, exec/sec: 0.461, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 20, executions: 36, exec/sec: 0.461, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-21s, clients: 1, corpus: 5, objectives: 21, executions: 37, exec/sec: 0.456, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 21, executions: 37, exec/sec: 0.456, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-24s, clients: 1, corpus: 5, objectives: 22, executions: 38, exec/sec: 0.452, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 22, executions: 38, exec/sec: 0.452, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-27s, clients: 1, corpus: 5, objectives: 23, executions: 39, exec/sec: 0.447, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 23, executions: 39, exec/sec: 0.447, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-30s, clients: 1, corpus: 5, objectives: 24, executions: 40, exec/sec: 0.444, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 24, executions: 40, exec/sec: 0.444, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-33s, clients: 1, corpus: 5, objectives: 25, executions: 41, exec/sec: 0.440, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 25, executions: 41, exec/sec: 0.440, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-36s, clients: 1, corpus: 5, objectives: 26, executions: 42, exec/sec: 0.437, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 26, executions: 42, exec/sec: 0.437, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-39s, clients: 1, corpus: 5, objectives: 27, executions: 43, exec/sec: 0.434, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 27, executions: 43, exec/sec: 0.434, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-42s, clients: 1, corpus: 5, objectives: 28, executions: 44, exec/sec: 0.431, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 28, executions: 44, exec/sec: 0.431, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-45s, clients: 1, corpus: 5, objectives: 29, executions: 45, exec/sec: 0.428, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 29, executions: 45, exec/sec: 0.428, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-48s, clients: 1, corpus: 5, objectives: 30, executions: 46, exec/sec: 0.425, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 30, executions: 46, exec/sec: 0.425, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-51s, clients: 1, corpus: 5, objectives: 31, executions: 47, exec/sec: 0.423, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 31, executions: 47, exec/sec: 0.423, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-54s, clients: 1, corpus: 5, objectives: 32, executions: 48, exec/sec: 0.420, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 32, executions: 48, exec/sec: 0.420, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 1m-57s, clients: 1, corpus: 5, objectives: 33, executions: 49, exec/sec: 0.418, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 33, executions: 49, exec/sec: 0.418, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-0s, clients: 1, corpus: 5, objectives: 34, executions: 50, exec/sec: 0.416, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 34, executions: 50, exec/sec: 0.416, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-3s, clients: 1, corpus: 5, objectives: 35, executions: 51, exec/sec: 0.414, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 35, executions: 51, exec/sec: 0.414, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-6s, clients: 1, corpus: 5, objectives: 36, executions: 52, exec/sec: 0.412, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 36, executions: 52, exec/sec: 0.412, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-9s, clients: 1, corpus: 5, objectives: 37, executions: 53, exec/sec: 0.410, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 37, executions: 53, exec/sec: 0.410, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-12s, clients: 1, corpus: 5, objectives: 38, executions: 54, exec/sec: 0.409, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 38, executions: 54, exec/sec: 0.409, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-15s, clients: 1, corpus: 5, objectives: 39, executions: 55, exec/sec: 0.407, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 39, executions: 55, exec/sec: 0.407, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-18s, clients: 1, corpus: 5, objectives: 40, executions: 56, exec/sec: 0.405, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 40, executions: 56, exec/sec: 0.405, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-21s, clients: 1, corpus: 5, objectives: 41, executions: 57, exec/sec: 0.404, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 41, executions: 57, exec/sec: 0.404, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-24s, clients: 1, corpus: 5, objectives: 42, executions: 58, exec/sec: 0.402, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 42, executions: 58, exec/sec: 0.402, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-27s, clients: 1, corpus: 5, objectives: 43, executions: 59, exec/sec: 0.401, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 43, executions: 59, exec/sec: 0.401, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-30s, clients: 1, corpus: 5, objectives: 44, executions: 60, exec/sec: 0.400, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 44, executions: 60, exec/sec: 0.400, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-33s, clients: 1, corpus: 5, objectives: 45, executions: 61, exec/sec: 0.398, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 45, executions: 61, exec/sec: 0.398, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-36s, clients: 1, corpus: 5, objectives: 46, executions: 62, exec/sec: 0.397, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 46, executions: 62, exec/sec: 0.397, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-39s, clients: 1, corpus: 5, objectives: 47, executions: 63, exec/sec: 0.396, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 47, executions: 63, exec/sec: 0.396, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-42s, clients: 1, corpus: 5, objectives: 48, executions: 64, exec/sec: 0.395, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 48, executions: 64, exec/sec: 0.395, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-45s, clients: 1, corpus: 5, objectives: 49, executions: 65, exec/sec: 0.394, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 49, executions: 65, exec/sec: 0.394, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-48s, clients: 1, corpus: 5, objectives: 50, executions: 66, exec/sec: 0.392, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 50, executions: 66, exec/sec: 0.392, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-51s, clients: 1, corpus: 5, objectives: 51, executions: 67, exec/sec: 0.391, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 51, executions: 67, exec/sec: 0.391, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-54s, clients: 1, corpus: 5, objectives: 52, executions: 68, exec/sec: 0.390, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 52, executions: 68, exec/sec: 0.390, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 2m-57s, clients: 1, corpus: 5, objectives: 53, executions: 69, exec/sec: 0.389, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 53, executions: 69, exec/sec: 0.389, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-0s, clients: 1, corpus: 5, objectives: 54, executions: 70, exec/sec: 0.389, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 54, executions: 70, exec/sec: 0.389, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-3s, clients: 1, corpus: 5, objectives: 55, executions: 71, exec/sec: 0.388, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 55, executions: 71, exec/sec: 0.388, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-6s, clients: 1, corpus: 5, objectives: 56, executions: 72, exec/sec: 0.387, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 56, executions: 72, exec/sec: 0.387, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-9s, clients: 1, corpus: 5, objectives: 57, executions: 73, exec/sec: 0.386, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 57, executions: 73, exec/sec: 0.386, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-12s, clients: 1, corpus: 5, objectives: 58, executions: 74, exec/sec: 0.385, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 58, executions: 74, exec/sec: 0.385, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-15s, clients: 1, corpus: 5, objectives: 59, executions: 75, exec/sec: 0.384, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 59, executions: 75, exec/sec: 0.384, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-18s, clients: 1, corpus: 5, objectives: 60, executions: 76, exec/sec: 0.383, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 60, executions: 76, exec/sec: 0.383, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-21s, clients: 1, corpus: 5, objectives: 61, executions: 77, exec/sec: 0.383, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 61, executions: 77, exec/sec: 0.383, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-24s, clients: 1, corpus: 5, objectives: 62, executions: 78, exec/sec: 0.382, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 62, executions: 78, exec/sec: 0.382, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-27s, clients: 1, corpus: 5, objectives: 63, executions: 79, exec/sec: 0.381, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 63, executions: 79, exec/sec: 0.381, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-30s, clients: 1, corpus: 5, objectives: 64, executions: 80, exec/sec: 0.381, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 64, executions: 80, exec/sec: 0.381, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-33s, clients: 1, corpus: 5, objectives: 65, executions: 81, exec/sec: 0.380, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 65, executions: 81, exec/sec: 0.380, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-36s, clients: 1, corpus: 5, objectives: 66, executions: 82, exec/sec: 0.379, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 66, executions: 82, exec/sec: 0.379, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-39s, clients: 1, corpus: 5, objectives: 67, executions: 83, exec/sec: 0.379, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 67, executions: 83, exec/sec: 0.379, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-42s, clients: 1, corpus: 5, objectives: 68, executions: 84, exec/sec: 0.378, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 68, executions: 84, exec/sec: 0.378, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-45s, clients: 1, corpus: 5, objectives: 69, executions: 85, exec/sec: 0.377, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 69, executions: 85, exec/sec: 0.377, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-48s, clients: 1, corpus: 5, objectives: 70, executions: 86, exec/sec: 0.377, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 70, executions: 86, exec/sec: 0.377, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-51s, clients: 1, corpus: 5, objectives: 71, executions: 87, exec/sec: 0.376, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 71, executions: 87, exec/sec: 0.376, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-54s, clients: 1, corpus: 5, objectives: 72, executions: 88, exec/sec: 0.376, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 72, executions: 88, exec/sec: 0.376, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 3m-57s, clients: 1, corpus: 5, objectives: 73, executions: 89, exec/sec: 0.375, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 73, executions: 89, exec/sec: 0.375, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-0s, clients: 1, corpus: 5, objectives: 74, executions: 90, exec/sec: 0.375, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 74, executions: 90, exec/sec: 0.375, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-3s, clients: 1, corpus: 5, objectives: 75, executions: 91, exec/sec: 0.374, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 75, executions: 91, exec/sec: 0.374, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-6s, clients: 1, corpus: 5, objectives: 76, executions: 92, exec/sec: 0.374, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 76, executions: 92, exec/sec: 0.374, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-9s, clients: 1, corpus: 5, objectives: 77, executions: 93, exec/sec: 0.373, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 77, executions: 93, exec/sec: 0.373, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-12s, clients: 1, corpus: 5, objectives: 78, executions: 94, exec/sec: 0.373, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 78, executions: 94, exec/sec: 0.373, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-15s, clients: 1, corpus: 5, objectives: 79, executions: 95, exec/sec: 0.372, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 79, executions: 95, exec/sec: 0.372, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-18s, clients: 1, corpus: 5, objectives: 80, executions: 96, exec/sec: 0.372, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 80, executions: 96, exec/sec: 0.372, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-21s, clients: 1, corpus: 5, objectives: 81, executions: 97, exec/sec: 0.371, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 81, executions: 97, exec/sec: 0.371, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-24s, clients: 1, corpus: 5, objectives: 82, executions: 98, exec/sec: 0.371, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 82, executions: 98, exec/sec: 0.371, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-27s, clients: 1, corpus: 5, objectives: 83, executions: 99, exec/sec: 0.371, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 83, executions: 99, exec/sec: 0.371, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-30s, clients: 1, corpus: 5, objectives: 84, executions: 100, exec/sec: 0.370, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 84, executions: 100, exec/sec: 0.370, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-33s, clients: 1, corpus: 5, objectives: 85, executions: 101, exec/sec: 0.370, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 85, executions: 101, exec/sec: 0.370, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-36s, clients: 1, corpus: 5, objectives: 86, executions: 102, exec/sec: 0.369, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 86, executions: 102, exec/sec: 0.369, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-39s, clients: 1, corpus: 5, objectives: 87, executions: 103, exec/sec: 0.369, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 87, executions: 103, exec/sec: 0.369, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-42s, clients: 1, corpus: 5, objectives: 88, executions: 104, exec/sec: 0.369, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 88, executions: 104, exec/sec: 0.369, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-45s, clients: 1, corpus: 5, objectives: 89, executions: 105, exec/sec: 0.368, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 89, executions: 105, exec/sec: 0.368, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-48s, clients: 1, corpus: 5, objectives: 90, executions: 106, exec/sec: 0.368, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 90, executions: 106, exec/sec: 0.368, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-51s, clients: 1, corpus: 5, objectives: 91, executions: 107, exec/sec: 0.367, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 91, executions: 107, exec/sec: 0.367, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-54s, clients: 1, corpus: 5, objectives: 92, executions: 108, exec/sec: 0.367, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 92, executions: 108, exec/sec: 0.367, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 4m-57s, clients: 1, corpus: 5, objectives: 93, executions: 109, exec/sec: 0.367, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 93, executions: 109, exec/sec: 0.367, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 5m-0s, clients: 1, corpus: 5, objectives: 94, executions: 110, exec/sec: 0.366, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 94, executions: 110, exec/sec: 0.366, edges: 408/408 (100%), stability: 408/408 (100%)
+[Objective   #1]  (GLOBAL) run time: 5m-3s, clients: 1, corpus: 5, objectives: 95, executions: 111, exec/sec: 0.366, edges: 100.000%, stability: 100.000%
+                  (CLIENT) corpus: 5, objectives: 95, executions: 111, exec/sec: 0.366, edges: 408/408 (100%), stability: 408/408 (100%)

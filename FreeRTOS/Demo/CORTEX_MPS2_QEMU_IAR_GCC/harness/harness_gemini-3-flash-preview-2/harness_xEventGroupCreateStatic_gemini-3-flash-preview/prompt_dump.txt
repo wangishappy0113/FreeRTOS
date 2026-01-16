@@ -1,0 +1,191 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test logic inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xEventGroupCreateStatic, vAssertCalled, vPortEnterCritical
+
+### Function xEventGroupCreateStatic
+Signature: EventGroupHandle_t(StaticEventGroup_t*)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c:86-138
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, FreeRTOS.h, task.h, timers.h, event_groups.h
+Outgoing calls summary: /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), vAssertCalled(function), <operator>.assignment(operator), <operator>.sizeOf(operator), <operator>.cast(operator), <operator>.notEquals(operator), <operator>.indirectFieldAccess(operator)
+Incoming callers count: 1
+Full source code:
+        EventGroupHandle_t xEventGroupCreateStatic( StaticEventGroup_t * pxEventGroupBuffer )
+        {
+            EventGroup_t * pxEventBits;
+
+            traceENTER_xEventGroupCreateStatic( pxEventGroupBuffer );
+
+            /* A StaticEventGroup_t object must be provided. */
+            configASSERT( pxEventGroupBuffer );
+
+            #if ( configASSERT_DEFINED == 1 )
+            {
+                /* Sanity check that the size of the structure used to declare a
+                 * variable of type StaticEventGroup_t equals the size of the real
+                 * event group structure. */
+                volatile size_t xSize = sizeof( StaticEventGroup_t );
+                configASSERT( xSize == sizeof( EventGroup_t ) );
+            }
+            #endif /* configASSERT_DEFINED */
+
+            /* The user has provided a statically allocated event group - use it. */
+            /* MISRA Ref 11.3.1 [Misaligned access] */
+            /* More details at: https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/main/MISRA.md#rule-113 */
+            /* coverity[misra_c_2012_rule_11_3_violation] */
+            pxEventBits = ( EventGroup_t * ) pxEventGroupBuffer;
+
+            if( pxEventBits != NULL )
+            {
+                pxEventBits->uxEventBits = 0;
+                vListInitialise( &( pxEventBits->xTasksWaitingForBits ) );
+
+                #if ( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
+                {
+                    /* Both static and dynamic allocation can be used, so note that
+                     * this event group was created statically in case the event group
+                     * is later deleted. */
+                    pxEventBits->ucStaticallyAllocated = pdTRUE;
+                }
+                #endif /* configSUPPORT_DYNAMIC_ALLOCATION */
+
+                traceEVENT_GROUP_CREATE( pxEventBits );
+            }
+            else
+            {
+                /* xEventGroupCreateStatic should only ever be called with
+                 * pxEventGroupBuffer pointing to a pre-allocated (compile time
+                 * allocated) StaticEventGroup_t variable. */
+                traceEVENT_GROUP_CREATE_FAILED();
+            }
+
+            traceRETURN_xEventGroupCreateStatic( pxEventBits );
+
+            return pxEventBits;
+        }
+
+Official docs (summary):
+Parameters:
+- pxEventGroupBuffer: StaticEventGroup_t — Must point to a variable of type StaticEventGroup_t, in which the event  group ’s data structure will be stored.
+Return values:
+- EventGroupHandle_t: The event group could not be created because pxEventGroupBuffer was
+NULL .
+Any other value  The event group  was created and the value returned is  the handle of the
+created event group .
+Related configs: configSUPPORT_STATIC_ALLOCATION, configUSE_16_BIT_TICKS, xEventGroupCr
+Related APIs: eateStatic, xEventGroupCreate
+Reference snippets:
+- API xEventGroupCreate Related (api:xEventGroupCreate:related#c0) :: API: xEventGroupCreate Section: related related: xEventGroupCreateStatic
+- API xEventGroupCreateStatic Related (api:xEventGroupCreateStatic:related#c0) :: API: xEventGroupCreateStatic Section: related related: eateStatic, xEventGroupCreate
+- Incoming of xEventGroupCreateStatic (rel:in:xEventGroupCreateStatic#c0) :: incoming: MPU_xEventGroupCreateStatic
+- Type xEventGroupCreateStatic (type:xEventGroupCreateStatic#c0) :: TYPE type xEventGroupCreateStatic /home/zwz/FreeRTOS/FreeRTOS/Source/event_groups.c
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c:MPU_StoreEventGroupHandleAtIndex:ANY(2) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c:MPU_StoreEventGroupHandleAtIndex:ANY(2)#c0) :: incoming: MPU_xEventGroupCreate, MPU_xEventGroupCreateStatic
+- API xEventGroupCreateStatic Overview (api:xEventGroupCreateStatic:overview#c0) :: API: xEventGroupCreateStatic Signature: EventGroupHandle_t xEventGroupCreateStatic(StaticEventGroup_t *pxEventGroupBuffer); Headers: event_groups.h, FreeRTOS.h Summary: Create s a new event group and returns a handle by which the created event group can be referenced. Each event group requires a [very] small amount of …
+- xEventGroupCreateStatic :: EventGroupHandle_t xEventGroupCreateStatic(StaticEventGroup_t *pxEventGroupBuffer); Create s a new event group and returns a handle by which the created event group can be referenced.
+- xEventGroupCreateStatic :: EventGroupHandle_t xEventGroupCreateStatic(StaticEventGroup_t *pxEventGroupBuffer); Create s a new event group and returns a handle by which the created event group can be referenced.
+
+Official documentation (full):
+Title: xEventGroupCreateStatic
+Signature: EventGroupHandle_t xEventGroupCreateStatic(StaticEventGroup_t *pxEventGroupBuffer);
+Summary:
+Create s a new event group and returns a handle by which the created event group can be
+referenced.
+Each event group requires a [very] small amount of RAM that is used to hold the event group’ s
+state.  If an event group is created using xEventGroupCreate() then this RAM is automatically
+allocated from the FreeRTOS heap.   If an event group is created using
+xEventGroupCreateStatic() then the RAM is provided by the application writer, which requires
+an additional parameter, but allows the RAM to be static ally allocated at compile time.
+Event groups are stored in variables of type EventGroupHandle_t.  The number of bits (or
+flags) implemented within an event group is 8 if configUSE_16_BIT_TICKS is set to 1, or 24 if
+configUSE_16_BIT_TICKS is set to 0.  The dependency on configUSE_16_BIT_TICKS results
+from the data type used for thread local storage in the internal implementation of RTOS tasks.
+Parameters:
+- pxEventGroupBuffer: StaticEventGroup_t — Must point to a variable of type StaticEventGroup_t, in which the event  group ’s data structure will be stored.
+Return values:
+- EventGroupHandle_t: The event group could not be created because pxEventGroupBuffer was
+NULL .
+Any other value  The event group  was created and the value returned is  the handle of the
+created event group .
+Notes:
+configSUPPORT_STATIC_ALLOCATION must be set to 1 in FreeRTOSConfig.h, and t he
+RTOS source file FreeRTOS/source/event_groups.c must be included in the build , for the
+xEventGroupCr eateStatic () function to be available.
+Example:
+/* Declare a variable to hold the handle of the created event group. */
+EventGroupHandle_t xEventGroupHandle;
+/* Declare a variable to hold the data associated with the created  event group. */
+StaticEventGroup_t xCreatedEventGroup;
+void vAFunction( void )
+{
+/* Attempt to create the event group. */
+xEventGroupHandle = xEventGroupCreate( &xCreatedEventGroup );
+/* pxEventGroupBuffer was not null so expect the event group to have  been
+created.  */
+configASSERT( xEventGroupHandle );
+}
+
+### Function vAssertCalled
+Signature: void(void)
+Location: main.c:58-72
+Cyclomatic: -1 Lines: -1
+Includes: none
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0)(macro), vPortEnterCritical(function), <operator>.equals(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0)(macro), vPortExitCritical(function)
+Incoming callers count: 141
+
+### Function vPortEnterCritical
+Signature: void(void)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/port.c:913-937
+Cyclomatic: -1 Lines: -1
+Includes: FreeRTOS.h, task.h, mpu_syscall_numbers.h
+Outgoing calls summary: /home/zwz/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU/portmacro.h:portDISABLE_INTERRUPTS:ANY(0)(macro), vPortRaiseBASEPRI(function), <operator>.postIncrement(operator)
+Incoming callers count: 47
+Full source code:
+void vPortEnterCritical( void )
+{
+    #if ( configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS == 1 )
+        if( portIS_PRIVILEGED() == pdFALSE )
+        {
+            portRAISE_PRIVILEGE();
+            portMEMORY_BARRIER();
+
+            portDISABLE_INTERRUPTS();
+            uxCriticalNesting++;
+            portMEMORY_BARRIER();
+
+            portRESET_PRIVILEGE();
+            portMEMORY_BARRIER();
+        }
+        else
+        {
+            portDISABLE_INTERRUPTS();
+            uxCriticalNesting++;
+        }
+    #else /* if ( configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS == 1 ) */
+        portDISABLE_INTERRUPTS();
+        uxCriticalNesting++;
+    #endif /* if ( configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS == 1 ) */
+}
+
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

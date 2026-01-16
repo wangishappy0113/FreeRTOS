@@ -1,0 +1,402 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test logic inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. IMPORTANT: In this project template, FR_init has the signature: FR_Reader FR_init(const unsigned char* buf, size_t n). Correct usage: FR_Reader fr = FR_init(FUZZ_INPUT, MAX_FUZZ_INPUT_SIZE). Do NOT call FR_init with 3 arguments and do NOT pass an FR_Reader* to FR_init. Also note: the input length macro is MAX_FUZZ_INPUT_SIZE (there is no FUZZ_INPUT_SIZE). Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: eTaskGetState, xTaskCreate, Function, Type, Incoming
+
+### Function eTaskGetState
+Signature: eTaskState(TaskHandle_t)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2508-2633
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: <operator>.assignment(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configASSERT:ANY(1)(macro), <operator>.equals(operator), <operator>.notEquals(operator), vAssertCalled(function), /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0)(macro), vPortEnterCritical(function), /home/zwz/FreeRTOS/FreeRTOS/Source/include/list.h:listLIST_ITEM_CONTAINER:ANY(1)(macro)
+Incoming callers count: 3
+Full source code:
+    eTaskState eTaskGetState( TaskHandle_t xTask )
+    {
+        eTaskState eReturn;
+        List_t const * pxStateList;
+        List_t const * pxEventList;
+        List_t const * pxDelayedList;
+        List_t const * pxOverflowedDelayedList;
+        const TCB_t * const pxTCB = xTask;
+
+        traceENTER_eTaskGetState( xTask );
+
+        configASSERT( pxTCB != NULL );
+
+        #if ( configNUMBER_OF_CORES == 1 )
+            if( pxTCB == pxCurrentTCB )
+            {
+                /* The task calling this function is querying its own state. */
+                eReturn = eRunning;
+            }
+            else
+        #endif
+        {
+            taskENTER_CRITICAL();
+            {
+                pxStateList = listLIST_ITEM_CONTAINER( &( pxTCB->xStateListItem ) );
+                pxEventList = listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) );
+                pxDelayedList = pxDelayedTaskList;
+                pxOverflowedDelayedList = pxOverflowDelayedTaskList;
+            }
+            taskEXIT_CRITICAL();
+
+            if( pxEventList == &xPendingReadyList )
+            {
+                /* The task has been placed on the pending ready list, so its
+                 * state is eReady regardless of what list the task's state list
+                 * item is currently placed on. */
+                eReturn = eReady;
+            }
+            else if( ( pxStateList == pxDelayedList ) || ( pxStateList == pxOverflowedDelayedList ) )
+            {
+                /* The task being queried is referenced from one of the Blocked
+                 * lists. */
+                eReturn = eBlocked;
+            }
+
+            #if ( INCLUDE_vTaskSuspend == 1 )
+                else if( pxStateList == &xSuspendedTaskList )
+                {
+                    /* The task being queried is referenced from the suspended
+                     * list.  Is it genuinely suspended or is it blocked
+                     * indefinitely? */
+                    if( listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) ) == NULL )
+                    {
+                        #if ( configUSE_TASK_NOTIFICATIONS == 1 )
+                        {
+                            BaseType_t x;
+
+                            /* The task does not appear on the event list item of
+                             * and of the RTOS objects, but could still be in the
+                             * blocked state if it is waiting on its notification
+                             * rather than waiting on an object.  If not, is
+                             * suspended. */
+                            eReturn = eSuspended;
+
+                            for( x = ( BaseType_t ) 0; x < ( BaseType_t ) configTASK_NOTIFICATION_ARRAY_ENTRIES; x++ )
+                            {
+                                if( pxTCB->ucNotifyState[ x ] == taskWAITING_NOTIFICATION )
+                                {
+                                    eReturn = eBlocked;
+                                    break;
+                                }
+                            }
+                        }
+                        #else /* if ( configUSE_TASK_NOTIFICATIONS == 1 ) */
+                        {
+                            eReturn = eSuspended;
+                        }
+                        #endif /* if ( configUSE_TASK_NOTIFICATIONS == 1 ) */
+                    }
+                    else
+                    {
+                        eReturn = eBlocked;
+                    }
+                }
+            #endif /* if ( INCLUDE_vTaskSuspend == 1 ) */
+
+            #if ( INCLUDE_vTaskDelete == 1 )
+                else if( ( pxStateList == &xTasksWaitingTermination ) || ( pxStateList == NULL ) )
+                {
+                    /* The task being queried is referenced from the deleted
+                     * tasks list, or it is not referenced from any lists at
+                     * all. */
+                    eReturn = eDeleted;
+                }
+            #endif
+
+            else
+            {
+                #if ( configNUMBER_OF_CORES == 1 )
+                {
+                    /* If the task is not in any other state, it must be in the
+                     * Ready (including pending ready) state. */
+                    eReturn = eReady;
+                }
+                #else /* #if ( configNUMBER_OF_CORES == 1 ) */
+                {
+                    if( taskTASK_IS_RUNNING( pxTCB ) == pdTRUE )
+                    {
+                        /* Is it actively running on a core? */
+                        eReturn = eRunning;
+                    }
+                    else
+                    {
+                        /* If the task is not in any other state, it must be in the
+                         * Ready (including pending ready) state. */
+                        eReturn = eReady;
+                    }
+                }
+                #endif /* #if ( configNUMBER_OF_CORES == 1 ) */
+            }
+        }
+
+        traceRETURN_eTaskGetState( eReturn );
+
+        return eReturn;
+    }
+
+Official docs (summary):
+Parameters:
+- pxTask: TaskHandle_t — The handle of the subject task.  To obtain a task’s handle create the task using xTaskCreate() and make use of the  pxCreatedTask parameter, or create the task using xTaskCreateStatic () and store  the returned value, or use the task’s name in a call to xTaskGetHandle().
+Return values:
+- eTaskState: Table 1 lists the value that eTaskGetState() will return for each possible state that the task
+referenced by the pxTask parameter can exist in.
+Table 1.  eTaskGetState() return values
+State  Return Value
+Running  eRunning (the task is querying its own state)
+Ready  eReady
+Blocked  eBlocked
+Suspended  eSuspended
+Deleted  eDeleted (the task’s structures are waiting to be cleaned up)
+Related configs: none
+Related APIs: none
+Reference snippets:
+- API eTaskGetState Returns (api:eTaskGetState:returns#c0) :: API: eTaskGetState Section: returns returns eTaskState: Table 1 lists the value that eTaskGetState() will return for each possible state that the task referenced by the pxTask parameter can exist in. Table 1.  eTaskGetState() return values State  Return Value Running  eRunning (the task is querying its own state) Ready…
+- API eTaskGetState Overview (api:eTaskGetState:overview#c0) :: API: eTaskGetState Signature: eTaskState eTaskGetState (TaskHandle_t pxTask); Headers: task.h, FreeRTOS.h Summary: Returns as an enumerated type the state in which a task existed at the time eTaskGetState() was executed.
+- Function eTaskGetState (func:eTaskGetState:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c0) :: FUNC eTaskGetState eTaskState(TaskHandle_t) file /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:2508-2633     eTaskState eTaskGetState( TaskHandle_t xTask )     {         eTaskState eReturn;         List_t const * pxStateList;         List_t const * pxEventList;         List_t const * pxDelayedList;         List_t const * …
+- Function eTaskGetState (func:eTaskGetState:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c2) ::                          eReturn = eRunning;                     }                     else                     {                         /* If the task is not in any other state, it must be in the                          * Ready (including pending ready) state. */                         eReturn = eReady;            …
+- Type eTaskGetState (type:eTaskGetState#c0) :: TYPE type eTaskGetState /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c
+- Function <global> (func:<global>:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c49) :: nced from the suspended                      * list.  Is it genuinely suspended or is it blocked                      * indefinitely? */                     if( listLIST_ITEM_CONTAINER( &( pxTCB->xEventListItem ) ) == NULL )                     {                         #if ( configUSE_TASK_NOTIFICATIONS == 1 )        …
+- eTaskGetState :: eTaskState eTaskGetState (TaskHandle_t pxTask); Returns as an enumerated type the state in which a task existed at the time eTaskGetState() was executed.
+
+Official documentation (full):
+Title: eTaskGetState
+Signature: eTaskState eTaskGetState (TaskHandle_t pxTask);
+Summary:
+Returns as an enumerated type the state in which a task existed at the time eTaskGetState()
+was executed.
+Parameters:
+- pxTask: TaskHandle_t — The handle of the subject task.  To obtain a task’s handle create the task using xTaskCreate() and make use of the  pxCreatedTask parameter, or create the task using xTaskCreateStatic () and store  the returned value, or use the task’s name in a call to xTaskGetHandle().
+Return values:
+- eTaskState: Table 1 lists the value that eTaskGetState() will return for each possible state that the task
+referenced by the pxTask parameter can exist in.
+Table 1.  eTaskGetState() return values
+State  Return Value
+Running  eRunning (the task is querying its own state)
+Ready  eReady
+Blocked  eBlocked
+Suspended  eSuspended
+Deleted  eDeleted (the task’s structures are waiting to be cleaned up)
+Notes:
+INCLUDE_eTaskGetState must be set to 1 in FreeRTOSConfig.h for the eTaskGetState() API
+function to be available.
+
+### Function xTaskCreate
+Signature: BaseType_t(TaskFunction_t,char*,StackType_t,void*,UBaseType_t,TaskHandle_t*)
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1740-1774
+Cyclomatic: -1 Lines: -1
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: <operator>.assignment(operator), prvCreateTask(function), <operator>.notEquals(operator), prvAddNewTaskToReadyList(function), /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:pdPASS:ANY(0)(macro), <operator>.cast(operator), /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY:ANY(0)(macro), <operator>.minus(operator)
+Incoming callers count: 1
+Full source code:
+    BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
+                            const char * const pcName,
+                            const configSTACK_DEPTH_TYPE uxStackDepth,
+                            void * const pvParameters,
+                            UBaseType_t uxPriority,
+                            TaskHandle_t * const pxCreatedTask )
+    {
+        TCB_t * pxNewTCB;
+        BaseType_t xReturn;
+
+        traceENTER_xTaskCreate( pxTaskCode, pcName, uxStackDepth, pvParameters, uxPriority, pxCreatedTask );
+
+        pxNewTCB = prvCreateTask( pxTaskCode, pcName, uxStackDepth, pvParameters, uxPriority, pxCreatedTask );
+
+        if( pxNewTCB != NULL )
+        {
+            #if ( ( configNUMBER_OF_CORES > 1 ) && ( configUSE_CORE_AFFINITY == 1 ) )
+            {
+                /* Set the task's affinity before scheduling it. */
+                pxNewTCB->uxCoreAffinityMask = configTASK_DEFAULT_CORE_AFFINITY;
+            }
+            #endif
+
+            prvAddNewTaskToReadyList( pxNewTCB );
+            xReturn = pdPASS;
+        }
+        else
+        {
+            xReturn = errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY;
+        }
+
+        traceRETURN_xTaskCreate( xReturn );
+
+        return xReturn;
+    }
+
+Official docs (summary):
+Parameters:
+- pvTaskCode: TaskFunction_t — Tasks are simply C functions that never exit and , as such , are normally  implemented as an infinite loop. The pvTaskCode parameter is simply a  pointer to the function (in effect , just the function name) that implements the  task.
+- pcName: const char * const — A descriptive name for the task. This is mainly used to facilitate debugging,  but can also be used in a call to xTaskGetHandle() to obtain a task handle.  The application -defined constant configMAX_TASK_NAME_LEN defines the  maximum length of the name in characters – including the NULL terminator.  Supplying a string longer than this maximum will result in the string being  silently truncated.
+- usStackDepth: unsigned short — Each task has its own unique stack that is allocated by the kernel to the task  when the task is created. The usStackDepth value tells the kernel how large  to make the stack.  The value specifies the number of words the stack can hold, not the number  of bytes. For example, on an architecture with a 4 byte stack width , if
+- usStackDepth: unsigned short — is passed in as 100, then 400 bytes of stack space will be  allocated (100 * 4 bytes). The stack depth multiplied by the stack width must  not exceed the maximum value that can be contained in a variable of type  size_t.  The size of the stack used by the idle task is defined by the application -  defined constant configMINIMAL_STACK_SIZE . The value assigned to this  constant in the demo application provided for the chosen microcontroller  architecture is the minimum recommended for any task on that architecture .  If your task uses a lot of stack space , then you must assign a larger value.
+- pvParameters: void — Task functions accept a parameter of type ‘pointer to void ’ ( void* ). The  value assigned to pvParameters will be the value passed into the task.  This parameter has the type ‘pointer to void ’ to allow the task parameter to  effectively, and indirectly by means of casting, receive a parameter of any  type. For example, integer types can be passed into a task function by  casting the integer to a void pointer at the point the task is created, then by  casting the void pointer parameter back to an integer in the task function  definition itself.
+- uxPriority: UBaseType_t — Defines the priority at which the task will execute. Priorities can be assigned  from 0, which is the lowest priority , to (configMAX_PRIORITIES – 1), which  is the highest priority .  configMAX_PRIORITIES is a user defined constant. If  configUSE_PORT_OPTIMISED_TASK_SELECTION is set to 0 then t here is  no upper limit to the number of priorities that can be available (other than the  limit of the data types used and the RAM available in your microcontroller),  but it is advised to use the lowest number of priorities required , to avoid  wasting RAM.  Passing a uxPriority value above (configMAX_PRIORITIES – 1) will result in  the priority assigned to the task being capped silently to the maximum  legitimate value.
+- pxCreatedTask: TaskHandle_t — pxCreatedTask can be used to pass out a handle to the task being created.  This handle can then be used to reference the task in API calls that, for
+Return values:
+- BaseType_t: pdPASS Indicates that the task has been
+created successfully.
+errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY  Indicates that the task could not be
+created because there was
+insufficient heap memory available for
+FreeRTOS to allocate the task data
+structures and stack.
+If heap_1.c , heap_2.c  or heap_4.c
+are included in the project then the
+total amount of heap available is
+defined by configTOTAL_HEAP_SIZE
+in FreeRTOSConfig.h , and failure to
+allocate memory can be trapped
+using the
+vApplicationMallocFailedHook()
+callback (or ‘hook’) function , and the
+amount of free heap memory
+remaining can be queried using the
+xPortGetFreeHeapSize()  API
+function.
+If heap_3.c is included in the project
+then the total heap size is defined by
+the linker  configuration .
+Related configs: configSUPPORT_DYNAMIC_ALLOCATION
+Related APIs: xTaskCreateStatic
+Reference snippets:
+- Incoming of prvCreateTask (rel:in:prvCreateTask#c0) :: incoming: xTaskCreate
+- API xTaskCreate Overview (api:xTaskCreate:overview#c0) :: API: xTaskCreate Signature: BaseType_t xTaskCreate(TaskFunction_t pvTaskCode, const char * const pcName, unsigned short usStackDepth, void *pvParameters, UBaseType_t uxPriority, TaskHandle_t *pxCreatedTask); Headers: task.h, FreeRTOS.h Summary: Creates a new instance of a task. Each task requires RAM that is used to ho…
+- Function xTaskCreate (func:xTaskCreate:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c#c0) :: FUNC xTaskCreate BaseType_t(TaskFunction_t,char*,StackType_t,void*,UBaseType_t,TaskHandle_t*) file /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:1740-1774     BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,                             const char * const pcName,                             const configSTACK_DEPTH_TYPE u…
+- xTaskCreate :: BaseType_t xTaskCreate(TaskFunction_t pvTaskCode, const char * const pcName, unsigned short usStackDepth, void *pvParameters, UBaseType_t uxPriority, TaskHandle_t *pxCreatedTask); Creates a new instance of a task. Each task requires RAM that is used to hold the task state  (the task control block, or TCB) ,
+
+Official documentation (full):
+Title: xTaskCreate
+Signature: BaseType_t xTaskCreate(TaskFunction_t pvTaskCode, const char * const pcName, unsigned short usStackDepth, void *pvParameters, UBaseType_t uxPriority, TaskHandle_t *pxCreatedTask);
+Summary:
+Creates a new instance of a task.
+Each task requires RAM that is used to hold the task state  (the task control block, or TCB) ,
+and used by the task as its stack.  If a task is created using xTaskCreate() then the required
+RAM is automatically allocated from the FreeRTOS heap.  If a task is created using
+xTaskCreateStatic() then the RAM is provided by the application writer, which results in two
+additional function parameters, but allows the RAM to be static ally allocated at compile time.
+Newly created tasks are initially placed in the Ready state , but will immediately become the
+Running state task if there are no higher priority tasks that are able to run.
+Tasks can be created both before and after the scheduler has been started.
+Parameters:
+- pvTaskCode: TaskFunction_t — Tasks are simply C functions that never exit and , as such , are normally  implemented as an infinite loop. The pvTaskCode parameter is simply a  pointer to the function (in effect , just the function name) that implements the  task.
+- pcName: const char * const — A descriptive name for the task. This is mainly used to facilitate debugging,  but can also be used in a call to xTaskGetHandle() to obtain a task handle.  The application -defined constant configMAX_TASK_NAME_LEN defines the  maximum length of the name in characters – including the NULL terminator.  Supplying a string longer than this maximum will result in the string being  silently truncated.
+- usStackDepth: unsigned short — Each task has its own unique stack that is allocated by the kernel to the task  when the task is created. The usStackDepth value tells the kernel how large  to make the stack.  The value specifies the number of words the stack can hold, not the number  of bytes. For example, on an architecture with a 4 byte stack width , if
+- usStackDepth: unsigned short — is passed in as 100, then 400 bytes of stack space will be  allocated (100 * 4 bytes). The stack depth multiplied by the stack width must  not exceed the maximum value that can be contained in a variable of type  size_t.  The size of the stack used by the idle task is defined by the application -  defined constant configMINIMAL_STACK_SIZE . The value assigned to this  constant in the demo application provided for the chosen microcontroller  architecture is the minimum recommended for any task on that architecture .  If your task uses a lot of stack space , then you must assign a larger value.
+- pvParameters: void — Task functions accept a parameter of type ‘pointer to void ’ ( void* ). The  value assigned to pvParameters will be the value passed into the task.  This parameter has the type ‘pointer to void ’ to allow the task parameter to  effectively, and indirectly by means of casting, receive a parameter of any  type. For example, integer types can be passed into a task function by  casting the integer to a void pointer at the point the task is created, then by  casting the void pointer parameter back to an integer in the task function  definition itself.
+- uxPriority: UBaseType_t — Defines the priority at which the task will execute. Priorities can be assigned  from 0, which is the lowest priority , to (configMAX_PRIORITIES – 1), which  is the highest priority .  configMAX_PRIORITIES is a user defined constant. If  configUSE_PORT_OPTIMISED_TASK_SELECTION is set to 0 then t here is  no upper limit to the number of priorities that can be available (other than the  limit of the data types used and the RAM available in your microcontroller),  but it is advised to use the lowest number of priorities required , to avoid  wasting RAM.  Passing a uxPriority value above (configMAX_PRIORITIES – 1) will result in  the priority assigned to the task being capped silently to the maximum  legitimate value.
+- pxCreatedTask: TaskHandle_t — pxCreatedTask can be used to pass out a handle to the task being created.  This handle can then be used to reference the task in API calls that, for
+Return values:
+- BaseType_t: pdPASS Indicates that the task has been
+created successfully.
+errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY  Indicates that the task could not be
+created because there was
+insufficient heap memory available for
+FreeRTOS to allocate the task data
+structures and stack.
+If heap_1.c , heap_2.c  or heap_4.c
+are included in the project then the
+total amount of heap available is
+defined by configTOTAL_HEAP_SIZE
+in FreeRTOSConfig.h , and failure to
+allocate memory can be trapped
+using the
+vApplicationMallocFailedHook()
+callback (or ‘hook’) function , and the
+amount of free heap memory
+remaining can be queried using the
+xPortGetFreeHeapSize()  API
+function.
+If heap_3.c is included in the project
+then the total heap size is defined by
+the linker  configuration .
+Notes:
+configSUPPORT_DYNAMIC_ALLOCATION must be set to 1 in FreeRTOSConfig.h, or simply
+left undefined, for this function to be available.
+Example:
+If your application has no use for the task handle , then pxCreatedTask can
+be set to NULL.
+/* Define a structure called xStruct and a variable of type xStruct.  These are just used to
+demonstrate a parameter being passed into a task function. */
+typedef struct A_STRUCT
+{
+char cStructMember1;
+char cStructMember2;
+} xStruct;
+/* Define a variable of the type xStruct to pass as the task parameter. */
+xStruct xParameter = { 1, 2 };
+/* Define the task that will be created.  Note the name of the function that implements the task
+is used as the first parameter in the call to xTaskCreate() below. */
+void vTaskCode( void * pvParameters )
+{
+xStruct *pxParameters;
+/* Cast the void * parameter back to the required type. */
+pxParameters = ( xStruct * ) pvParameters;
+/* The parameter can now be accessed as expected. */
+if( pxParameters ->cStructMember1 != 1 )
+{
+/* Etc. */
+}
+/* Enter an infinite loop to perform the task processing. */
+for( ;; )
+{
+/* Task code goes here. */
+}
+}
+/* Define a function that creates a task.  This could be called eithe r before or  after the
+scheduler has been started. */
+void vAnotherFunction( void )
+{
+TaskHandle_t  xHandle;
+/* Create the task. */
+if( xTaskCreate(
+vTaskCode,          /* Pointer to the function that implements the task. */
+"Demo task",        /* Text name given to the task. */
+STACK_SIZE,         /* The size of the s tack that should be created for  the task.
+This is defined in words, not bytes. */
+(void*) &xParameter, /* A reference to xParameters is used as the task  parameter.
+This is cast to a void * to prevent compiler warnings. */
+TASK_PRIORITY,       /* The priority to assign  to the newly created task.  */
+&xHandle            /* The handle to the task being created will be placed in
+xHandle. */
+) != pdPASS )
+{
+/* The task could not be created as there was insufficient heap memory remaining. If
+heap_1.c,  heap_2.c or heap_4.c are included in the project then this situation  can be
+trapped using the vApplicationMallocFailedHook() callback (or ‘hook’) function,  and the
+amount of FreeRTOS  heap memory that remains unallocated can be queried using the
+xPortGetFreeHeapSize()  API function. */
+}
+else
+{
+/* The task was created successfully. The handle can now be used in other API functions,
+for example to change the priority of the task. */
+vTaskPrioritySet( xHandle, 2 );
+}
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

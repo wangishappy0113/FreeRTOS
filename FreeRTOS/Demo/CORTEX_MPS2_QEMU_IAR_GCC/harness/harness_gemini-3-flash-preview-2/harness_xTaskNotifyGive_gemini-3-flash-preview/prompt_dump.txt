@@ -1,0 +1,114 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xTaskNotifyGive
+
+### Function xTaskNotifyGive
+Signature: BaseType_t xTaskNotifyGive(TaskHandle_t xTaskToNotify);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- xTaskToNotify: TaskHandle_t — The handle of the task being notified and having its notification value  incremented .  To obtain a task’s handle create the task using xTaskCreate() and make use  of the pxCreatedTask parameter, or create the task using xTaskCreateStatic()  and store the returned value, or use the task’s name in a call to  xTaskGetHandle().
+Return values:
+- BaseType_t: xTaskNotifyGive() is a macro that calls xTaskNotify() with the eAction parameter set to
+eIncrement .  Therefor e pdPASS is always returned.
+Related configs: configUSE_TASK_NOTIFICATIONS
+Related APIs: ulTaskNotifyTake, xSemaphoreGive, xTaskNotifyWait
+Reference snippets:
+- Incoming of vTaskGenericNotifyGiveFromISR (rel:in:vTaskGenericNotifyGiveFromISR#c0) :: incoming: MPU_vTaskGenericNotifyGiveFromISR
+- Call vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:pdTRUE:ANY(0) (edge:vTaskGenericNotifyGiveFromISR->/home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:pdTRUE:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8305#c0) :: Call: vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/projdefs.h:pdTRUE:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8305 callee_kind=macro
+- Call vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0) (edge:vTaskGenericNotifyGiveFromISR->/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8248#c0) :: Call: vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8248 callee_kind=macro
+- Call vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskWAITING_NOTIFICATION:ANY(0) (edge:vTaskGenericNotifyGiveFromISR->/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskWAITING_NOTIFICATION:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8258#c0) :: Call: vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskWAITING_NOTIFICATION:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8258 callee_kind=macro
+- Call vTaskGenericNotifyGiveFromISR -> <operator>.assignment (edge:vTaskGenericNotifyGiveFromISR-><operator>.assignment:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8240#c0) :: Call: vTaskGenericNotifyGiveFromISR -> <operator>.assignment at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8240 callee_kind=operator
+- Call vTaskGenericNotifyGiveFromISR -> <operator>.assignment (edge:vTaskGenericNotifyGiveFromISR-><operator>.assignment:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8305#c0) :: Call: vTaskGenericNotifyGiveFromISR -> <operator>.assignment at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8305 callee_kind=operator
+- xTaskNotifyGive :: BaseType_t xTaskNotifyGive(TaskHandle_t xTaskToNotify); Each task has a 32 -bit notification value that is initialized  to zero when the task is created.  A task notification is an event sent directly to a task that can unblock the receiving task, and
+- xTaskNotifyGive :: BaseType_t xTaskNotifyGive(TaskHandle_t xTaskToNotify); Each task has a 32 -bit notification value that is initialized  to zero when the task is created.  A task notification is an event sent directly to a task that can unblock the receiving task, and
+
+Official documentation (full):
+Title: xTaskNotifyGive
+Signature: BaseType_t xTaskNotifyGive(TaskHandle_t xTaskToNotify);
+Summary:
+Each task has a 32 -bit notification value that is initialized  to zero when the task is created.  A
+task notification is an event sent directly to a task that can unblock the receiving task, and
+optio nally update the receiving task’ s notification value.
+xTaskNotifyGive() is a mac ro intended for use when a  task notification value is being used as
+a light er weight and faster alternative to a binary semaphore or a counting semaphore .
+FreeRTOS semaphores are given using the xSemaphoreGive() API function, and
+xTaskNotifyGive() is the equivalent that uses the receiving task's notification value instead of a
+separate semaphore  object .
+Parameters:
+- xTaskToNotify: TaskHandle_t — The handle of the task being notified and having its notification value  incremented .  To obtain a task’s handle create the task using xTaskCreate() and make use  of the pxCreatedTask parameter, or create the task using xTaskCreateStatic()  and store the returned value, or use the task’s name in a call to  xTaskGetHandle().
+Return values:
+- BaseType_t: xTaskNotifyGive() is a macro that calls xTaskNotify() with the eAction parameter set to
+eIncrement .  Therefor e pdPASS is always returned.
+Notes:
+When a task notification value is being used as a binary or counting semaphore then the task
+being notified should wait for the notification using the simpler ulTaskNotifyTake() API function
+rather than the xTaskNotifyWait() API function.
+RTOS task notification functionality is enabled by default, and can be excluded from a build
+(saving 8 bytes per task) by setting configUSE_TASK_NOTIFICATIONS to 0 in
+FreeRTOSConfig.h.
+Example:
+/* Prototypes of the two tasks created by main(). */
+static void prvTask1( void *pvParameters );
+static void prvTask2( void * pvParameters );
+/* Handles for the tasks create by main(). */
+static TaskHandle_t xTask1 = NULL, xTask2 = NULL;
+/* Create two tasks that send notifications back and forth to each other, then
+start the RTOS scheduler. */
+void main( void )
+{
+xTaskCreate( prvTask1, "Task1", 200, NULL, tskIDLE_PRIORITY, &xTask1 );
+xTaskCreate( prvTask2, "Task2", 200, NULL, tskIDLE_PRIORITY, &xTask2 );
+vTaskStartScheduler();
+}
+/*----------------------------------------------------------- */
+static void prvTask1( void *pvParameters )
+{
+for( ;; )
+{
+/* Send a notification to prvTask2(), bringing it out of the Blocked
+state. */
+xTaskNotifyGive( xTask2 );
+/* Block to wait for prvTask2() to notify this task. */
+ulTaskNotifyTake( pdTRUE, portMAX_DELAY );
+}
+}
+/*----------------------------------------------------------- */
+static void prvTask2( void *pvParameters )
+{
+for( ;; )
+{
+/* Block to wait for prvTask1() to notify this task. */
+ulTaskNotifyTake( pdTRUE, portMAX_DELAY );
+/* Send a notification to prvTask1(), bringing it out of the Blocked
+state. */
+xTaskNotifyGive( xTask1 );
+}
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

@@ -1,0 +1,120 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xSemaphoreCreateBinaryStatic
+
+### Function xSemaphoreCreateBinaryStatic
+Signature: SemaphoreHandle_t xSemaphoreCreateBinaryStatic(StaticSemaphore_t *pxSemaphoreBuffer);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- pxSemaphoreBuffer: StaticSemaphore_t — Must point to a variable of type StaticSemaphore_t, which will be used  to hold the semaphore ’s state.
+Return values:
+- SemaphoreHandle_t: The semaphore could not be created because pxSemaphoreBuffer was
+NULL.
+Any other value  The semaphore was created successfully.  The returned value is a handle
+by which the created semaphore can be referenced.
+Related configs: configSUPPORT_STATIC_ALLOCATION, xSema, xSemaphoreGi
+Related APIs: phoreTake, vSemaphoreCreateBinary, veFromISR, xSemaphoreCreateBinary, xSemaphoreTake
+Reference snippets:
+- API xSemaphoreCreateBinaryStatic Overview (api:xSemaphoreCreateBinaryStatic:overview#c0) :: API: xSemaphoreCreateBinaryStatic Signature: SemaphoreHandle_t xSemaphoreCreateBinaryStatic(StaticSemaphore_t *pxSemaphoreBuffer); Headers: semphr.h, FreeRTOS.h Summary: Creates a binary semaphore, and returns a handle by which the semaphore can be referenced. Each binary semaphore require s a small amount of RAM that …
+- API xSemaphoreCreateBinaryStatic Example (api:xSemaphoreCreateBinaryStatic:example#c0) :: API: xSemaphoreCreateBinaryStatic Section: example SemaphoreHandle_t  xSemaphore Handle; StaticSemaphore_t xSemaphoreBuffer; void vATask( void * pvParameters ) { /* Create a binary semaphore without using any dynamic memory allocation . */ xSemaphoreHandle = x SemaphoreCreateBinaryStatic( &xSemaphoreBuffer ); /* pxSema…
+- API xSemaphoreCreateBinary Overview (api:xSemaphoreCreateBinary:overview#c0) :: API: xSemaphoreCreateBinary Signature: SemaphoreHandle_t xSemaphoreCreateBinary(void); Headers: semphr.h, FreeRTOS.h Summary: Creates a binary semaphore, and returns a handle by which the semaphore can be referenced. Each binary semaphore require s a small amount of RAM that is used to hold the semaphore’s state.  If a…
+- API xSemaphoreCreateBinaryStatic Parameters (api:xSemaphoreCreateBinaryStatic:parameters#c0) :: API: xSemaphoreCreateBinaryStatic Section: parameters param pxSemaphoreBuffer: StaticSemaphore_t Must point to a variable of type StaticSemaphore_t, which will be used  to hold the semaphore ’s state.
+- API xSemaphoreCreateBinaryStatic Notes (api:xSemaphoreCreateBinaryStatic:notes#c0) :: API: xSemaphoreCreateBinaryStatic Section: notes Direct to task notifications normally provide a lighter weight and faster alternative to binary semaphores. Binary semaphores and mutexes are very similar , but do have some subtle differences . Mutexes include a priority inheritance mechanism, binary semaphores do not. …
+- API xSemaphoreCreateBinaryStatic Returns (api:xSemaphoreCreateBinaryStatic:returns#c0) :: API: xSemaphoreCreateBinaryStatic Section: returns returns SemaphoreHandle_t: The semaphore could not be created because pxSemaphoreBuffer was NULL. Any other value  The semaphore was created successfully.  The returned value is a handle by which the created semaphore can be referenced.
+- xSemaphoreCreateBinaryStatic :: SemaphoreHandle_t xSemaphoreCreateBinaryStatic(StaticSemaphore_t *pxSemaphoreBuffer); Creates a binary semaphore, and returns a handle by which the semaphore can be referenced.
+- xSemaphoreCreateBinaryStatic :: SemaphoreHandle_t xSemaphoreCreateBinaryStatic(StaticSemaphore_t *pxSemaphoreBuffer); Creates a binary semaphore, and returns a handle by which the semaphore can be referenced.
+
+Official documentation (full):
+Title: xSemaphoreCreateBinaryStatic
+Signature: SemaphoreHandle_t xSemaphoreCreateBinaryStatic(StaticSemaphore_t *pxSemaphoreBuffer);
+Summary:
+Creates a binary semaphore, and returns a handle by which the semaphore can be
+referenced.
+Each binary semaphore require s a small amount of RAM that is used to hold the semaphore’s
+state.  If a binary semaphore is created using xSemaphoreCreateBinary() then the required
+RAM is automatically allocated from the FreeRTOS heap.  If a binary semaphore is created
+using xSemaphoreCreateBinaryStatic() then the RAM is provided by the application writer,
+which requires an additional parameter, but allows the RAM to be statically allocated at
+compile time .
+The semaphore is created in the ‘empty’ state, meaning the semaphore must first be given
+before it can be taken (obtained) using the xSemaphoreTake() function.
+Parameters:
+- pxSemaphoreBuffer: StaticSemaphore_t — Must point to a variable of type StaticSemaphore_t, which will be used  to hold the semaphore ’s state.
+Return values:
+- SemaphoreHandle_t: The semaphore could not be created because pxSemaphoreBuffer was
+NULL.
+Any other value  The semaphore was created successfully.  The returned value is a handle
+by which the created semaphore can be referenced.
+Notes:
+Direct to task notifications normally provide a lighter weight and faster alternative to binary
+semaphores.
+Binary semaphores and mutexes are very similar , but do have some subtle differences .
+Mutexes include a priority inheritance mechanism, binary semaphores do not. This makes
+binary semaphores the better choice for implementing synchronization (between tasks or
+between an interrupt  and a  task), and mutexes the better choice for implementing simple
+mutual exclusion.
+Binary Semaphores – A binary semaphore used for synchronization does not need to be
+‘given ’ back after it has been successfully  ‘taken’ ( obtained ).  T ask synchronization is
+implemented by  having one task  or interrupt ‘give’ the semaphore , and  another task ‘take’  the
+semaphore  (see the xSemaphoreGi veFromISR() documentation).  Note the same functionality
+can often be achieved in a more efficient way using a direct to task notification.
+Mutexes – The priority of a task that holds a mutex will be raised if another task of higher
+priority attempts to obtain the same mutex.   The task that already holds  the mutex is said to
+‘inherit’  the priority of the task that is attem pting to ‘take’ the same mutex.  The inherited
+priority will be ‘disinherited’ when the mutex is returned (the task that inherited a higher priority
+while it held a mutex will return to its original priority when the mutex is returned).
+A task that obtains a mutex that is used for mutual exclusion must always give the mutex back
+– otherwise no other task will ever be able to obtain the same mutex .  An example of a mutex
+being used to implemen t mutual exclusion is provided i n the xSema phoreTake() section of this
+manual.
+Mutexes and binary semaphores are both referenced using variables that have an
+SemaphoreHandle_t type,  and can be used in any API function that takes a parameter of that
+type.
+Mutexes and binary semaphores that were created using the vSemaphoreCreateBinary()
+macro (as opposed to the preferred xSemaphoreCreateBinary() function) are both created
+such that the first call to xSemaphoreTake() on the semaphore or mutex will pass.  Note
+vSemaphoreCreateBinary() is deprecated and must not be used in new applications.  Binary
+semaphores created using the xSemaphoreCreateBinary() function are created ‘empty’, so the
+semaphore must first be given before the semaphore can be taken (obtained) using a call to
+xSemaphoreTake().
+configSUPPORT_STATIC_ALLOCATION must be set to 1 in FreeRTOSConfig.h for this
+function to be available.
+Example:
+SemaphoreHandle_t  xSemaphore Handle;
+StaticSemaphore_t xSemaphoreBuffer;
+void vATask( void * pvParameters )
+{
+/* Create a binary semaphore without using any dynamic memory allocation . */
+xSemaphoreHandle = x SemaphoreCreateBinaryStatic( &xSemaphoreBuffer );
+/* pxSemaphoreBuffer was not NULL so the binary semaphore will have been created,
+and xSemaphoreHandle will be a valid handle.
+The rest of the task code goes here. */
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

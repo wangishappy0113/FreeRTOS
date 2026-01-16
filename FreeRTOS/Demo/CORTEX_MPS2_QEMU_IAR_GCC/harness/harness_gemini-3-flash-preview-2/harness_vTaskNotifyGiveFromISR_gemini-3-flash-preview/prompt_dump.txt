@@ -1,0 +1,134 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test logic inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: vTaskNotifyGiveFromISR
+
+### Function vTaskNotifyGiveFromISR
+Signature: void vTaskNotifyGiveFromISR(TaskHandle_t xTaskToNotify, BaseType_t *pxHigherPriorityTaskWoken);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- xTaskToNotify: TaskHandle_t — The handle of the RTOS task being notified and having its  notification value incremented.  To obtain a task’s handle create the task using xTaskCreate()  and make use of the pxCreatedTask parameter, or create the  task using xTaskCreateStatic() and store the returned value, or  use the task’s name in a call to xTaskGetHandle().
+- pxHigherPriorityTaskWoken: BaseType_t — *pxHigherPriorityTa skWoken must be initialized to pdFALSE .  vTaskNotifyGiveFromISR() will then set  *pxHigherPriorityTaskWoken to pdTRUE if sending the  notification caused the task being notified to leave the Blocked  state, and the unblocked task has a priority above that of the  currently running task.  If vTaskNotifyGiveFromISR() sets this value to pdTRUE then a  context switch should be requested before the interrupt is  exited. See Listing 74 for an example.
+- pxHigherPriorityTaskWoken: BaseType_t — is an optional parameter and can  be set to NULL.
+Return values:
+- void: This function returns no value.
+Related configs: configUSE_TASK_NOTIFICATIONS, xSemaphoreG
+Related APIs: iveFromISR, ulTaskNotifyTake, xTaskNotifyGive, xTaskNotifyWait
+Reference snippets:
+- Incoming of vTaskGenericNotifyGiveFromISR (rel:in:vTaskGenericNotifyGiveFromISR#c0) :: incoming: MPU_vTaskGenericNotifyGiveFromISR
+- Call vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL_FROM_ISR:ANY(1) (edge:vTaskGenericNotifyGiveFromISR->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL_FROM_ISR:ANY(1):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8331#c0) :: Call: vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL_FROM_ISR:ANY(1) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8331 callee_kind=macro
+- Call vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL_FROM_ISR:ANY(0) (edge:vTaskGenericNotifyGiveFromISR->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL_FROM_ISR:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8245#c0) :: Call: vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL_FROM_ISR:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8245 callee_kind=macro
+- Call vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0) (edge:vTaskGenericNotifyGiveFromISR->/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8248#c0) :: Call: vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8248 callee_kind=macro
+- Call vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskWAITING_NOTIFICATION:ANY(0) (edge:vTaskGenericNotifyGiveFromISR->/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskWAITING_NOTIFICATION:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8258#c0) :: Call: vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskWAITING_NOTIFICATION:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8258 callee_kind=macro
+- Incoming of xQueueGiveFromISR (rel:in:xQueueGiveFromISR#c0) :: incoming: MPU_xQueueGiveFromISR
+- vTaskNotifyGiveFromISR :: void vTaskNotifyGiveFromISR(TaskHandle_t xTaskToNotify, BaseType_t *pxHigherPriorityTaskWoken); A version of xTaskNotifyGive() that can be called from an interrupt service routine (ISR). Each task has a 32 -bit notification value that is initialized  to zero when the task is created.  A
+
+Official documentation (full):
+Title: vTaskNotifyGiveFromISR
+Signature: void vTaskNotifyGiveFromISR(TaskHandle_t xTaskToNotify, BaseType_t *pxHigherPriorityTaskWoken);
+Summary:
+A version of xTaskNotifyGive() that can be called from an interrupt service routine (ISR).
+Each task has a 32 -bit notification value that is initialized  to zero when the task is created.  A
+task notification is an event sent directly to a task that can unblock the receiving task, and
+optio nally update the receiving task’ s notification value.
+vTaskNotifyGiveFromISR() is intended for use when a task notification value is being used as
+a lighter weight and faster alternative to a binary semaphore or a counting semaphore.
+FreeRTOS semaphores are given using the xSemaphoreG iveFromISR() API function, and
+vTaskNotifyGiveFromISR() is the equivalent that uses the receiving task's notification value
+instead of a separate semaphore  object .
+Parameters:
+- xTaskToNotify: TaskHandle_t — The handle of the RTOS task being notified and having its  notification value incremented.  To obtain a task’s handle create the task using xTaskCreate()  and make use of the pxCreatedTask parameter, or create the  task using xTaskCreateStatic() and store the returned value, or  use the task’s name in a call to xTaskGetHandle().
+- pxHigherPriorityTaskWoken: BaseType_t — *pxHigherPriorityTa skWoken must be initialized to pdFALSE .  vTaskNotifyGiveFromISR() will then set  *pxHigherPriorityTaskWoken to pdTRUE if sending the  notification caused the task being notified to leave the Blocked  state, and the unblocked task has a priority above that of the  currently running task.  If vTaskNotifyGiveFromISR() sets this value to pdTRUE then a  context switch should be requested before the interrupt is  exited. See Listing 74 for an example.
+- pxHigherPriorityTaskWoken: BaseType_t — is an optional parameter and can  be set to NULL.
+Return values:
+- void: This function returns no value.
+Notes:
+When a task notification value is being used as a binary or counting semaphore then the task
+being notified should wait for the notification using the ulTaskNotifyTake() API function rather
+than the xTaskNotifyWait() API function.
+RTOS task notification functionality is enabled by default, and can be excluded from a build
+(saving 8 bytes per task) by setting configUSE_TASK_NOTIFICATIONS to 0 in
+FreeRTOSConfig.h.
+Example:
+This is an example of a transmit function in a generic peripheral driver.  An  task calls the
+transmit function, then waits in the Blocked state (so not using an CPU time) until it is notified
+that the transmission is complete.  The transmission is performed by a DMA, and the DMA end
+interrupt is used to notify the task.
+static TaskHandle_t xTaskToNotify = NULL;
+/* The peripheral driver's transmit function. */
+void StartTransmission( uint8_t *pcData, size_t xDataLength )
+{
+/* At this point xTaskToNotify  should be NULL as no transmission is in  progress.
+A mutex can be used to guard access to the peripheral if  necessary. */
+configASSERT( xTaskToNotify == NULL );
+/* Store the handle of the calling task. */
+xTaskToNotify = xTaskGetCurrentTaskHandle();
+/* Start the transmission - an interrupt is generated when the transmission
+is complete. */
+vStartTransmit( pcData, xDataLength  );
+}
+/*----------------------------------------------------------- */
+/* The transmit end interrupt. */
+void vTransmitEndISR( void )
+{
+BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+/* At this point xTaskToNotify should not be NULL as a transmission was in
+progress. */
+configASSERT( xTaskToNotify != NULL );
+/* Notify the task that the transmission is complete. */
+vTaskNotifyGiveFromISR( xTaskToNotify, &xHigherPriorityTaskWoken );
+/* There are no transmissions in progress, so no tasks to notify. */
+xTaskToNotify = NULL;
+/* If xHigherPriorityTaskWoken is now set to pdTRUE then a context switch
+should be performed to ensure the interrupt returns directly to the highest
+priority task.  The macro used for this purpose is dependent on the port in
+use and may be called portEND_SWITCHING_ISR(). */
+portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
+}
+/*----------------------------------------------------------- */
+/* The task that initiates the transmission, then enters the Blocked state (so
+not consuming any CPU time) to wait for it to complete. */
+void vAFunctionCalledFromATask( uint8_t ucDataToTransmit, size_t xDataLength )
+{
+uint32_t ulNotificationValue;
+const TickType_t xMaxBlockTime = pdMS_TO_TICKS( 200 );
+/* Start the transmission by calling the function shown above. */
+StartTransmission( ucDataToTransmit, xDataLength );
+/* Wait for the transmission to complete. */
+ulNotificationValue = ulTaskNotifyTake( pdFALSE, xMaxBlockTime );
+if( ulNotificationValue == 1 )
+{
+/* The transmission ended as expected. */
+}
+else
+{
+/* The call to ulTaskNotifyTake() timed out. */
+}
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

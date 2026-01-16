@@ -1,0 +1,116 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test logic inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xMessageBufferSendFromISR
+
+### Function xMessageBufferSendFromISR
+Signature: size_t xMessageBufferSendFromISR(MessageBufferHandle_t xMessageBuffer, const void *pvTxData, size_t xDataLengthBytes, BaseType_t *pxHigherPriorityTaskWoken);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- xMessageBuffer: MessageBufferHandle_t — The handle of the message buffer to which a message is being  sent.
+- pvTxData: const void — A pointer to the message that is to be copied into the message  buffer.
+- xDataLengthBytes: size_t — The length of the message. That is, the number of bytes to copy  from pvTxData into the message buffer. When a message is  written to the message buffer an additional sizeof( size_t ) bytes  are also written to store the message's length. sizeof( size_t ) is  typically 4 bytes on a 32 -bit architecture, so on most 32 -bit  architecture setting xDataLengthBytes to 20 will reduce the free  space in the message buffer by 24 bytes (20 bytes of message  data and 4 bytes to hold the message length).
+- pxHigherPriorityTaskWoken: BaseType_t — It is possible that a message buffer will have a task blocked on it  waiting for data. Calling xMessageBufferSendFromISR() can  make data available, and so cause a task that was waiting for  data to leave the Blocked state. If calling  xMessageBufferSendFromISR() causes a task to leave the  Blocked state, and the unblocked task has a priority higher than  the currently executing task (the task that was interrupted), then,  internally, xMessageBufferSendFromISR() will set  *pxHigherPriorityTaskWoken to pdTRUE. If  xMessageBufferSendFromISR() sets this value to pdTRUE,  then normally a context switch should be performed before the  interrupt is exited. This will ensure that the interrupt returns  directly to the highest priority Ready state task.  *pxHigherPriorityTaskWoken should be set to pdFALSE befo re  it is passed into the function. See the code example below for  an example.
+Return values:
+- size_t: The number of bytes actually written to the message buffer. If the message buffer didn't have
+enough free space for the message to be stored then 0 is returned, otherwise
+xDataLengthBytes is returned.
+Related configs: none
+Related APIs: xMessageBufferRead, xMessageBufferSend
+Reference snippets:
+- API xMessageBufferSendFromISR Related (api:xMessageBufferSendFromISR:related#c0) :: API: xMessageBufferSendFromISR Section: related related: xMessageBufferRead, xMessageBufferSend
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/stream_buffer.c:prvSEND_COMPLETE_FROM_ISR:ANY(2) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/stream_buffer.c:prvSEND_COMPLETE_FROM_ISR:ANY(2)#c0) :: incoming: xStreamBufferSendFromISR
+- API xMessageBufferSend Related (api:xMessageBufferSend:related#c0) :: API: xMessageBufferSend Section: related related: xMessageBufferRead, xMessageBufferSendFromISR
+- Incoming of prvWriteMessageToBuffer (rel:in:prvWriteMessageToBuffer#c0) :: incoming: xStreamBufferSend, xStreamBufferSendFromISR
+- Incoming of xStreamBufferSendFromISR (rel:in:xStreamBufferSendFromISR#c0) :: incoming: MPU_xStreamBufferSendFromISR
+- API xStreamBufferSendFromISR Related (api:xStreamBufferSendFromISR:related#c0) :: API: xStreamBufferSendFromISR Section: related related: xStreamBufferRead, xStreamBufferSend
+- xMessageBufferSendFromISR :: size_t xMessageBufferSendFromISR(MessageBufferHandle_t xMessageBuffer, const void *pvTxData, size_t xDataLengthBytes, BaseType_t *pxHigherPriorityTaskWoken); Interrupt safe version of the API function that sends a discrete message to the message buffer. The message can be any length that fits within the buffer's free space, and is copied
+
+Official documentation (full):
+Title: xMessageBufferSendFromISR
+Signature: size_t xMessageBufferSendFromISR(MessageBufferHandle_t xMessageBuffer, const void *pvTxData, size_t xDataLengthBytes, BaseType_t *pxHigherPriorityTaskWoken);
+Summary:
+Interrupt safe version of the API function that sends a discrete message to the message
+buffer. The message can be any length that fits within the buffer's free space, and is copied
+into the buffer.
+Parameters:
+- xMessageBuffer: MessageBufferHandle_t — The handle of the message buffer to which a message is being  sent.
+- pvTxData: const void — A pointer to the message that is to be copied into the message  buffer.
+- xDataLengthBytes: size_t — The length of the message. That is, the number of bytes to copy  from pvTxData into the message buffer. When a message is  written to the message buffer an additional sizeof( size_t ) bytes  are also written to store the message's length. sizeof( size_t ) is  typically 4 bytes on a 32 -bit architecture, so on most 32 -bit  architecture setting xDataLengthBytes to 20 will reduce the free  space in the message buffer by 24 bytes (20 bytes of message  data and 4 bytes to hold the message length).
+- pxHigherPriorityTaskWoken: BaseType_t — It is possible that a message buffer will have a task blocked on it  waiting for data. Calling xMessageBufferSendFromISR() can  make data available, and so cause a task that was waiting for  data to leave the Blocked state. If calling  xMessageBufferSendFromISR() causes a task to leave the  Blocked state, and the unblocked task has a priority higher than  the currently executing task (the task that was interrupted), then,  internally, xMessageBufferSendFromISR() will set  *pxHigherPriorityTaskWoken to pdTRUE. If  xMessageBufferSendFromISR() sets this value to pdTRUE,  then normally a context switch should be performed before the  interrupt is exited. This will ensure that the interrupt returns  directly to the highest priority Ready state task.  *pxHigherPriorityTaskWoken should be set to pdFALSE befo re  it is passed into the function. See the code example below for  an example.
+Return values:
+- size_t: The number of bytes actually written to the message buffer. If the message buffer didn't have
+enough free space for the message to be stored then 0 is returned, otherwise
+xDataLengthBytes is returned.
+Notes:
+Uniquely among FreeRTOS objects, the stream buffer implementation (so also the message
+buffer implementation, as message buffers are built on top of stream buffers) assumes there is
+only one task or interrupt that will write to the buffer (the writer), and only one task or interrupt
+that will read from the buffer (the reader). It is safe for the writer and reader to be different
+tasks or interrupts, but, unlike other FreeRTOS objects, it is not safe to have multiple different
+writers or multiple different readers. If there are to be multiple different writers then the
+application writer must place each call to a writing API function (such as
+xMessageBufferSend()) inside a critical section and use a send block time of 0. Likewise, if
+there are to be multiple different readers then the application writer must place each call to a
+reading API function (such as xMessageBufferRead()) inside a critical section and use a
+receive block time of 0.
+Use xMessageBufferSend()  to write to a message buffer from a task. Use
+xMessageBufferSendFromISR() to write to a message buffer from an interrupt service routine
+(ISR).
+Message buffer functionality is enabled by including the FreeRTOS/source/stream_buffer.c
+source file in the build (as message buffers use stream buffers).
+Example:
+/* A message buffer that has already been created. */
+MessageBufferHandle_t xMessageBuffer;
+void vAnInterruptServiceRoutine( void )
+{
+size_t xBytesSent;
+char *pcStringToSend = "String to send";
+BaseType_t xHigherPriorityTaskWoken = pdFALSE; /* Initialised to pdFALSE. */
+/* Attempt to send the string to the message buffer. */
+xBytesSent = xMessageBufferSendFromISR( xMessageBuffer,
+( void * ) pcStringToSend,
+strlen( pcStringToSend ),
+&xHigherPriorityTaskWoken );
+if( xBytesSent != strlen( pcStringToSend ) )
+{
+/* The string could not be added to the message buffer because there was
+not enough free space in the buffer. */
+}
+/* If xHigherPriorityTaskWoken was set to pdTRUE inside
+xMessageBufferSendFromISR() then a task that has a priority above the
+priority of the currently executing task was unblocked and a context
+switch should be performed to ensure the ISR returns to the unblocked
+task.  In most FreeRTOS ports this is done by simply passing
+xHigherPriorityTaskWoken into taskYIELD_FROM_ISR(), which will test the
+variables value, and perform the context switch if necessary.  Check the
+documentation for the port in use for port specific instructions. */
+taskYIELD_FROM_ISR( xHigherPriorityTaskWoken );
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

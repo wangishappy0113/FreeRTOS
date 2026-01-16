@@ -1,0 +1,541 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test logic inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. IMPORTANT: In this project template, FR_init has the signature: FR_Reader FR_init(const unsigned char* buf, size_t n). Correct usage: FR_Reader fr = FR_init(FUZZ_INPUT, MAX_FUZZ_INPUT_SIZE). Do NOT call FR_init with 3 arguments and do NOT pass an FR_Reader* to FR_init. Also note: the input length macro is MAX_FUZZ_INPUT_SIZE (there is no FUZZ_INPUT_SIZE). Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xTaskGetApplicationTaskTag, files , xTaskCallApplicationTaskHook, vTaskSetApplicationTaskTag, xAnExampleTaskHookFunction
+
+### Function xTaskGetApplicationTaskTag
+Signature: TaskHookFunction_t xTaskGetApplicationTaskTag( TaskHandle_t xTask )
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:None-None
+Cyclomatic: None Lines: None
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: none
+Incoming callers count: 0
+Full source code:
+TaskHookFunction_t xTaskGetApplicationTaskTag( TaskHandle_t xTask )
+{
+        TCB_t * pxTCB;
+        TaskHookFunction_t xReturn;
+
+        traceENTER_xTaskGetApplicationTaskTag( xTask );
+
+        /* If xTask is NULL then set the calling task's hook. */
+        pxTCB = prvGetTCBFromHandle( xTask );
+        configASSERT( pxTCB != NULL );
+
+        /* Save the hook function in the TCB.  A critical section is required as
+         * the value can be accessed from an interrupt. */
+        taskENTER_CRITICAL();
+        {
+            xReturn = pxTCB->pxTaskTag;
+        }
+        taskEXIT_CRITICAL();
+
+        traceRETURN_xTaskGetApplicationTaskTag( xReturn );
+
+        return xReturn;
+    }
+Official docs (summary):
+Parameters:
+- xTask: TaskHandle_t — The handle of the task being queried . This is the subject task.  A task can obtain its own tag value by either using its own task handle, or by using  NULL in place of a valid task handle.
+Return values:
+- TaskHookFunction_t: The ‘tag’ value of the task being queried.
+Related configs: configUSE_APPLICATION_TASK_TAG
+Related APIs: traceTASK_SWITCHED_IN, xTaskCallApplicationTaskHook
+Reference snippets:
+- API xTaskGetApplicationTaskTag Overview (api:xTaskGetApplicationTaskTag:overview#c0) :: API: xTaskGetApplicationTaskTag Signature: TaskHookFunction_t xTaskGetApplicationTaskTag(TaskHandle_t xTask); Headers: task.h, FreeRTOS.h Summary: Returns the ‘tag’ value associated with a task.  The meaning and use of the tag value is defined by the application writer.  The kernel itself will not normally access the t…
+- API xTaskGetApplicationTaskTag Returns (api:xTaskGetApplicationTaskTag:returns#c0) :: API: xTaskGetApplicationTaskTag Section: returns returns TaskHookFunction_t: The ‘tag’ value of the task being queried.
+- API xTaskGetApplicationTaskTag Parameters (api:xTaskGetApplicationTaskTag:parameters#c0) :: API: xTaskGetApplicationTaskTag Section: parameters param xTask: TaskHandle_t The handle of the task being queried . This is the subject task.  A task can obtain its own tag value by either using its own task handle, or by using  NULL in place of a valid task handle.
+- API xTaskGetApplicationTaskTag Related (api:xTaskGetApplicationTaskTag:related#c0) :: API: xTaskGetApplicationTaskTag Section: related related: traceTASK_SWITCHED_IN, xTaskCallApplicationTaskHook
+- API xTaskGetApplicationTaskTag Notes (api:xTaskGetApplicationTaskTag:notes#c0) :: API: xTaskGetApplicationTaskTag Section: notes The tag value can be used to hold a function pointer.  When this is done the function assigned to the tag value can be called using the xTaskCallApplicationTaskHook() API function.  This technique is in effect assigning a callback function to the task.  It is common for su…
+- API xTaskGetApplicationTaskTag Example (api:xTaskGetApplicationTaskTag:example#c1) :: e returned tag value is stored in an integer, so cast to an integer to prevent compiler warnings. */ lReturnedTaskHandle = ( long  ) xTaskGetApplicationTaskTag(  xHandle ); } }
+- xTaskGetApplicationTaskTag :: TaskHookFunction_t xTaskGetApplicationTaskTag(TaskHandle_t xTask); Returns the ‘tag’ value associated with a task.  The meaning and use of the tag value is defined by the application writer.  The kernel itself will not normally access the tag value.
+
+Official documentation (full):
+Title: xTaskGetApplicationTaskTag
+Signature: TaskHookFunction_t xTaskGetApplicationTaskTag(TaskHandle_t xTask);
+Summary:
+Returns the ‘tag’ value associated with a task.  The meaning and use of the tag value is
+defined by the application writer.  The kernel itself will not normally access the tag value.
+This function is intended for advanced users only.
+Parameters:
+- xTask: TaskHandle_t — The handle of the task being queried . This is the subject task.  A task can obtain its own tag value by either using its own task handle, or by using  NULL in place of a valid task handle.
+Return values:
+- TaskHookFunction_t: The ‘tag’ value of the task being queried.
+Notes:
+The tag value can be used to hold a function pointer.  When this is done the function assigned
+to the tag value can be called using the xTaskCallApplicationTaskHook() API function.  This
+technique is in effect assigning a callback function to the task.  It is common for such a
+callback to be used in combination with the traceTASK_SWITCHED_IN() macro to implement
+an execution trace feature.
+configUSE_APPLICATION_TASK_TAG must be set to 1 in FreeRTOSConfig.h for
+xTaskGetApplicationTaskTag () to be available.
+Example:
+/* In this example, an integer is set as the task tag value. */
+void vATask( void *pvParameters )
+{
+/* Assign a tag value of 1 to the currently executing task. The (void *) cast
+is used to prevent compiler warnings. */
+vTaskSetApplicationTaskTag( NULL, ( void * ) 1 );
+for( ;; )
+{
+/* Rest of task code goes here. */
+}
+}
+void vAFunction( void )
+{
+TaskHandle_t  xHandle;
+long lReturnedTaskHandle;
+/* Create a task from the vATask() function, storing the handle to the created
+task in the xTask variable. */
+/* Create the task. */
+if( xTaskCreate(
+vATask,             /* Pointer to the function that implements the task. */
+"Demo task",        /* Text name given to the task. */
+STACK_SIZE,         /* The size of the stack that should be created for the task.
+This is defined in words, not bytes. */
+NULL,               /* The task does not use the parameter. */
+TASK_PRIORITY,      /* The priority to assign to the newly created task. */
+&xHandle            /* The handle to the task being created will be placed in
+xHandle. */
+) == pdPASS )
+{
+/* The task was created successfully.  Delay for a short period to allow
+the task to run. */
+vTaskDelay( 100 );
+/* What tag value is assigned to the task?  The returned tag value is
+stored in an integer, so cast to an integer to prevent compiler warnings. */
+lReturnedTaskHandle = ( long  ) xTaskGetApplicationTaskTag(  xHandle );
+}
+}
+
+### Function files 
+Signature: to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * https://www.FreeRTOS.org
+ * https://github.com/FreeRTOS
+ *
+ */
+
+
+#include <stdlib.h>
+
+/* Defining MPU_WRAPPERS_INCLUDED_FROM_API_FILE prevents task.h from redefining
+ * all the API functions to use the MPU wrappers.  That should only be done when
+ * task.h is included from an application file. */
+#define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+
+#include "FreeRTOS.h"
+#include "list.h"
+
+/* The MPU ports require MPU_WRAPPERS_INCLUDED_FROM_API_FILE to be
+ * defined for the header files above, but not in this file, in order to
+ * generate the correct privileged Vs unprivileged linkage and placement. */
+#undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+
+/*-----------------------------------------------------------
+* PUBLIC LIST API documented in list.h
+*----------------------------------------------------------*/
+
+void vListInitialise( List_t * const pxList )
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/list.c:None-None
+Cyclomatic: None Lines: None
+Includes: stdlib.h, FreeRTOS.h, list.h
+Outgoing calls summary: none
+Incoming callers count: 0
+Full source code:
+to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * https://www.FreeRTOS.org
+ * https://github.com/FreeRTOS
+ *
+ */
+
+
+#include <stdlib.h>
+
+/* Defining MPU_WRAPPERS_INCLUDED_FROM_API_FILE prevents task.h from redefining
+ * all the API functions to use the MPU wrappers.  That should only be done when
+ * task.h is included from an application file. */
+#define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+
+#include "FreeRTOS.h"
+#include "list.h"
+
+/* The MPU ports require MPU_WRAPPERS_INCLUDED_FROM_API_FILE to be
+ * defined for the header files above, but not in this file, in order to
+ * generate the correct privileged Vs unprivileged linkage and placement. */
+#undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+
+/*-----------------------------------------------------------
+* PUBLIC LIST API documented in list.h
+*----------------------------------------------------------*/
+
+void vListInitialise( List_t * const pxList )
+{
+    traceENTER_vListInitialise( pxList );
+
+    /* The list structure contains a list item which is used to mark the
+     * end of the list.  To initialise the list the list end is inserted
+     * as the only list entry. */
+    pxList->pxIndex = ( ListItem_t * ) &( pxList->xListEnd );
+
+    listSET_FIRST_LIST_ITEM_INTEGRITY_CHECK_VALUE( &( pxList->xListEnd ) );
+
+    /* The list end value is the highest possible value in the list to
+     * ensure it remains at the end of the list. */
+    pxList->xListEnd.xItemValue = portMAX_DELAY;
+
+    /* The list end next and previous pointers point to itself so we know
+     * when the list is empty. */
+    pxList->xListEnd.pxNext = ( ListItem_t * ) &( pxList->xListEnd );
+    pxList->xListEnd.pxPrevious = ( ListItem_t * ) &( pxList->xListEnd );
+
+    /* Initialize the remaining fields of xListEnd when it is a proper ListItem_t */
+    #if ( configUSE_MINI_LIST_ITEM == 0 )
+    {
+        pxList->xListEnd.pvOwner = NULL;
+        pxList->xListEnd.pxContainer = NULL;
+        listSET_SECOND_LIST_ITEM_INTEGRITY_CHECK_VALUE( &( pxList->xListEnd ) );
+    }
+    #endif
+
+    pxList->uxNumberOfItems = ( UBaseType_t ) 0U;
+
+    /* Write known values into the list if
+     * configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES is set to 1. */
+    listSET_LIST_INTEGRITY_CHECK_1_VALUE( pxList );
+    listSET_LIST_INTEGRITY_CHECK_2_VALUE( pxList );
+
+    traceRETURN_vListInitialise();
+}
+
+### Function xTaskCallApplicationTaskHook
+Signature: BaseType_t xTaskCallApplicationTaskHook( TaskHandle_t xTask,
+                                             void * pvParameter )
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:None-None
+Cyclomatic: None Lines: None
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: none
+Incoming callers count: 0
+Full source code:
+BaseType_t xTaskCallApplicationTaskHook( TaskHandle_t xTask,
+                                             void * pvParameter )
+{
+        TCB_t * xTCB;
+        BaseType_t xReturn;
+
+        traceENTER_xTaskCallApplicationTaskHook( xTask, pvParameter );
+
+        /* If xTask is NULL then we are calling our own task hook. */
+        if( xTask == NULL )
+        {
+            xTCB = pxCurrentTCB;
+        }
+        else
+        {
+            xTCB = xTask;
+        }
+
+        if( xTCB->pxTaskTag != NULL )
+        {
+            xReturn = xTCB->pxTaskTag( pvParameter );
+        }
+        else
+        {
+            xReturn = pdFAIL;
+        }
+
+        traceRETURN_xTaskCallApplicationTaskHook( xReturn );
+
+        return xReturn;
+    }
+Official docs (summary):
+Parameters:
+- xTask: TaskHandle_t — The handle of the task whose associated hook function is being called.  To obtain a task’s handle create the task using xTaskCreate() and make use  of the pxCreatedTask parameter, or create the task using xTaskCreateStatic()  and store the returned value, or use the task’s name in a call to  xTaskGetHandle().  A task can call its own hook function by passing NULL in place of a valid task  handle.
+- pvParameters: void — The value used as the parameter to the task hook function itself.  This parameter has the type ‘pointer to void ’ to allow the task hook function  parameter to effectively , and indirectly by means of casting, receive a  parameter of any type. For example, integer types can be passed in to a hook  function by casting the integer to a void pointer at the point the hook function  is called, then by casting the void pointer parameter back to an integer within  the hook function itself.
+Return values:
+- BaseType_t: This function returns no value.
+Related configs: configUSE_APPLICATION_TASK_TAG, pvParameters
+Related APIs: vTaskSetApplicationTaskTag, xAnExampleTaskHookFunction, xTaskCallApplicationTaskHook
+Reference snippets:
+- xTaskCallApplicationTaskHook :: BaseType_t xTaskCallApplicationTaskHook(TaskHandle_t xTask, void *pvParameters); This function is intended for advanced users only. The vTaskSetApplicationTaskTag()  function can be used to assign a ‘tag’ value to a task .  The
+
+Official documentation (full):
+Title: xTaskCallApplicationTaskHook
+Signature: BaseType_t xTaskCallApplicationTaskHook(TaskHandle_t xTask, void *pvParameters);
+Summary:
+This function is intended for advanced users only.
+The vTaskSetApplicationTaskTag()  function can be used to assign a ‘tag’ value to a task .  The
+meaning  and use  of the tag value is defined by the application writer .  The kernel itself will not
+normally access the tag value.
+As a special case , the tag value can be used to associate a ‘task hook’ (or callback) function to
+a task.  When this is done, the hook function is called using xTaskCallApplicationTaskHook().
+Task hook functions can be used for any purpose.  The example shown in this section
+demonstrates a task hook being used to output debug trace information.
+Task hook functions must have the prototype demonstrated by Listing 8.
+BaseType_t  xAnExampleTaskHookFunction( void *pvParameters );
+xTaskCallApplicationTaskHook() is only available when
+configUSE_APPLICATION_TASK_TAG  is set to 1 in FreeRTOSConfig.h.
+Parameters:
+- xTask: TaskHandle_t — The handle of the task whose associated hook function is being called.  To obtain a task’s handle create the task using xTaskCreate() and make use  of the pxCreatedTask parameter, or create the task using xTaskCreateStatic()  and store the returned value, or use the task’s name in a call to  xTaskGetHandle().  A task can call its own hook function by passing NULL in place of a valid task  handle.
+- pvParameters: void — The value used as the parameter to the task hook function itself.  This parameter has the type ‘pointer to void ’ to allow the task hook function  parameter to effectively , and indirectly by means of casting, receive a  parameter of any type. For example, integer types can be passed in to a hook  function by casting the integer to a void pointer at the point the hook function  is called, then by casting the void pointer parameter back to an integer within  the hook function itself.
+Return values:
+- BaseType_t: This function returns no value.
+Example:
+/* Define a hook (callback) function – using the required prototype as
+demonstrated by Listing 8 */
+static BaseType_t  prvExampleTaskHook( void * pvParameter )
+{
+/* Perform an action - this could be anything.  In this example the hook
+is used to output debug trace information.  pxCurrentTCB is the handle
+of the currently executing task.  ( vWriteTrace() is not an API function,
+its just used as an example .) */
+vWriteTrace( pxCurrentTCB );
+/* This example does not make use of the hook return value so just returns
+0 in every case. */
+return 0;
+}
+/* Define an example task that makes use of its tag value. */
+void vAnotherTask( void *pvParameters )
+{
+/* vTaskSetApplicationTaskTag() sets the ‘tag’ value associated with a task.
+NULL is used in place of a valid task handle to indicate that it should be
+the tag value of the calling task that gets set.  In this example the ‘value’
+being set is the hook function. */
+vTaskSetApplicationTaskTag( NULL, prvExampleTaskHook );
+for( ;; )
+{
+/* The rest of the task code goes here. */
+}
+}
+/* Define the traceTASK_SWITCHED_OUT() macro to call the hook function of each
+task that is switched out.  pxCurrentTCB points to the handle of the currently
+running task. */
+#define traceTASK_SWITCHED_OUT() xTaskCallApplicationTaskHook( pxCurrentTCB, 0 )
+
+### Function vTaskSetApplicationTaskTag
+Signature: void vTaskSetApplicationTaskTag( TaskHandle_t xTask,
+                                     TaskHookFunction_t pxHookFunction )
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:None-None
+Cyclomatic: None Lines: None
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: none
+Incoming callers count: 0
+Full source code:
+void vTaskSetApplicationTaskTag( TaskHandle_t xTask,
+                                     TaskHookFunction_t pxHookFunction )
+{
+        TCB_t * xTCB;
+
+        traceENTER_vTaskSetApplicationTaskTag( xTask, pxHookFunction );
+
+        /* If xTask is NULL then it is the task hook of the calling task that is
+         * getting set. */
+        if( xTask == NULL )
+        {
+            xTCB = ( TCB_t * ) pxCurrentTCB;
+        }
+        else
+        {
+            xTCB = xTask;
+        }
+
+        /* Save the hook function in the TCB.  A critical section is required as
+         * the value can be accessed from an interrupt. */
+        taskENTER_CRITICAL();
+        {
+            xTCB->pxTaskTag = pxHookFunction;
+        }
+        taskEXIT_CRITICAL();
+
+        traceRETURN_vTaskSetApplicationTaskTag();
+    }
+Official docs (summary):
+Parameters:
+- xTask: TaskHandle_t — The handle of the task to which a tag value is being assigned. This is the  subject task.  A task can assign a tag value to itself by either using its own task handle or by  using NULL in place of a valid task handle.
+- pxTagValue: TaskHookFunction_t — The value being assigned as the tag value of the subject task . This is of type  TaskHookFunction_t to permit a function pointer to be assigned to the tag,  although, indirectly by casting, tag values can be of any type.
+Return values:
+- void: This function returns no value.
+Related configs: configUSE_APPLICATION_TASK_TAG
+Related APIs: traceTASK_SWITCHED_IN, vTaskSetApplicationTaskTag, xTaskCallApplicationTaskHook
+Reference snippets:
+- vTaskSetApplicationTaskTag :: void vTaskSetApplicationTaskTag(TaskHandle_t xTask, TaskHookFunction_t pxTagValue) ; This function is intended for advanced users only. The vTaskSetApplicationTaskTag()  API function can be used to assign a ‘tag’ value to a task.
+
+Official documentation (full):
+Title: vTaskSetApplicationTaskTag
+Signature: void vTaskSetApplicationTaskTag(TaskHandle_t xTask, TaskHookFunction_t pxTagValue) ;
+Summary:
+This function is intended for advanced users only.
+The vTaskSetApplicationTaskTag()  API function can be used to assign a ‘tag’ value to a task.
+The meaning and use of the tag value is defined by the application writer.  The kernel itself will
+not normally access the tag value.
+Parameters:
+- xTask: TaskHandle_t — The handle of the task to which a tag value is being assigned. This is the  subject task.  A task can assign a tag value to itself by either using its own task handle or by  using NULL in place of a valid task handle.
+- pxTagValue: TaskHookFunction_t — The value being assigned as the tag value of the subject task . This is of type  TaskHookFunction_t to permit a function pointer to be assigned to the tag,  although, indirectly by casting, tag values can be of any type.
+Return values:
+- void: This function returns no value.
+Notes:
+The tag value can be used to hold a function pointer .  When this is done the function assigned
+to the tag value can be called using the xTaskCallApplicationTaskHook() API function .  This
+technique is in effect assigning a callback function to the task.  It is common for such a
+callback to be used in combination with the traceTASK_SWITCHED_IN () macro to implement
+an execution trace feature.
+configUSE_APPLICATION_TASK_TAG must be set to 1 in FreeRTOSConfig.h for
+vTaskSetApplicationTaskTag()  to be available.
+Example:
+/* In this example , an integer is set as the task tag value. */
+void vATask( void *pvParameters )
+{
+/* Assign a tag value of 1 to the currently executing task. The (void *) cast
+is used to prevent compiler warnings. */
+vTaskSetApplicationTaskTag( NULL, ( void * ) 1 );
+for( ;; )
+{
+/* Rest of task code goes here. */
+}
+}
+/* In this example a callback function is assigned as the task tag.  First define the
+callback function - this must have type TaskHookFunction_t , as per this example. */
+static BaseType_t  prvExampleTaskHook( void * pvParameter )
+{
+/* Perform some action - this could be anything from logging a value, updating
+the task state, outputting a value, etc. */
+return 0;
+}
+/* Now define the task that sets prvExampleTaskHook () as its hook/tag value.  This is
+in effect registering the task callback  function . */
+void vAnotherTask( void *pvParameters )
+{
+/* Register a callback function for the currently running (calling) task. */
+vTaskSetApplicationTaskTag( NULL, prvExampleTaskHook );
+for( ;; )
+{
+/* Rest of task code goes here. */
+}
+}
+/* [As an example use of the hook (callback)] Define the traceTASK_SWITCHED_OUT()
+macro to call the hook function.  The kernel will then automatically call the task
+hook each time the task is switched out.  This technique can be used to generate
+an execution trace.  pxCurrentTCB references the currently executing task. */
+#define traceTASK_SWITCHED_OUT() xTaskCallApplicationTaskHook( pxCurrentTCB, 0 )
+
+### Function xAnExampleTaskHookFunction
+Signature: BaseType_t xTaskCallApplicationTaskHook(TaskHandle_t xTask, void *pvParameters);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- xTask: TaskHandle_t — The handle of the task whose associated hook function is being called.  To obtain a task’s handle create the task using xTaskCreate() and make use  of the pxCreatedTask parameter, or create the task using xTaskCreateStatic()  and store the returned value, or use the task’s name in a call to  xTaskGetHandle().  A task can call its own hook function by passing NULL in place of a valid task  handle.
+- pvParameters: void — The value used as the parameter to the task hook function itself.  This parameter has the type ‘pointer to void ’ to allow the task hook function  parameter to effectively , and indirectly by means of casting, receive a  parameter of any type. For example, integer types can be passed in to a hook  function by casting the integer to a void pointer at the point the hook function  is called, then by casting the void pointer parameter back to an integer within  the hook function itself.
+Return values:
+- BaseType_t: This function returns no value.
+Related configs: configUSE_APPLICATION_TASK_TAG, pvParameters
+Related APIs: vTaskSetApplicationTaskTag, xAnExampleTaskHookFunction, xTaskCallApplicationTaskHook
+
+Official documentation (full):
+Title: xTaskCallApplicationTaskHook
+Signature: BaseType_t xTaskCallApplicationTaskHook(TaskHandle_t xTask, void *pvParameters);
+Summary:
+This function is intended for advanced users only.
+The vTaskSetApplicationTaskTag()  function can be used to assign a ‘tag’ value to a task .  The
+meaning  and use  of the tag value is defined by the application writer .  The kernel itself will not
+normally access the tag value.
+As a special case , the tag value can be used to associate a ‘task hook’ (or callback) function to
+a task.  When this is done, the hook function is called using xTaskCallApplicationTaskHook().
+Task hook functions can be used for any purpose.  The example shown in this section
+demonstrates a task hook being used to output debug trace information.
+Task hook functions must have the prototype demonstrated by Listing 8.
+BaseType_t  xAnExampleTaskHookFunction( void *pvParameters );
+xTaskCallApplicationTaskHook() is only available when
+configUSE_APPLICATION_TASK_TAG  is set to 1 in FreeRTOSConfig.h.
+Parameters:
+- xTask: TaskHandle_t — The handle of the task whose associated hook function is being called.  To obtain a task’s handle create the task using xTaskCreate() and make use  of the pxCreatedTask parameter, or create the task using xTaskCreateStatic()  and store the returned value, or use the task’s name in a call to  xTaskGetHandle().  A task can call its own hook function by passing NULL in place of a valid task  handle.
+- pvParameters: void — The value used as the parameter to the task hook function itself.  This parameter has the type ‘pointer to void ’ to allow the task hook function  parameter to effectively , and indirectly by means of casting, receive a  parameter of any type. For example, integer types can be passed in to a hook  function by casting the integer to a void pointer at the point the hook function  is called, then by casting the void pointer parameter back to an integer within  the hook function itself.
+Return values:
+- BaseType_t: This function returns no value.
+Example:
+/* Define a hook (callback) function – using the required prototype as
+demonstrated by Listing 8 */
+static BaseType_t  prvExampleTaskHook( void * pvParameter )
+{
+/* Perform an action - this could be anything.  In this example the hook
+is used to output debug trace information.  pxCurrentTCB is the handle
+of the currently executing task.  ( vWriteTrace() is not an API function,
+its just used as an example .) */
+vWriteTrace( pxCurrentTCB );
+/* This example does not make use of the hook return value so just returns
+0 in every case. */
+return 0;
+}
+/* Define an example task that makes use of its tag value. */
+void vAnotherTask( void *pvParameters )
+{
+/* vTaskSetApplicationTaskTag() sets the ‘tag’ value associated with a task.
+NULL is used in place of a valid task handle to indicate that it should be
+the tag value of the calling task that gets set.  In this example the ‘value’
+being set is the hook function. */
+vTaskSetApplicationTaskTag( NULL, prvExampleTaskHook );
+for( ;; )
+{
+/* The rest of the task code goes here. */
+}
+}
+/* Define the traceTASK_SWITCHED_OUT() macro to call the hook function of each
+task that is switched out.  pxCurrentTCB points to the handle of the currently
+running task. */
+#define traceTASK_SWITCHED_OUT() xTaskCallApplicationTaskHook( pxCurrentTCB, 0 )
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

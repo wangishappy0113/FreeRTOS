@@ -1,0 +1,119 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test logic inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xTaskNotifyAndQueryFromISR
+
+### Function xTaskNotifyAndQueryFromISR
+Signature: BaseType_t xTaskNotifyAndQuery(TaskHandle_t xTaskToNotify, uint32_t ulValue, eNotifyAction eAction, uint32_t *pulPreviousNotifyValue, BaseType_t *pxHigherPriorityTaskWoken);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- xTaskToNotify: TaskHandle_t — The handle of the RTOS task being notified.  To obtain a task’s handle create the task using xTaskCreate()  and make use of the pxCreatedTask parameter, or create the  task using xTaskCreateStatic() and store the returned value, or  use the task’s name in a call to xTaskGetHandle().
+- ulValue: uint32_t — Used to update the notification value of the task being notified .  How ulValue is interpreted depends on the value of the eAction  parameter .
+- eAction: eNotifyAction — The action to perform when notifying the task.
+- eAction: eNotifyAction — is an enumerated type and can take one of the following  values:  • eNoAction – The task is notified but its notification value  is not changed. In this case ulValue is not used.  • eSetBits – The task’s notification value is bitwise ORed  with ulValue. For example, if ulValue is set to 0x01, then  bit 0 will be set within the task's notification value. If
+- ulValue: uint32_t — is 0x04 then bit 2 will be set in the task's  notification value. Using eSetBits allows task  notification s to be used as a faster and light weight  alternative to an event group.  • eIncrement – The task’s notification value is incremented  by one. In this case ulValue is not used.  • eSetValueWithOverwrite – The task’s notification value  is unconditionally set to the value of ulValue, even if the  task already had a notification pending when  xTaskNotify() was called.  • eSetValueWithoutOverwrite – If the task already has a  notification pending then its notification value is not  changed and xTaskNotify() returns pdFAIL. If the task  did not already have a notification pending then its  notification value is set to ulValue.
+- pulPreviousNotifyValue: uint32_t — Used to pass out the subject task's notification value before any  bits are modified by the action of xTaskNotifyAndQuery().
+- pulPreviousNotifyValue: uint32_t — is an optional parameter, and can be set  to NULL if it is not required. If pulPreviousNotifyValue is not  used then consider using xTaskNotify FromISR () in place of  xTaskNotifyAndQuery FromISR ().
+- pxHigherPriorityTaskWoken: BaseType_t — *pxHigherPriorityTaskWoken must be initialized to pdFALSE.  xTaskNotifyAndQueryFromISR() will set  *pxHigherPriorityTaskWoken to pdTRUE if sending the  notification caused the task being notified to leave the Blocked  state, and the task being notified has a priority above that of the  currently running task.  If xTaskNotifyAndQueryFromISR() sets this value to pdTRUE  then a context switch should be requested before the interrupt is  exited. See Listing 68 for an example.
+- pxHigherPriorityTaskWoken: BaseType_t — is an optional parameter and can  be set to NULL.
+Return values:
+- BaseType_t: If eAction is set to eSetValueWithoutOverwrite and the task’s notification value is not updated
+then pdFAIL is returned.  In all other cases pdPASS is returned.
+Related configs: configUSE_TASK_NOTIFICATIONS, xTaskNotify
+Related APIs: xTaskNotify, xTaskNotifyAndQuery
+Reference snippets:
+- Call vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0) (edge:vTaskGenericNotifyGiveFromISR->/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8248#c0) :: Call: vTaskGenericNotifyGiveFromISR -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:taskNOTIFICATION_RECEIVED:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8248 callee_kind=macro
+- Call xTaskGenericNotifyFromISR -> <operator>.assignment (edge:xTaskGenericNotifyFromISR-><operator>.assignment:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8074#c0) :: Call: xTaskGenericNotifyFromISR -> <operator>.assignment at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8074 callee_kind=operator
+- Call xTaskGenericNotifyFromISR -> <operator>.assignment (edge:xTaskGenericNotifyFromISR-><operator>.assignment:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8067#c0) :: Call: xTaskGenericNotifyFromISR -> <operator>.assignment at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8067 callee_kind=operator
+- Call xTaskGenericNotifyFromISR -> <operator>.assignment (edge:xTaskGenericNotifyFromISR-><operator>.assignment:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8100#c0) :: Call: xTaskGenericNotifyFromISR -> <operator>.assignment at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8100 callee_kind=operator
+- Call xTaskGenericNotifyFromISR -> <operator>.assignment (edge:xTaskGenericNotifyFromISR-><operator>.assignment:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8154#c0-f4aaf55b) :: Call: xTaskGenericNotifyFromISR -> <operator>.assignment at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8154 callee_kind=operator
+- Call xTaskGenericNotifyFromISR -> <operator>.assignment (edge:xTaskGenericNotifyFromISR-><operator>.assignment:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8154#c0-c263400c) :: Call: xTaskGenericNotifyFromISR -> <operator>.assignment at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8154 callee_kind=operator
+- xTaskNotifyAndQueryFromISR :: BaseType_t xTaskNotifyAndQuery(TaskHandle_t xTaskToNotify, uint32_t ulValue, eNotifyAction eAction, uint32_t *pulPreviousNotifyValue, BaseType_t *pxHigherPriorityTaskWoken); xTaskNotifyAndQuery() is similar to xTaskNotify(), but includes an additional parameter in which the subject task’s previous notification value is returned.
+- xTaskNotifyAndQueryFromISR :: BaseType_t xTaskNotifyAndQuery(TaskHandle_t xTaskToNotify, uint32_t ulValue, eNotifyAction eAction, uint32_t *pulPreviousNotifyValue, BaseType_t *pxHigherPriorityTaskWoken); xTaskNotifyAndQuery() is similar to xTaskNotify(), but includes an additional parameter in which the subject task’s previous notification value is returned.
+
+Official documentation (full):
+Title: xTaskNotifyAndQueryFromISR
+Signature: BaseType_t xTaskNotifyAndQuery(TaskHandle_t xTaskToNotify, uint32_t ulValue, eNotifyAction eAction, uint32_t *pulPreviousNotifyValue, BaseType_t *pxHigherPriorityTaskWoken);
+Summary:
+xTaskNotifyAndQuery() is similar to xTaskNotify(), but includes an additional parameter in
+which the subject task’s previous notification value is returned.
+xTaskNotifyAndQueryFromISR() is a version of xTaskNotifyAndQuery() that can be called from
+an interrupt service routine (ISR).
+Each task has a 32 -bit notification value that is initialized to zero when the task is created.
+xTaskNotify AndQueryFromISR () is used to send an event directly to and potentially unblock a
+task, and optio nally update the receiving task’ s notification value in one of the following ways:
+• Write a 32 -bit number to the notification value
+• Add one (increment) the notification value
+• Set one or more bits in the notification value
+• Leave the notification value unchanged
+Parameters:
+- xTaskToNotify: TaskHandle_t — The handle of the RTOS task being notified.  To obtain a task’s handle create the task using xTaskCreate()  and make use of the pxCreatedTask parameter, or create the  task using xTaskCreateStatic() and store the returned value, or  use the task’s name in a call to xTaskGetHandle().
+- ulValue: uint32_t — Used to update the notification value of the task being notified .  How ulValue is interpreted depends on the value of the eAction  parameter .
+- eAction: eNotifyAction — The action to perform when notifying the task.
+- eAction: eNotifyAction — is an enumerated type and can take one of the following  values:  • eNoAction – The task is notified but its notification value  is not changed. In this case ulValue is not used.  • eSetBits – The task’s notification value is bitwise ORed  with ulValue. For example, if ulValue is set to 0x01, then  bit 0 will be set within the task's notification value. If
+- ulValue: uint32_t — is 0x04 then bit 2 will be set in the task's  notification value. Using eSetBits allows task  notification s to be used as a faster and light weight  alternative to an event group.  • eIncrement – The task’s notification value is incremented  by one. In this case ulValue is not used.  • eSetValueWithOverwrite – The task’s notification value  is unconditionally set to the value of ulValue, even if the  task already had a notification pending when  xTaskNotify() was called.  • eSetValueWithoutOverwrite – If the task already has a  notification pending then its notification value is not  changed and xTaskNotify() returns pdFAIL. If the task  did not already have a notification pending then its  notification value is set to ulValue.
+- pulPreviousNotifyValue: uint32_t — Used to pass out the subject task's notification value before any  bits are modified by the action of xTaskNotifyAndQuery().
+- pulPreviousNotifyValue: uint32_t — is an optional parameter, and can be set  to NULL if it is not required. If pulPreviousNotifyValue is not  used then consider using xTaskNotify FromISR () in place of  xTaskNotifyAndQuery FromISR ().
+- pxHigherPriorityTaskWoken: BaseType_t — *pxHigherPriorityTaskWoken must be initialized to pdFALSE.  xTaskNotifyAndQueryFromISR() will set  *pxHigherPriorityTaskWoken to pdTRUE if sending the  notification caused the task being notified to leave the Blocked  state, and the task being notified has a priority above that of the  currently running task.  If xTaskNotifyAndQueryFromISR() sets this value to pdTRUE  then a context switch should be requested before the interrupt is  exited. See Listing 68 for an example.
+- pxHigherPriorityTaskWoken: BaseType_t — is an optional parameter and can  be set to NULL.
+Return values:
+- BaseType_t: If eAction is set to eSetValueWithoutOverwrite and the task’s notification value is not updated
+then pdFAIL is returned.  In all other cases pdPASS is returned.
+Notes:
+RTOS task notification functionality is enabled by default, and can be excluded from a build
+(saving 8 bytes per task) by setting configUSE_TASK_NOTIFICATIONS to 0 in
+FreeRTOSConfig.h.
+Example:
+different actions  from inside an ISR .
+uint32_t ulPreviousValue;
+/* xHigherPriorityTaskWoken must be set to pdFALSE  so it can later be detected if it
+was set to pdTRUE by any of the functions called within the interrupt. */
+BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+/* Set bit 8 in the notification value of the task referenced by xTask1Handle.  The
+task’s previous notification value is not needed, so the last pulPreviousNotifyValue
+parameter is set to NULL. */
+xTaskNotifyAndQuery FromISR( xTask1Handle,
+( 1UL << 8UL ),
+eSetBits,
+NULL,
+&xHigherPriorityTaskWoken  );
+/* Send a notification to the task referenced by xTask2Handle, potentially  removing
+the task from the Blocked state, but without updating the task's  notification value.
+The task’s current notification value is saved in ulPreviousValue. */
+xTaskNotifyAndQuery FromISR( xTask2Handle,
+0,
+eNoAction,
+&ulPreviousValue ,
+&xHigherPriorityTaskWoken  );
+/* If xHigherPriorityTaskWoken is now set to pdTRUE then a context switch  should be
+performed to ensure the interrupt returns directly to the highest  priority task.  The
+macro used for this purpose is dependent on the port in use and may be called
+portEND_SWITCHING_ISR(). */
+portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

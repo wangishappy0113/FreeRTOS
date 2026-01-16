@@ -1,0 +1,213 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test logic inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xSemaphoreTakeRecursive, vTaskList
+
+### Function xSemaphoreTakeRecursive
+Signature: BaseType_t xSemaphoreTakeRecursive(SemaphoreHandle_t xMutex, TickType_t xTicksToWait);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- xMutex: SemaphoreHandle_t — The semaphore being ‘taken’. A semaphore is referenced by a variable of  type SemaphoreHandle_t and must be explicitly created before being used.
+- xTicksToWait: TickType_t — The maximum amount of time the task should remain in the Blocked state to  wait for the semaphore to become available, if the semaphore is not available  immediately.  If xTicksToWait is zero, then xSemaphoreTakeRecursive() will return  immediately if the semaphore is not available.  The block time is specified in tick periods, so the absolute time it represents is  dependent on the tick frequency. The pdMS_TO_TICKS() macro can be used  to convert a time specified in milliseconds to a time specified in ticks.  Setting xTicksToWait to portMAX_DELAY will cause the task to wait  indefinitely (without timing out) provided INCLUDE_vTaskSuspend is set to 1  in FreeRTOSConfig.h.
+Return values:
+- BaseType_t: pdPASS  Returned only if the call to xSemaphoreTakeRecursive() was successful in
+obtaining the semaphore.
+If a block time was specified ( xTicksToWait  was not zero), then it is possible that
+the calling task was placed in to the Blocked state to wait for the semaphore if it was
+not immediately available, but the semaphore became available before the block
+time expired.
+pdFAIL  Returned if the call to xSemaphoreTakeRecursive() did not successfully obtain the
+semaphore.
+If a block time was specified ( xTicksToWait  was not zero), then the calling task will
+have been placed into the Blocked state to wait for the semaphore to become
+available, but the block time expired before this happened.
+Related configs: none
+Related APIs: xSemaphoreCreateRecursiveMutex, xSemaphoreGive, xSemaphoreGiveRecursive, xSemaphoreTake
+Reference snippets:
+- API xSemaphoreTakeRecursive Overview (api:xSemaphoreTakeRecursive:overview#c0) :: API: xSemaphoreTakeRecursive Signature: BaseType_t xSemaphoreTakeRecursive(SemaphoreHandle_t xMutex, TickType_t xTicksToWait); Headers: semphr.h, FreeRTOS.h Summary: ‘Takes’ (or obtain s) a recursive mutex type semaphore that has previously been created using xSemaphoreCreateRecursiveMutex().
+- API xSemaphoreTakeRecursive Notes (api:xSemaphoreTakeRecursive:notes#c0) :: API: xSemaphoreTakeRecursive Section: notes A recursive mutex is ‘taken’ using the xSemaphoreTakeRecursive() function, and ‘given’ using the xSemaphoreGiveRecursive() function.  The xSemaphoreTake() and xSemaphoreGive() functions must not be used with recursive mutexes. Calls to xSemaphoreTakeRecursive() can be nested.…
+- API xSemaphoreTakeRecursive Parameters (api:xSemaphoreTakeRecursive:parameters#c0) :: API: xSemaphoreTakeRecursive Section: parameters param xMutex: SemaphoreHandle_t The semaphore being ‘taken’. A semaphore is referenced by a variable of  type SemaphoreHandle_t and must be explicitly created before being used. param xTicksToWait: TickType_t The maximum amount of time the task should remain in the Block…
+- API xSemaphoreTakeRecursive Returns (api:xSemaphoreTakeRecursive:returns#c0) :: API: xSemaphoreTakeRecursive Section: returns returns BaseType_t: pdPASS  Returned only if the call to xSemaphoreTakeRecursive() was successful in obtaining the semaphore. If a block time was specified ( xTicksToWait  was not zero), then it is possible that the calling task was placed in to the Blocked state to wait fo…
+- API xSemaphoreTakeRecursive Example (api:xSemaphoreTakeRecursive:example#c0) :: API: xSemaphoreTakeRecursive Section: example /* A task that creates a recursive mutex. */ void vATask( void * pvParameters ) { /* Recursive mutexes cannot be used before being explicitly created using a call to xSemaphoreCreateRecursiveMutex(). */ xMutex = xSemaphoreCreateRecursiveMutex(); /* Rest of task code goes he…
+- Function xQueueTakeMutexRecursive (func:xQueueTakeMutexRecursive:/home/zwz/FreeRTOS/FreeRTOS/Source/queue.c#c0) :: FUNC xQueueTakeMutexRecursive BaseType_t(QueueHandle_t,TickType_t) file /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:818-865     BaseType_t xQueueTakeMutexRecursive( QueueHandle_t xMutex,                                          TickType_t xTicksToWait )     {         BaseType_t xReturn;         Queue_t * const pxMutex =…
+- xSemaphoreTakeRecursive :: BaseType_t xSemaphoreTakeRecursive(SemaphoreHandle_t xMutex, TickType_t xTicksToWait); ‘Takes’ (or obtain s) a recursive mutex type semaphore that has previously been created using xSemaphoreCreateRecursiveMutex().
+
+Official documentation (full):
+Title: xSemaphoreTakeRecursive
+Signature: BaseType_t xSemaphoreTakeRecursive(SemaphoreHandle_t xMutex, TickType_t xTicksToWait);
+Summary:
+‘Takes’ (or obtain s) a recursive mutex type semaphore that has previously been created using
+xSemaphoreCreateRecursiveMutex().
+Parameters:
+- xMutex: SemaphoreHandle_t — The semaphore being ‘taken’. A semaphore is referenced by a variable of  type SemaphoreHandle_t and must be explicitly created before being used.
+- xTicksToWait: TickType_t — The maximum amount of time the task should remain in the Blocked state to  wait for the semaphore to become available, if the semaphore is not available  immediately.  If xTicksToWait is zero, then xSemaphoreTakeRecursive() will return  immediately if the semaphore is not available.  The block time is specified in tick periods, so the absolute time it represents is  dependent on the tick frequency. The pdMS_TO_TICKS() macro can be used  to convert a time specified in milliseconds to a time specified in ticks.  Setting xTicksToWait to portMAX_DELAY will cause the task to wait  indefinitely (without timing out) provided INCLUDE_vTaskSuspend is set to 1  in FreeRTOSConfig.h.
+Return values:
+- BaseType_t: pdPASS  Returned only if the call to xSemaphoreTakeRecursive() was successful in
+obtaining the semaphore.
+If a block time was specified ( xTicksToWait  was not zero), then it is possible that
+the calling task was placed in to the Blocked state to wait for the semaphore if it was
+not immediately available, but the semaphore became available before the block
+time expired.
+pdFAIL  Returned if the call to xSemaphoreTakeRecursive() did not successfully obtain the
+semaphore.
+If a block time was specified ( xTicksToWait  was not zero), then the calling task will
+have been placed into the Blocked state to wait for the semaphore to become
+available, but the block time expired before this happened.
+Notes:
+A recursive mutex is ‘taken’ using the xSemaphoreTakeRecursive() function, and ‘given’ using
+the xSemaphoreGiveRecursive() function.  The xSemaphoreTake() and xSemaphoreGive()
+functions must not be used with recursive mutexes.
+Calls to xSemaphoreTakeRecursive() can be nested.  Therefore, once a recursive mutex has
+been successfully ‘taken’ by a task, further calls to xSemaphoreTakeRecursive() made by the
+same task will also be successful.  The same number of calls must be made to
+xSemaphoreGiveRecursive() as have previously been made to xSemaphoreTakeRecursive()
+before the mutex becomes available to any other task.  For example, if a task successfully and
+recursively ‘takes’ the same mutex five times, then the mutex will not be available to any other
+task until the task that successfully obtained the mutex has also ‘given’ the mutex back exactly
+five times.
+xSemaphoreTakeRecursive() must only be called from an executing task and therefore must
+not be called while the scheduler is in the Initialization state (prior to the scheduler being
+started).
+xSemaphoreTakeRecursive() must not be called from within a critical section or while the
+scheduler is suspended.
+Example:
+/* A task that creates a recursive mutex. */
+void vATask( void * pvParameters )
+{
+/* Recursive mutexes cannot be used before being explicitly created using a call
+to xSemaphoreCreateRecursiveMutex(). */
+xMutex = xSemaphoreCreateRecursiveMutex();
+/* Rest of task code goes here. */
+for( ;; )
+{
+}
+}
+/* A function (called by a task) that uses the mutex. */
+void vAFunction ( void )
+{
+/* ... Do other things.  */
+if( xMutex != NULL )
+{
+/* See if the mutex can be obtained.  If the mutex is not available wait 10
+ticks to see if it becomes free. */
+if( xSemaphoreTakeRecursive( xMutex, 10 ) == pdTRUE )
+{
+/* The mutex was successfully ‘taken’. */
+...
+/* For some reason , due to the nature of the code, further calls to
+xSemaphoreTakeRecursive() are made on the same mutex.  In real code these
+would not be just sequential calls, as that would serve no purpose.
+Instead, the calls are likely to be buried inside a more complex call
+structure, for example in a TCP/IP stack.*/
+xSemaphoreTakeRecursive( xMutex, ( TickType_t  ) 10 );
+xSemaphoreTakeRecursive( xMutex, ( TickType_t  ) 10 );
+/* The mutex has now been ‘taken’ three times, so will not be available
+to another task until it has also been given back three times.  Again it
+is unlikely that real code would have these calls sequentially, but
+instead buried in a more complex call structure.  This is just for
+illustrative purposes. */
+xSemaphoreGiveRecursive( xMutex );
+xSemaphoreGiveRecursive( xMutex );
+xSemaphoreGiveRecursive( xMutex );
+/* Now the mutex can be taken by other tasks. */
+}
+else
+{
+/* The mutex was not successfully ‘taken’. */
+}
+}
+}
+
+### Function vTaskList
+Signature: void vTaskList (char *pcWriteBuffer);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- pcWriteBuffer: char — The buffer into which the table text is written. This must be large enough to  hold the entire table as no boundary checking is performed.
+Return values:
+- void: This function returns no value.
+Related configs: configUSE_STATS_FORMATTING_FUNCTIONS, configUSE_TRACE_FACILITY
+Related APIs: xTaskGetSystemState
+
+Official documentation (full):
+Title: vTaskList
+Signature: void vTaskList (char *pcWriteBuffer);
+Summary:
+Creates a human readable table in a character buffer that describes the state of each task  at
+the time vTaskList() was called .  An example is shown in Figure 2.
+Figure 2 An example of the table produced by calling vTaskList()
+The table includes the following information:
+• Name – This is the name given to the task when the task was created.
+• State – The state of the task at the time vTaskList() was called, as  follows:
+o ‘X’ if the task is executing (the task that called vTaskList()).
+o ‘B’ if the task is in the Blocked state.
+o ‘R’ if the task is in the Ready state.
+o ‘S’ if the task is in the Suspended state , or in the Blocked state without a
+timeout .
+o ‘D’ if the task has been deleted, but the idle task has not yet freed the memory
+that was being used by the task to hold its data structures and stack.
+• Priority – The priority assigned to the task at the time vTaskList() was called.
+• Stack – Shows the ‘high water mark’ of the task ’s stack.   This is the minimum amount of
+free stack that has been available during the lifetime of the task.  The closer this value is
+to zero , the closer the task has come to overflowing its stack.
+• Num – This is a unique number that is assigned to each task.  It has no purpose other
+than to help identify tasks when more than one task has been assigned the same name.
+Parameters:
+- pcWriteBuffer: char — The buffer into which the table text is written. This must be large enough to  hold the entire table as no boundary checking is performed.
+Return values:
+- void: This function returns no value.
+Notes:
+vTaskList() is a utility function that is provided for convenience only.  It is not considered part
+of the kernel.   vTaskList() obtains its raw data using the xTaskGetSystemState()  API function.
+vTaskList() will disable interrupts for the duration of its execution.  This might not be
+acceptable for applications that include hard real time functionality.
+configUSE_TRACE_FACILITY and configUSE_STATS_FORMATTING_FUNCTIONS  must
+both be set to 1 within FreeRTOSConfig.h for vTaskList() to be available.
+By default , vTaskList() makes use of the standard library sprintf() function .  This can  result in a
+marked increase in the compiled image size , and in stack usage .  The FreeRTOS download
+includes an open source cut down version of sprintf() in a file called printf -stdarg.c .  This can
+be used in place of the standard library sprintf()  to help minimise the code size impact.  Note
+that printf -stdarg.c  is licensed separately to FreeRTOS.   Its license terms are contained in the
+file itself.
+Example:
+void vAFunction( void )
+{
+/* Define a buffer that is large enough to hold the generated table.  In most cases
+the buffer will be too large to allocate on the stack, hence in this example it is
+declared static. */
+static char cBuffer[  BUFFER_SIZE ];
+/* Pass the buffer into vTaskList() to generate the table of information. */
+vTaskList( cBuffer );
+/* The generated information can be saved or viewed here. */
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

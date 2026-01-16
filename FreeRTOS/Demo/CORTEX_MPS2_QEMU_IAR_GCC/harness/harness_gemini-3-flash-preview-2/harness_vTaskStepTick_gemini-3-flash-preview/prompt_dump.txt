@@ -1,0 +1,288 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test logic inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. IMPORTANT: In this project template, FR_init has the signature: FR_Reader FR_init(const unsigned char* buf, size_t n). Correct usage: FR_Reader fr = FR_init(FUZZ_INPUT, MAX_FUZZ_INPUT_SIZE). Do NOT call FR_init with 3 arguments and do NOT pass an FR_Reader* to FR_init. Also note: the input length macro is MAX_FUZZ_INPUT_SIZE (there is no FUZZ_INPUT_SIZE). Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: vTaskStepTick, portSUPPRESS_TICKS_AND_SLEEP, Call
+
+### Function vTaskStepTick
+Signature: This is to ensure vTaskStepTick() is available when user defined low power mode
+ * implementations require configUSE_TICKLESS_IDLE to be set to a value other than
+ * 1. */
+#if ( configUSE_TICKLESS_IDLE != 0 )
+
+    void vTaskStepTick( TickType_t xTicksToJump )
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:None-None
+Cyclomatic: None Lines: None
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: none
+Incoming callers count: 0
+Full source code:
+This is to ensure vTaskStepTick() is available when user defined low power mode
+ * implementations require configUSE_TICKLESS_IDLE to be set to a value other than
+ * 1. */
+#if ( configUSE_TICKLESS_IDLE != 0 )
+
+    void vTaskStepTick( TickType_t xTicksToJump )
+{
+        TickType_t xUpdatedTickCount;
+
+        traceENTER_vTaskStepTick( xTicksToJump );
+
+        /* Correct the tick count value after a period during which the tick
+         * was suppressed.  Note this does *not* call the tick hook function for
+         * each stepped tick. */
+        xUpdatedTickCount = xTickCount + xTicksToJump;
+        configASSERT( xUpdatedTickCount <= xNextTaskUnblockTime );
+
+        if( xUpdatedTickCount == xNextTaskUnblockTime )
+        {
+            /* Arrange for xTickCount to reach xNextTaskUnblockTime in
+             * xTaskIncrementTick() when the scheduler resumes.  This ensures
+             * that any delayed tasks are resumed at the correct time. */
+            configASSERT( uxSchedulerSuspended != ( UBaseType_t ) 0U );
+            configASSERT( xTicksToJump != ( TickType_t ) 0 );
+
+            /* Prevent the tick interrupt modifying xPendedTicks simultaneously. */
+            taskENTER_CRITICAL();
+            {
+                xPendedTicks++;
+            }
+            taskEXIT_CRITICAL();
+            xTicksToJump--;
+        }
+        else
+        {
+            mtCOVERAGE_TEST_MARKER();
+        }
+
+        xTickCount += xTicksToJump;
+
+        traceINCREASE_TICK_COUNT( xTicksToJump );
+        traceRETURN_vTaskStepTick();
+    }
+Official docs (summary):
+Parameters:
+- xTicksToJump: TickType_t — The number of RTOS tick periods that passed between the tick interrupt  being stopped and restarted (how long the tick interrupt was suppressed for).  For correct operation the parameter must be less than or equal to the  portSUPPRESS_TICKS_AND_SLEEP() parameter.
+Return values:
+- void: This function returns no value.
+Related configs: configUSE_TICKLESS_IDLE
+Related APIs: portSUPPRESS_TICKS_AND_SLEEP
+Reference snippets:
+- Call xTaskIncrementTick -> <operator>.conditional (edge:xTaskIncrementTick-><operator>.conditional:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4754#c0) :: Call: xTaskIncrementTick -> <operator>.conditional at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4754 callee_kind=operator
+- Call xTaskIncrementTick -> <operator>.cast (edge:xTaskIncrementTick-><operator>.cast:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4822#c0) :: Call: xTaskIncrementTick -> <operator>.cast at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4822 callee_kind=operator
+- Call xTaskIncrementTick -> <operator>.conditional (edge:xTaskIncrementTick-><operator>.conditional:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4769#c0) :: Call: xTaskIncrementTick -> <operator>.conditional at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4769 callee_kind=operator
+- Call xTaskIncrementTick -> <operator>.cast (edge:xTaskIncrementTick-><operator>.cast:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4754#c0) :: Call: xTaskIncrementTick -> <operator>.cast at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4754 callee_kind=operator
+- Call xTaskIncrementTick -> <operator>.cast (edge:xTaskIncrementTick-><operator>.cast:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4754#c0-63625152) :: Call: xTaskIncrementTick -> <operator>.cast at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4754 callee_kind=operator
+- Call xTaskIncrementTick -> <operator>.cast (edge:xTaskIncrementTick-><operator>.cast:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4754#c0-0d184cce) :: Call: xTaskIncrementTick -> <operator>.cast at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4754 callee_kind=operator
+- vTaskStepTick :: void vTaskStepTick(TickType_t xTicksToJump) ; If the RTOS is configured to use tickless  idle functionality then the tick interrupt will be stopped, and the microcontroller placed into a low power state, whenever the Idle task is the
+
+Official documentation (full):
+Title: vTaskStepTick
+Signature: void vTaskStepTick(TickType_t xTicksToJump) ;
+Summary:
+If the RTOS is configured to use tickless  idle functionality then the tick interrupt will be
+stopped, and the microcontroller placed into a low power state, whenever the Idle task is the
+only task able to execute. Upon exiting the low power state the tick count value must be
+corrected to account for the time that passed while it was stopped.
+If a FreeRTOS port includes a default portSUPPRESS_TICKS_AND_SLEEP()
+implementation, then vTaskStepTick() is used internally to ensure the correct tick count value
+is maintained. vTaskStepTick() is a public API function to allow the default
+portSUPPRESS_TICKS_AND_SLEEP() implementation to be overridden, and for a
+portSUPPRESS_TICKS_AND_SLEEP() to be provided if the port being used does not provide
+a default.
+Parameters:
+- xTicksToJump: TickType_t — The number of RTOS tick periods that passed between the tick interrupt  being stopped and restarted (how long the tick interrupt was suppressed for).  For correct operation the parameter must be less than or equal to the  portSUPPRESS_TICKS_AND_SLEEP() parameter.
+Return values:
+- void: This function returns no value.
+Notes:
+configUSE_TICKLESS_IDLE must be set to 1 in FreeRTOSConfig.h for vTaskStepTick() to be
+available.
+Example:
+/* This is an example of how portSUPPRESS_TICKS_AND_SLEEP( ) might be implemented by
+an application writer.  This basic implementation will introduce inaccuracies in the
+tracking of the time maintained by the kernel in relation to calendar time.  Official
+FreeRTOS implementations account for these inaccuracies as much as possible .
+Only vTaskStepTick() is  part of the FreeRTOS API.  The other function calls are for
+demonstration only. */
+/* First define the portSUPPRESS_TICKS_AND_SLEEP() macro.  The parameter is the time,
+in ticks, until the kernel next needs to execute. */
+#define portSUPPRESS_TICKS_AND_SLEEP( xIdleTime ) vApplicationSleep( xIdleTime )
+/* Define the function that is called by portSUPPRESS_TICKS_AND_SLEEP(). */
+void vApplicationSleep( TickType_t  xExpectedIdleTime )
+{
+unsigned long ulLowPowerTimeBeforeSleep, ulLowPowerTimeAfterSleep;
+/* Read the current time from a time source that will remain operational when
+the microcontroller is in a low power state.  */
+ulLowPowerTimeBeforeSleep = ulGetExternalTime();
+/* Stop the timer that is generating the tick interrupt. */
+prvStopTickInterruptTimer();
+/* Configure an interrupt to bring the microcontroller out of its low power state
+at the time the kernel next needs to execute.   The interrupt must be generated
+from a source that remains operational when the microcontroller is in a low
+power state . */
+vSetWakeTimeInterrupt( xExpectedIdleTime );
+/* Enter the low power state. */
+prvSleep();
+/* Determine how long the microcontroller was actually in a low power state for,
+which will be less than xExpectedIdleTime if the microcontroller was brought out
+of low power mode by an interrupt other than that configured by the
+vSetWakeTimeInterrupt( ) call.  Note that the scheduler is suspended before
+portSUPPRESS_TICKS_AND_SLEEP() is called , and resumed when
+portSUPPRESS_TICKS_AND_SLEEP() returns.  Therefore no other tasks will execute
+until this function completes.  */
+ulLowPowerTimeAfterSleep = ulGetExternalTime();
+/* Correct the kernels tick count to account for the time the microcontroller
+spent in its low power state. */
+vTaskStepTick( ulLowPowerTimeAfterSleep – ulLowPowerTimeBeforeSleep );
+/* Restart the timer that is generating the tick interrupt. */
+prvStartTickInterruptTimer();
+}
+
+### Function portSUPPRESS_TICKS_AND_SLEEP
+Signature: This is to ensure portSUPPRESS_TICKS_AND_SLEEP() is called when
+         * user defined low power mode  implementations require
+         * configUSE_TICKLESS_IDLE to be set to a value other than 1. */
+        #if ( configUSE_TICKLESS_IDLE != 0 )
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:None-None
+Cyclomatic: None Lines: None
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, timers.h, stack_macros.h, stdio.h, tasks_test_access_functions.h, freertos_tasks_c_additions.h
+Outgoing calls summary: none
+Incoming callers count: 0
+Full source code:
+This is to ensure portSUPPRESS_TICKS_AND_SLEEP() is called when
+         * user defined low power mode  implementations require
+         * configUSE_TICKLESS_IDLE to be set to a value other than 1. */
+        #if ( configUSE_TICKLESS_IDLE != 0 )
+{
+            TickType_t xExpectedIdleTime;
+
+            /* It is not desirable to suspend then resume the scheduler on
+             * each iteration of the idle task.  Therefore, a preliminary
+             * test of the expected idle time is performed without the
+             * scheduler suspended.  The result here is not necessarily
+             * valid. */
+            xExpectedIdleTime = prvGetExpectedIdleTime();
+
+            if( xExpectedIdleTime >= ( TickType_t ) configEXPECTED_IDLE_TIME_BEFORE_SLEEP )
+            {
+                vTaskSuspendAll();
+                {
+                    /* Now the scheduler is suspended, the expected idle
+                     * time can be sampled again, and this time its value can
+                     * be used. */
+                    configASSERT( xNextTaskUnblockTime >= xTickCount );
+                    xExpectedIdleTime = prvGetExpectedIdleTime();
+
+                    /* Define the following macro to set xExpectedIdleTime to 0
+                     * if the application does not want
+                     * portSUPPRESS_TICKS_AND_SLEEP() to be called. */
+                    configPRE_SUPPRESS_TICKS_AND_SLEEP_PROCESSING( xExpectedIdleTime );
+
+                    if( xExpectedIdleTime >= ( TickType_t ) configEXPECTED_IDLE_TIME_BEFORE_SLEEP )
+                    {
+                        traceLOW_POWER_IDLE_BEGIN();
+                        portSUPPRESS_TICKS_AND_SLEEP( xExpectedIdleTime );
+                        traceLOW_POWER_IDLE_END();
+                    }
+                    else
+                    {
+                        mtCOVERAGE_TEST_MARKER();
+                    }
+                }
+                ( void ) xTaskResumeAll();
+            }
+            else
+            {
+                mtCOVERAGE_TEST_MARKER();
+            }
+        }
+Official docs (summary):
+Parameters:
+- xTicksToJump: TickType_t — The number of RTOS tick periods that passed between the tick interrupt  being stopped and restarted (how long the tick interrupt was suppressed for).  For correct operation the parameter must be less than or equal to the  portSUPPRESS_TICKS_AND_SLEEP() parameter.
+Return values:
+- void: This function returns no value.
+Related configs: configUSE_TICKLESS_IDLE
+Related APIs: portSUPPRESS_TICKS_AND_SLEEP
+
+Official documentation (full):
+Title: vTaskStepTick
+Signature: void vTaskStepTick(TickType_t xTicksToJump) ;
+Summary:
+If the RTOS is configured to use tickless  idle functionality then the tick interrupt will be
+stopped, and the microcontroller placed into a low power state, whenever the Idle task is the
+only task able to execute. Upon exiting the low power state the tick count value must be
+corrected to account for the time that passed while it was stopped.
+If a FreeRTOS port includes a default portSUPPRESS_TICKS_AND_SLEEP()
+implementation, then vTaskStepTick() is used internally to ensure the correct tick count value
+is maintained. vTaskStepTick() is a public API function to allow the default
+portSUPPRESS_TICKS_AND_SLEEP() implementation to be overridden, and for a
+portSUPPRESS_TICKS_AND_SLEEP() to be provided if the port being used does not provide
+a default.
+Parameters:
+- xTicksToJump: TickType_t — The number of RTOS tick periods that passed between the tick interrupt  being stopped and restarted (how long the tick interrupt was suppressed for).  For correct operation the parameter must be less than or equal to the  portSUPPRESS_TICKS_AND_SLEEP() parameter.
+Return values:
+- void: This function returns no value.
+Notes:
+configUSE_TICKLESS_IDLE must be set to 1 in FreeRTOSConfig.h for vTaskStepTick() to be
+available.
+Example:
+/* This is an example of how portSUPPRESS_TICKS_AND_SLEEP( ) might be implemented by
+an application writer.  This basic implementation will introduce inaccuracies in the
+tracking of the time maintained by the kernel in relation to calendar time.  Official
+FreeRTOS implementations account for these inaccuracies as much as possible .
+Only vTaskStepTick() is  part of the FreeRTOS API.  The other function calls are for
+demonstration only. */
+/* First define the portSUPPRESS_TICKS_AND_SLEEP() macro.  The parameter is the time,
+in ticks, until the kernel next needs to execute. */
+#define portSUPPRESS_TICKS_AND_SLEEP( xIdleTime ) vApplicationSleep( xIdleTime )
+/* Define the function that is called by portSUPPRESS_TICKS_AND_SLEEP(). */
+void vApplicationSleep( TickType_t  xExpectedIdleTime )
+{
+unsigned long ulLowPowerTimeBeforeSleep, ulLowPowerTimeAfterSleep;
+/* Read the current time from a time source that will remain operational when
+the microcontroller is in a low power state.  */
+ulLowPowerTimeBeforeSleep = ulGetExternalTime();
+/* Stop the timer that is generating the tick interrupt. */
+prvStopTickInterruptTimer();
+/* Configure an interrupt to bring the microcontroller out of its low power state
+at the time the kernel next needs to execute.   The interrupt must be generated
+from a source that remains operational when the microcontroller is in a low
+power state . */
+vSetWakeTimeInterrupt( xExpectedIdleTime );
+/* Enter the low power state. */
+prvSleep();
+/* Determine how long the microcontroller was actually in a low power state for,
+which will be less than xExpectedIdleTime if the microcontroller was brought out
+of low power mode by an interrupt other than that configured by the
+vSetWakeTimeInterrupt( ) call.  Note that the scheduler is suspended before
+portSUPPRESS_TICKS_AND_SLEEP() is called , and resumed when
+portSUPPRESS_TICKS_AND_SLEEP() returns.  Therefore no other tasks will execute
+until this function completes.  */
+ulLowPowerTimeAfterSleep = ulGetExternalTime();
+/* Correct the kernels tick count to account for the time the microcontroller
+spent in its low power state. */
+vTaskStepTick( ulLowPowerTimeAfterSleep – ulLowPowerTimeBeforeSleep );
+/* Restart the timer that is generating the tick interrupt. */
+prvStartTickInterruptTimer();
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

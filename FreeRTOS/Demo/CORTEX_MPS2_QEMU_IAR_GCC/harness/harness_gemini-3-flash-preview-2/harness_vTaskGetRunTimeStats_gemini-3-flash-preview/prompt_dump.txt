@@ -1,0 +1,150 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: vTaskGetRunTimeStats
+
+### Function vTaskGetRunTimeStats
+Signature: void vTaskGetRunTimeStats (char *pcWriteBuffer);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- pcWriteBuffer: char — A pointer to a character buffer into which the formatted and human readable  table is written. The buffer must be large enough to hold the entire table , as  no boundary checking is performed .
+Return values:
+- void: None .
+Related configs: configGENERATE_RUN_TIME_STATS, configUSE_STATS_FORMATTING_FUNCTIONS
+Related APIs: portALT_GET_RUN_TIME_COUNTER_VALUE, portCONFIGURE_TIMER_FOR_RUN_TIME_STATS, portGET_RUN_TIME_COUNTER_VALUE, xTaskGetSystemState
+Reference snippets:
+- Incoming of /home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configTIMER_TASK_STACK_DEPTH:ANY(0) (rel:in:/home/zwz/FreeRTOS/FreeRTOS/Source/include/FreeRTOSConfig.h:configTIMER_TASK_STACK_DEPTH:ANY(0)#c0) :: incoming: vApplicationGetTimerTaskMemory
+- Call prvSampleTimeNow -> xTaskGetTickCount (edge:prvSampleTimeNow->xTaskGetTickCount:/home/zwz/FreeRTOS/FreeRTOS/Source/timers.c:872#c0) :: Call: prvSampleTimeNow -> xTaskGetTickCount at /home/zwz/FreeRTOS/FreeRTOS/Source/timers.c:872 callee_kind=function resolved=/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:4160-4176
+- Call vPortGetHeapStats -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0) (edge:vPortGetHeapStats->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/portable/MemMang/heap_4.c:613#c0) :: Call: vPortGetHeapStats -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskENTER_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/portable/MemMang/heap_4.c:613 callee_kind=macro
+- Call vTaskGetInfo -> <operator>.indirectFieldAccess (edge:vTaskGetInfo-><operator>.indirectFieldAccess:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:6287#c0) :: Call: vTaskGetInfo -> <operator>.indirectFieldAccess at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:6287 callee_kind=operator
+- Call vPortGetHeapStats -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) (edge:vPortGetHeapStats->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/portable/MemMang/heap_4.c:620#c0) :: Call: vPortGetHeapStats -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/portable/MemMang/heap_4.c:620 callee_kind=macro
+- Call vTaskGetInfo -> <operator>.indirectFieldAccess (edge:vTaskGetInfo-><operator>.indirectFieldAccess:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:6267#c0) :: Call: vTaskGetInfo -> <operator>.indirectFieldAccess at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:6267 callee_kind=operator
+- vTaskGetRunTimeStats :: void vTaskGetRunTimeStats (char *pcWriteBuffer); FreeRTOS can be configured to collect task run time statistics.  Task run time statistics provide information on the amount of processing time each task has received.  Figures are
+
+Official documentation (full):
+Title: vTaskGetRunTimeStats
+Signature: void vTaskGetRunTimeStats (char *pcWriteBuffer);
+Summary:
+FreeRTOS can be configured to collect task run time statistics.  Task run time statistics
+provide information on the amount of processing time each task has received.  Figures are
+provided as both an absolute time and a percentage of the total application run time.  The
+vTaskGetRunTimeStats()  API function formats the collected run time statistics into a human
+readable table.  Columns are generated for the task name, the absolute time allocated to that
+task, and the percentage of the total application run time allocated to that task.  A row is
+generated for each task in the system, including the Idle task.   An example output is shown in
+Figure 1.
+Figure 1 An example of the table produced by calling vTaskGetRunTimeStats()
+Parameters:
+- pcWriteBuffer: char — A pointer to a character buffer into which the formatted and human readable  table is written. The buffer must be large enough to hold the entire table , as  no boundary checking is performed .
+Return values:
+- void: None .
+Notes:
+vTaskGetRunTimeStats() is a utility function that is provided for convenience only.  It is not
+considered part of the kernel.  vTaskGetRunTimeStats() obtains its raw data using the
+xTaskGetSystemState()  API function.
+configGENERATE_RUN_TIME_STATS  and configUSE_STATS_FORMATTING_FUNCTIONS
+must both be set to 1 in FreeRTOSConfig.h for vTaskGetRunTimeStats() to be available.
+Setting configGENERATE_RUN_TIME_STATS  will also require the application to define the
+following macros:
+portCONFIGURE_TIMER_FOR_RUN_TIME_STATS () This macro must be provided to
+initialize whichever peripheral is
+used to generate the time base.
+The time base used by the run time
+stats must have a higher resolution
+than the tick interrupt, otherwise the
+gathered statistics may be too
+inaccurate to be truly useful.  It is
+recommended to make the time
+base between 10 and 20  times
+faster than the tick interrupt
+portGET_RUN_TIME_COUNTER_VALUE (), or
+portALT_GET_RUN_TIME_COUNTER_VALUE(Time)  One of these two  macro s must be
+provided to ret urn the current time
+base value – which  is the total time
+that the application has been
+running in the chosen time base
+units.  If the first macro is used it
+must be defined to evaluate to the
+current time base value.  If the
+second macro is used it must be
+defined to set its ‘Time’ parameter to
+the current time base value.
+These  macros can be defined in FreeRTOSConfig.h.
+Example:
+/* The LM3Sxxxx Eclipse demo application already includes a 20KHz timer interrupt.
+The interrupt handler was updated to simply increment a variable called
+ulHighFrequencyTimerTicks each time it executed.
+portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() then sets this variable to 0 and
+portGET_RUN_TIME_COUNTER_VALUE() returns its value. To implement this the  following
+few lines are  added to FreeRTOSConfig.h. */
+extern volatile unsigned long ulHighFrequencyTimerTicks;
+/* ulHighFrequencyTimerTicks is already being incremented at 20KHz.  Just set
+its value back to 0. */
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() ( ulHighFrequencyTimerTicks = 0UL )
+/* Simply return the high frequency counter value. */
+#define portGET_RUN_TIME_COUNTER_VALUE()  ulHighFrequencyTimerTicks
+/* The LPC17xx demo application does not include the high frequency interrupt test,
+so portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() is used to configure the  timer 0
+peripheral to generate the time base. portGET_RUN_TIME _COUNTER_VALUE() simply returns
+the current timer 0 counter value. This was implemented using the following functions
+and macros. */
+/* Defined in main.c. */
+void vConfigureTimerForRunTimeStats( void )
+{
+const unsigned long TCR_COUNT_RESET = 2,
+CTCR_CTM_TIMER = 0x00,
+TCR_COUNT_ENABLE = 0x01;
+/* Power up and feed the timer with a clock. */
+PCONP |= 0x02UL;
+PCLKSEL0 = (PCLKSEL0 & (~(0x3<<2))) | (0x01 << 2);
+/* Reset Timer 0 */
+T0TCR = TCR_COUNT_RESET;
+/* Just count up. */
+T0CTCR = CTCR_CTM_TIMER;
+/* Prescale to a frequency that is good enough to get a decent resolution,
+but not too fast so as to overflow all the time. */
+T0PR =  ( configCPU_CLOCK_HZ / 10000UL ) - 1UL;
+/* Start the counter. */
+T0TCR = TCR_COUNT_ENABLE;
+}
+/* Defined in FreeRTOSConfig.h. */
+extern void vConfigureTimerForRunTimeStats( void );
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() vConfigureTimerForRunTimeStats()
+#define portGET_RUN_TIME_COUNTER_VALUE() T0TC
+void vAFunction( void )
+{
+/* Define a buffer that is large enough to hold the generated table.  In most cases
+the buffer will be too large to allocate on the sta ck, hence in this example it is
+declared static. */
+static char cBuffer[  BUFFER_SIZE ];
+/* Pass the buffer into vTaskGetRunTimeStats() to generate the table of data. */
+vTaskGetRunTimeStats( cBuffer );
+/* The generated information can be saved or viewed here. */
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

@@ -1,0 +1,110 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: ulTaskNotifyValueClear
+
+### Function ulTaskNotifyValueClear
+Signature: uint32_t ulTaskNotifyValueClear(TaskHandle _t xTask, uint32_t ulBitsToClear);
+Location: 
+Cyclomatic: None Lines: None
+Includes: none
+Outgoing calls summary: none
+Incoming callers count: 0
+Official docs (summary):
+Parameters:
+- xTask: TaskHandle _t — The handle of the RTOS task that will have bits in one of its notification values  cleared. Set xTask to NULL to clear bits in a notification value of the calling  task. To obtain a task’s handle create the task using xTaskCreate () and make  use of the pxCreatedTask parameter, or create the task using  xTaskCreateStatic () and store the returned value, or use the task’s name in a  call to xTaskGetHandle ().
+- ulBitsToClear: uint32_t — Bit mask of the bits to clear in the notification value of xTask. Set a bit to 1 to  clear the corresponding bits in the task’s notification value. Set ulBitsToClear  to 0xFFFFFFFF (UINT_MAX on 32 -bit architectures) to clear the notification  value to 0. Set ulBitsToClear to 0 to query the task’s notification value without  clearing any bits .
+Return values:
+- uint32_t: The value of the target ta sks’s notification value before the bits specified by ulBitsToClear
+were cleared.
+Related configs: configUSE_TASK_NOTIFICATIONS, uxIndexToClear, xTask
+Related APIs: ulTaskNotifiyValueClear, ulTaskNotifyValueClearIndexed, xTaskNotifyStateClearIndexed, xTaskNotifyWait
+Reference snippets:
+- Call MPU_ulTaskGenericNotifyValueClearImpl -> ulTaskGenericNotifyValueClear (edge:MPU_ulTaskGenericNotifyValueClearImpl->ulTaskGenericNotifyValueClear:/home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c:1527#c0) :: Call: MPU_ulTaskGenericNotifyValueClearImpl -> ulTaskGenericNotifyValueClear at /home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c:1527 callee_kind=function resolved=/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8380-8408
+- Call MPU_ulTaskGenericNotifyValueClearImpl -> ulTaskGenericNotifyValueClear (edge:MPU_ulTaskGenericNotifyValueClearImpl->ulTaskGenericNotifyValueClear:/home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c:1511#c0) :: Call: MPU_ulTaskGenericNotifyValueClearImpl -> ulTaskGenericNotifyValueClear at /home/zwz/FreeRTOS/FreeRTOS/Source/portable/Common/mpu_wrappers_v2.c:1511 callee_kind=function resolved=/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8380-8408
+- Call ulTaskGenericNotifyValueClear -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) (edge:ulTaskGenericNotifyValueClear->/home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8403#c0) :: Call: ulTaskGenericNotifyValueClear -> /home/zwz/FreeRTOS/FreeRTOS/Source/include/task.h:taskEXIT_CRITICAL:ANY(0) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8403 callee_kind=macro
+- Call ulTaskGenericNotifyValueClear -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:prvGetTCBFromHandle:ANY(1) (edge:ulTaskGenericNotifyValueClear->/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:prvGetTCBFromHandle:ANY(1):/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8393#c0) :: Call: ulTaskGenericNotifyValueClear -> /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:prvGetTCBFromHandle:ANY(1) at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8393 callee_kind=macro
+- Call ulTaskGenericNotifyValueClear -> <operator>.not (edge:ulTaskGenericNotifyValueClear-><operator>.not:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8401#c0) :: Call: ulTaskGenericNotifyValueClear -> <operator>.not at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8401 callee_kind=operator
+- Call ulTaskGenericNotifyValueClear -> <operator>.assignment (edge:ulTaskGenericNotifyValueClear-><operator>.assignment:/home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8400#c0) :: Call: ulTaskGenericNotifyValueClear -> <operator>.assignment at /home/zwz/FreeRTOS/FreeRTOS/Source/tasks.c:8400 callee_kind=operator
+- ulTaskNotifyValueClear :: uint32_t ulTaskNotifyValueClear(TaskHandle _t xTask, uint32_t ulBitsToClear); Prior to FreeRTOS v10.4.0 each task had a single “notification value”, and all task notification API functions operated on that value. Replacing the single notification value with an array of
+- ulTaskNotifyValueClear :: uint32_t ulTaskNotifyValueClear(TaskHandle _t xTask, uint32_t ulBitsToClear); Prior to FreeRTOS v10.4.0 each task had a single “notification value”, and all task notification API functions operated on that value. Replacing the single notification value with an array of
+
+Official documentation (full):
+Title: ulTaskNotifyValueClear
+Signature: uint32_t ulTaskNotifyValueClear(TaskHandle _t xTask, uint32_t ulBitsToClear);
+Summary:
+Prior to FreeRTOS v10.4.0 each task had a single “notification value”, and all task notification
+API functions operated on that value. Replacing the single notification value with an array of
+notification values necessitated a new set of API functions that could address specific
+notifications with the array. ulTaskNotifiyValueClear () is the original API function and remains
+for backward compatibility. Calling ulTaskNotifiyValueClear() is equivalent to calling
+ulTaskNotifyValueClearIndexed() with the uxIndexToClear parameter set to 0 .
+xTaskNotifyWait () waits, with an optional timeout, for the calling task to receive a notification.  If
+the receiving task was already Blocked waiting for a notification when one arrives the receiving
+task will be removed from the Blocked state and the notification cleared.
+Parameters:
+- xTask: TaskHandle _t — The handle of the RTOS task that will have bits in one of its notification values  cleared. Set xTask to NULL to clear bits in a notification value of the calling  task. To obtain a task’s handle create the task using xTaskCreate () and make  use of the pxCreatedTask parameter, or create the task using  xTaskCreateStatic () and store the returned value, or use the task’s name in a  call to xTaskGetHandle ().
+- ulBitsToClear: uint32_t — Bit mask of the bits to clear in the notification value of xTask. Set a bit to 1 to  clear the corresponding bits in the task’s notification value. Set ulBitsToClear  to 0xFFFFFFFF (UINT_MAX on 32 -bit architectures) to clear the notification  value to 0. Set ulBitsToClear to 0 to query the task’s notification value without  clearing any bits .
+Return values:
+- uint32_t: The value of the target ta sks’s notification value before the bits specified by ulBitsToClear
+were cleared.
+Notes:
+If a notification is sent to an index within the array of notifications then the notification at that
+index is said to be ‘ending’ until it is read or explicitly cleared by the receiving task.
+xTaskNotifyStateClearIndexed () is the function that clears a pending notification without
+reading the notification value. The notification value at the same array index is not altered. Set
+xTask to NULL to clear the notification state of the calling task.
+configUSE_TASK_NOTIFICATIONS must be 1 or undefined in FreeRTOSConfig.h to use.
+Example:
+/* Example function that clears notification bits and then clears the notification state . */
+void vExampleNotificationClear( TaskHandle_t xTaskToNotify  )
+{
+uint32_t ulNotifiedValue;
+/* Get the task to set all bits its own notification value.  This is not a
+normal thing to do, and is only done here as an example. */
+xTaskNotify( xTaskToNotify, notifyUINT32_MAX, eSetBits );
+/* Now clear the top bytes - the returned value from the first call should
+indicate that previously all bits were set. */
+configASSERT( ulTaskNotifyValueClear( xTaskToNotify,
+notifyUINT32_HIGH_BYTE ) ==
+notifyUINT32_MAX );
+/* Next clear the bottom bytes - the returned value this time should indicate
+that the top byte was clear (before the bottom byte was cleared. */
+configASSERT( ulTaskNotifyValueClear( xTaskToNotify,
+notifyUINT32_LOW_BYTE ) ==
+( notifyUINT32_MAX &
+~notifyUINT32_HIGH_BYTE ) );
+/* Next clear all bytes - the returned value should indicate that previously the
+high and low bytes were clear. */
+configASSERT( ulTaskNotifyValueClear( xTaskToNotify,
+notifyUINT32_MAX ) ==
+( notifyUINT32_MAX &
+~notifyUINT32_HIGH_BYTE &
+~notifyUINT32_LOW_BYTE ) );
+/* Now the notification state should be eNotified, so it should now be
+possible to clear the notification state. */
+configASSERT( xTaskNotifyStateClear( NULL ) == pdTRUE );
+configASSERT( xTaskNotifyStateClear( NULL ) == pdFALSE );
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.

@@ -5,9 +5,9 @@ import datetime
 
 # ================= 配置区域 =================
 # 请确保这里没有多余的空格
-ROOT_DIR = "/home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC/harness/harness_gemini-3-pro-preview"
+ROOT_DIR = "/home/zwz/FreeRTOS/FreeRTOS/Demo/CORTEX_MPS2_QEMU_IAR_GCC/harness/harness_gemini-3-flash-preview"
 
-REPORT_FILENAME = "fuzz_analysis_report.txt"
+REPORT_FILENAME = "fuzz_analysis_report_3flash_1.txt"
 LOG_FILENAME = "freertos_run.debug.log"
 GEN_TIME_FILENAME = "generate_func_cli.log"
 CRASH_DIR_NAME = "crashes"

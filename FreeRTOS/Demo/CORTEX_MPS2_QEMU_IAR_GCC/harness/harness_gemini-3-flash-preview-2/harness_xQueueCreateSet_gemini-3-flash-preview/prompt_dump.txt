@@ -1,0 +1,168 @@
+==== SYSTEM PROMPT ====
+You are a FreeRTOS kernel and driver-level testing expert. Generate high-quality, compilable, and runnable fuzzing test cases for the target API. Ensure task lifecycle completeness, correct synchronization usage, memory safety, and minimal viable initialization. The harness template already provides a fixed skeleton: it reads fuzz input via FR_* helpers from the global FUZZ_INPUT array, runs test_task inside a bounded for-loop, then prints [TEST_CASE_COMPLETED] and triggers a BREAKPOINT. Your job is ONLY to generate per-test-case helper_functions and test_logic bodies that plug into this skeleton. Target environment: FreeRTOS demo on Cortex-M MPU. All tasks and kernel objects must be created using static APIs (e.g., xTaskCreateStatic/xQueueCreateStatic). Set portPRIVILEGE_BIT when privileged access is required.  Do not use dynamic memory or unauthorized privileged operations. Use ACL APIs for cross-task handle access when needed.  Use only configASSERT or explicit condition checks for assertions; do not use Unity/CMock macros. Do NOT modify the outer fuzz harness wrappers provided by the template (e.g., fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, scheduler start/stop code); focus only on helper_functions and the per-iteration test_logic body.
+Fuzz input policy: All variability MUST come from the global FUZZ_INPUT byte array. Derive parameters deterministically from FUZZ_INPUT only (no rand/time). Use the template-provided FR_* helpers (FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range/FR_next_bytes/FR_next_string) to consume FUZZ_INPUT with bounds checks and an advancing offset. Do NOT re-implement these helpers, and do NOT use generic next_* names. Use modulo/clamping to map raw bytes into valid RTOS ranges (priorities, ticks, sizes). Keep the template's bounded-loop structure in test_task: do NOT introduce new infinite loops or long blocking calls outside the per-iteration test_logic body. Reader discipline (FR_Reader): (1) Initialize the Fuzz Reader (FR_init) outside the per-iteration loop and let it consume FUZZ_INPUT monotonically forward across all iterations. Never reset the reader offset (e.g. 'fr.off = 0') and never re-initialize the reader inside the loop. (2) Inside the loop, always check that enough bytes remain (via FR_remaining or helper return values) before consuming; if input is exhausted or insufficient for a safe parameter set, break the loop immediately instead of falling back to hardcoded defaults or resetting the reader. (3) The purpose of the bounded loop is to explore deeper and varied states from a single FUZZ_INPUT. Avoid repeating the exact same parameter combination across iterations; each iteration should, as far as practical, consume new bytes and exercise a different configuration or state transition.
+
+==== USER PROMPT ====
+Goal: Generate 1 fuzzing test case (JSON array) for the functions below and their key related APIs. Each item must include: name, description, api_category, helper_functions, test_logic.
+Focus functions: xQueueCreateSet
+
+### Function xQueueCreateSet
+Signature: QueueSetHandle_t xQueueCreateSet( const UBaseType_t uxEventQueueLength )
+Location: /home/zwz/FreeRTOS/FreeRTOS/Source/queue.c:None-None
+Cyclomatic: None Lines: None
+Includes: stdlib.h, string.h, FreeRTOS.h, task.h, queue.h, croutine.h
+Outgoing calls summary: none
+Incoming callers count: 0
+Full source code:
+QueueSetHandle_t xQueueCreateSet( const UBaseType_t uxEventQueueLength )
+{
+        QueueSetHandle_t pxQueue;
+
+        traceENTER_xQueueCreateSet( uxEventQueueLength );
+
+        pxQueue = xQueueGenericCreate( uxEventQueueLength, ( UBaseType_t ) sizeof( Queue_t * ), queueQUEUE_TYPE_SET );
+
+        traceRETURN_xQueueCreateSet( pxQueue );
+
+        return pxQueue;
+    }
+Official docs (summary):
+Parameters:
+- uxEventQueueLength: const UBaseType_t — Queue sets store events that occur on the queues and semaphores  contained in the set. uxEventQueueLength specifies the maximum  number of events that can be queued at once.  To be absolutely certain that events are not lost uxEventQueueLength  must be set to the sum of the lengths of the queues added to the set,  where binary semaphores and mutexes have a length of 1, and  counting semaphores have a length set by their maximum count  value. For example:  • If a queue set is to hold a queue of length 5, another queue of  length 12, and a binary semaphore, then uxEventQueueLength  should be set to (5 + 12 + 1), or 18.  • If a queue set is to hold three binary semaphores then
+- uxEventQueueLength: const UBaseType_t — should be set to (1 + 1 + 1 ), or 3.  • If a queue set is to hold a counting semaphore that has a  maximum count of 5, and a counting semaphore that has a  maximum count of 3, then uxEventQueueLength should be set  to (5 + 3), or 8.
+Return values:
+- QueueSetHandle_t: NULL The queue set could not be created.
+Any other value  The queue set was created successfully.  The returned value is a handle by
+which the created queue set can be referenced .
+Related configs: configUSE_QUEUE_SETS
+Related APIs: xQueueAddToSet, xQueueCreateSet, xQueueSelectFromSet
+Reference snippets:
+- API xQueueCreateSet Overview (api:xQueueCreateSet:overview#c0) :: API: xQueueCreateSet Signature: QueueSetHandle_t xQueueCreateSet(const UBaseType_t uxEventQueueLength); Headers: queue.h, FreeRTOS.h Summary: Queue sets provide a mechanism to allow an RTOS task to block (pend) on a read operation from multiple RTOS queues or semaphores simultaneously. Note that there are simpler alter…
+- API xQueueCreateSet Returns (api:xQueueCreateSet:returns#c0) :: API: xQueueCreateSet Section: returns returns QueueSetHandle_t: NULL The queue set could not be created. Any other value  The queue set was created successfully.  The returned value is a handle by which the created queue set can be referenced .
+- API xQueueCreateSet Related (api:xQueueCreateSet:related#c0) :: API: xQueueCreateSet Section: related related: xQueueAddToSet, xQueueCreateSet, xQueueSelectFromSet
+- API xQueueCreateSet Notes (api:xQueueCreateSet:notes#c0) :: API: xQueueCreateSet Section: notes Blocking on a queue set that contains a mutex will not cause the mutex holder to inherit the priority of the blocked task. An additional 4 bytes of RAM are required for each space in every queue added to a queue set.  Therefore a counting semaphore that has a high maximum count value…
+- API xQueueCreateSet Example (api:xQueueCreateSet:example#c0) :: API: xQueueCreateSet Section: example /* Define the lengths of the queues that will be added to the queue set. */ #define QUEUE_LENGTH_1   10 #define QUEUE_LENGTH_2   10 /* Binary semaphores have an effective length of 1. */ #define BINARY_SEMAPHORE_LENGTH  1 /* Define the size of the item to be held by queue 1 and que…
+- API xQueueCreateSet Parameters (api:xQueueCreateSet:parameters#c0) :: API: xQueueCreateSet Section: parameters param uxEventQueueLength: const UBaseType_t Queue sets store events that occur on the queues and semaphores  contained in the set. uxEventQueueLength specifies the maximum  number of events that can be queued at once.  To be absolutely certain that events are not lost uxEventQue…
+- xQueueCreateSet :: QueueSetHandle_t xQueueCreateSet(const UBaseType_t uxEventQueueLength); Queue sets provide a mechanism to allow an RTOS task to block (pend) on a read operation from multiple RTOS queues or semaphores simultaneously. Note that there are simpler
+
+Official documentation (full):
+Title: xQueueCreateSet
+Signature: QueueSetHandle_t xQueueCreateSet(const UBaseType_t uxEventQueueLength);
+Summary:
+Queue sets provide a mechanism to allow an RTOS task to block (pend) on a read operation
+from multiple RTOS queues or semaphores simultaneously. Note that there are simpler
+alternatives to using queue sets. See the Blocking on Multiple Objects page of the
+FreeRTOS.org website for more information.
+A queue set must be explicitly created using a call to xQueueCreateSet() before it can be
+used.  Once created, standard FreeRTOS queues and semaphores can be added to the set
+using calls to xQueueAddToSet().  xQueueSelectFromSet() is then used to determine which, if
+any, of the queues or semaphores contained in the set is in a state where a queue read or
+semaphore take operation would be successful.
+Parameters:
+- uxEventQueueLength: const UBaseType_t — Queue sets store events that occur on the queues and semaphores  contained in the set. uxEventQueueLength specifies the maximum  number of events that can be queued at once.  To be absolutely certain that events are not lost uxEventQueueLength  must be set to the sum of the lengths of the queues added to the set,  where binary semaphores and mutexes have a length of 1, and  counting semaphores have a length set by their maximum count  value. For example:  • If a queue set is to hold a queue of length 5, another queue of  length 12, and a binary semaphore, then uxEventQueueLength  should be set to (5 + 12 + 1), or 18.  • If a queue set is to hold three binary semaphores then
+- uxEventQueueLength: const UBaseType_t — should be set to (1 + 1 + 1 ), or 3.  • If a queue set is to hold a counting semaphore that has a  maximum count of 5, and a counting semaphore that has a  maximum count of 3, then uxEventQueueLength should be set  to (5 + 3), or 8.
+Return values:
+- QueueSetHandle_t: NULL The queue set could not be created.
+Any other value  The queue set was created successfully.  The returned value is a handle by
+which the created queue set can be referenced .
+Notes:
+Blocking on a queue set that contains a mutex will not cause the mutex holder to inherit the
+priority of the blocked task.
+An additional 4 bytes of RAM are required for each space in every queue added to a queue
+set.  Therefore a counting semaphore that has a high maximum count value should not be
+added to a queue set.
+A receive (in the case of a queue) or take (in the case of a semaphore) operation must not be
+performed on a member of a queue set unless a call to xQueueSelectFromSet() has first
+returned a handle to that set member.
+configUSE_QUEUE_SETS  must be set to 1 in FreeRTOSConfig.h for the xQueueCreateSet()
+API function to be available.
+Example:
+/* Define the lengths of the queues that will be added to the queue set. */
+#define QUEUE_LENGTH_1   10
+#define QUEUE_LENGTH_2   10
+/* Binary semaphores have an effective length of 1. */
+#define BINARY_SEMAPHORE_LENGTH  1
+/* Define the size of the item to be held by queue 1 and queue 2 respectively.  The
+values used here are just for demonstration purposes. */
+#define ITEM_SIZE_QUEUE_1  sizeof( uint32_t )
+#define ITEM_SIZE_QUEUE_2  sizeof( something_else_t )
+/* The combined length of the two queues and binary semaphore that will be  added to
+the queue set. */
+#define COMBINED_LENGTH ( QUEUE_LENGTH_1 + QUEUE_LENGTH_2 + BINARY_SEMAPHORE_LENGTH )
+void vAFunction( void )
+{
+static QueueSetHandle_t  xQueueSet;
+QueueHandle_t  xQueue1, xQueue2, xSemaphore;
+QueueSetMemberHandle_t  xActivatedMember;
+uint32_t xReceivedFromQueue1;
+something_else_t xReceivedFromQueue2;
+/* Create a queue set large enough to hold an event for every space in every
+queue and semaphore that is to be added to the set. */
+xQueueSet = xQueueCreateSet( COMBINED_LENGTH );
+/* Create the queues and semaphores that will be contained in the set. */
+xQueue1 = xQueueCreate( QUEUE_LENGTH_1, ITEM_SIZE_QUEUE_1 );
+xQueue2 = xQueueCreate( QUEUE_LENGTH_2, ITEM_SIZE_QUEUE_2 );
+/* Create the semaphore that is being added to the set. */
+xSemaphore = x SemaphoreCreateBinary();
+/* Take the semaphore, so it starts empty.  A block time of zero can be used
+as the semaphore is guaranteed to be available - it has just been created. */
+xSemaphoreTake( xSemaphore, 0 );
+/* Add the queues and semaphores to the set.  Reading from these queues and
+semaphore can only be performed after a call to xQueueSelectFromSet() has
+returned the queue or semaphore handle from this point on. */
+xQueueAddToSet( xQueue1, xQueueSet );
+xQueueAddToSet( xQueue2, xQueueSet );
+xQueueAddToSet( xSemaphore, xQueueSet );
+/* CONTINUED ON NEXT PAGE */
+/* CONTINUED FROM PREVIOUS PAGE */
+for( ;; )
+{
+/* Block to wait for something to be available from the queues or  semaphore
+that have been added to the set.  Don't block longer than  200ms. */
+xActivatedMember = xQueueSelectFromSet( xQueueSet, pdMS_TO_TICKS( 200 ) );
+/* Which set member was selected?  Receives/takes can use a block time  of
+zero as they are guaranteed to pass because xQueueSelectFromSet() would  not
+have returned the handle unless something was available. */
+if( xActivatedMember == xQueue1 )
+{
+xQueueReceive( xActivatedMember, &xReceivedFromQueue1, 0 );
+vProcessValueFromQueue1( xReceivedFromQueue1 );
+}
+else if( xActivatedQueue == xQueue2 )
+{
+xQueueReceive( xActivatedMember, &xReceivedFromQueue2, 0 );
+vProcessValueFromQueue2( &xReceivedFromQueue2 );
+}
+else if( xActivatedQueue == xSemaphore )
+{
+/* Take the semaphore to make sure it can be "given" again. */
+xSemaphoreTake( xActivatedMember, 0 );
+vProcessEventNotifiedBySemaphore();
+break;
+}
+else
+{
+/* The 200ms block time expired without an RTOS queue or semaphore
+being ready to process. */
+}
+}
+}
+
+Generation requirements:
+1) Output must be a strict JSON array without extra explanations.
+2) helper_functions can be an empty string or include static buffers/helpers; test_logic contains only function body statements.
+3) Use the template-provided FR_* helpers to consume FUZZ_INPUT with an advancing offset and bounds checks: call FR_init/FR_next_u8/FR_next_u16/FR_next_u32/FR_next_s32/FR_next_range(min,max)/FR_next_bytes(n)/FR_next_string(max_len). Do NOT re-implement these and do NOT define generic next_* names.
+   - Read at least 16 bytes overall (or as many as needed) and derive 3+ independent parameters from FUZZ_INPUT.
+   - No randomness/time: all variability must come from FUZZ_INPUT; deterministic mapping from bytes to parameters.
+4) Prefer static APIs for tasks/queues/semaphores/etc. and provide static storage; set portPRIVILEGE_BIT when needed.
+5) Use configASSERT or explicit condition checks; on failure paths, clean up resources or return.
+6) Avoid dynamic memory, raw SVC, or unauthorized privileged operations. Do NOT use xTaskCreate (use xTaskCreateStatic).
+7) Choose a suitable api_category for the target function (e.g., task_management, queue, semaphore, timers).
+8) The harness template will run test_logic inside a bounded for-loop in test_task; do NOT add extra infinite loops or long blocking calls around it, and do NOT modify outer wrappers such as fuzz_task, FUZZ_TASK_STACK_DEPTH, FUZZ_TASK_PRIORITY, or scheduler start/stop logic.
+9) JSON formatting MUST be valid: use double quotes, escape all newline characters as \n, and do NOT include code fences/backticks. No trailing commas.
+
+Forbidden/limitations:
+- Do NOT call FreeRTOS internal/private functions (e.g., names starting with prv).
+- Do NOT reference internal globals like uxSchedulerSuspended/xAlreadyYielded; rely on public API effects only.
+- Do NOT include random(), srand(), time(), or platform-specific syscalls. All variability from FUZZ_INPUT.
+- Do NOT define any symbols with FR_ prefix; these are reserved by the template.
